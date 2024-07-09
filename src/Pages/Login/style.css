@@ -35,6 +35,7 @@ html {
 .welcome-text{
     font-size: 150%;
     color: var(--black);
+    color: darkslateblue;
 }
 .login-logo{
     width: 20%;
@@ -118,7 +119,7 @@ html {
     border: none;
     width: 100%;
     border-radius: 5px;
-    background-color: #0D2481;
+    background-color: darkslateblue;
     color: white;
     cursor: pointer;
 }

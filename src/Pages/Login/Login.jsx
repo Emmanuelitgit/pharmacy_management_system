@@ -150,7 +150,7 @@ const handleShowPassword = () => {
           onClick={handleLogin} 
           />
         </div>
-        <p className='copyright'>@2024 Clinic Management System. Developed by Emmanuel Yidana</p>
+        <p className='copyright'>@2024 Pharmacy Management System. Developed by Justice Ofori</p>
       </div>
     </div>
   )
