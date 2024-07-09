@@ -6,7 +6,7 @@ import { getPrescription, getPatients, getReports, getAppointmentList, getBloodG
 import { depCountActions } from '../../store/depCount';
 
 
-const DoctorBoxes = () => {
+const SalesPersonBoxes = () => {
 
 
     // const role = useSelector((state) => state.auth?.role?.toLowerCase());
@@ -53,62 +53,62 @@ const DoctorBoxes = () => {
 
 
   const doctorBoxes = [
-        {
-          id:6,
-          name:"Patient",
-          background:"bg-primary",
-          link:'/doctor/patient-list',
-          total: patients?.length
-        },
-      {
-        id:7,
-        name:"Appointment",
-        background:"bg-warning",
-        link:'/doctor/appointment-list',
-        total: appointments?.length
-      },
-      {
-        id:8,
-        name:"Prescription",
-        background:"bg-success",
-        link:'/doctor/prescription-list',
-        total: prescriptions?.length
-      },
-      {
-        id:9,
-        name:"Blood Bank",
-        background:"purple",
-        link:'/doctor/blood-bank',
-        total: bloodBank?.length
-      },
-      {
-        id:11,
-        name:"Operation Report",
-        background:"bg-danger",
-        link:'/doctor/operation-report',
-        total: operation_report?.length
-      },
-      {
-        id:12,
-        name:"Birth Report",
-        background:"teal",
-        link:'/doctor/birth-report',
-        total: birth_report?.length
-      },
-      {
-        id:13,
-        name:"Death Report",
-        background:"brown",
-        link:'/doctor/death-report',
-        total: death_report?.length
-      },
-      {
-        id:14,
-        name:"Bed Allotment",
-        background:"bg-info",
-        link:'/doctor/bed-allotment-list',
-        total: bedAllotments?.length
-      },
+    {
+      id:1,
+      name:"Drug",
+      background:"purple",
+      link:'/admin/doctor-list',
+      total: patients.length
+    },
+    {
+      id:2,
+      name:"Orders",
+      background:"pink",
+      link:'/admin/nurse-list',
+      total: appointments.length
+    },
+      // {
+      //   id:8,
+      //   name:"Prescription",
+      //   background:"bg-success",
+      //   link:'/doctor/prescription-list',
+      //   total: prescriptions?.length
+      // },
+      // {
+      //   id:9,
+      //   name:"Blood Bank",
+      //   background:"purple",
+      //   link:'/doctor/blood-bank',
+      //   total: bloodBank?.length
+      // },
+      // {
+      //   id:11,
+      //   name:"Operation Report",
+      //   background:"bg-danger",
+      //   link:'/doctor/operation-report',
+      //   total: operation_report?.length
+      // },
+      // {
+      //   id:12,
+      //   name:"Birth Report",
+      //   background:"teal",
+      //   link:'/doctor/birth-report',
+      //   total: birth_report?.length
+      // },
+      // {
+      //   id:13,
+      //   name:"Death Report",
+      //   background:"brown",
+      //   link:'/doctor/death-report',
+      //   total: death_report?.length
+      // },
+      // {
+      //   id:14,
+      //   name:"Bed Allotment",
+      //   background:"bg-info",
+      //   link:'/doctor/bed-allotment-list',
+      //   total: bedAllotments?.length
+      // },
       ]
 
   return (
@@ -143,4 +143,4 @@ const DoctorBoxes = () => {
   )
 }
 
-export default DoctorBoxes
+export default SalesPersonBoxes

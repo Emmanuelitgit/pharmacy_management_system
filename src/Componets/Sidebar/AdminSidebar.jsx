@@ -1,17 +1,9 @@
 import React, { useEffect } from 'react';
 import "./style.css";
-import { Dashboard,
-        Share, Logout, Settings, Person, Science, LocalPharmacy,MedicalServices,PeopleAlt,
-        Bloodtype,ArrowDropDown,PersonAdd,Healing, Payment, Bed, ChildCare,
-        MedicalInformation,} from '@mui/icons-material';
-import  LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import ContentCutIcon from '@mui/icons-material/ContentCut';
+import { Dashboard,Settings, Person,PersonAdd,ShoppingCart} from '@mui/icons-material';
 import AddCardIcon from '@mui/icons-material/AddCard';
-import MonitorWeightIcon from '@mui/icons-material/MonitorWeight';
-import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { Collapse } from '@mui/material';
 import LogoutBtn from '../Buttons/LogoutBtn';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleSidebarToggle } from '../../store/modalState';
@@ -77,6 +69,11 @@ const AdminSidebar = () => {
           <Link to={"/admin/medicine-list"} className='link' onClick={handleToggle}>
           <AddCardIcon className='sidebar-icon'/>
           <span className='item-name'>Medicine List</span></Link>
+        </div>
+        <div className='item'>
+          <Link to={"/admin/order-list"} className='link' onClick={handleToggle}>
+          <ShoppingCart className='sidebar-icon'/>
+          <span className='item-name'>Orders</span></Link>
         </div>
         <div className='item' style={{marginTop: visible ? "300px" : "0px"}}>
          <Link to={"/admin/settings"} className='link' onClick={handleToggle}>

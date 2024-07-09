@@ -40,6 +40,7 @@ html {
 .login-logo{
     width: 20%;
     height: 60%;
+    border-radius: 50%;
 }
 .login-title{
     font-size: 160%;

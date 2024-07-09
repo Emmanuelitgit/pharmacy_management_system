@@ -7,8 +7,8 @@ import AdminDashboard from "./Pages/Admin/Dashboard/AdminDashboard";
 import Register from "./Pages/Register/Register";
 import Payment from "./Componets/Payment/Payment";
 import UserList from "./Pages/Admin/User/UserList";
-import DoctorNavs from './Componets/Navs/DoctorNavs';
-import DoctorDashboard from "./Pages/Doctor/DoctorDashboard";
+import SalesPersonNavs from './Componets/Navs/SalesPersonNavs';
+import SalesPersonDashboard from "./Pages/SalesPerson/SalesPersonDashboard";
 import InvoiceList from './Componets/Payment/InvoiceList';
 import Profile from './Componets/Profile/Profile';
 import Settings from './Pages/Admin/Settings/Settings';
@@ -30,10 +30,10 @@ const Admin = () => {
   );
 };
 
-const Doctor = () => {
+const SalesPerson = () => {
   return (
     <> 
-      <DoctorNavs/>
+      <SalesPersonNavs/>
       <Outlet/>
     </>
   );
@@ -50,6 +50,8 @@ const router = createBrowserRouter([
       { path: "/admin/payment-list", element: <Payment /> },
       { path: "/admin/medicine-list", element: <MedicineList /> },
       { path: "/admin/medicine-category", element: <MedicineCategory /> },
+      { path: "/admin/view-medicine", element: <ViewMedicine /> },
+      { path: "/admin/view-category", element: <ViewMedCategory /> },
       { path: "/admin/user-list", element: <UserList /> },
       { path: "/admin/view-staff/:id", element: <ViewUser /> },
       { path: "/admin/profile", element: <Profile /> },
@@ -60,10 +62,10 @@ const router = createBrowserRouter([
 
   // DOCTOR MODULE NAVIGATION HERE
   {
-    path: "/doctor",
-    element: <Doctor/>,
+    path: "/sales-person",
+    element: <SalesPerson/>,
     children: [
-      { path: "/doctor/dashboard", element: <DoctorDashboard /> },
+      { path: "/sales-person/dashboard", element: <SalesPersonDashboard /> },
     ]
   },
   { path: "/register", element: <Register /> },

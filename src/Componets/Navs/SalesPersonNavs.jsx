@@ -1,9 +1,9 @@
 import React from 'react';
 import Navbar from "../NavBar/Navbar";
-import DoctorSidebar from "../Sidebar/DoctorSidebar"
+import SalesPersonSidebar from "../Sidebar/SalesPersonSidebar"
 import { useLocation } from 'react-router-dom';
 
-const DoctorNavs = () => {
+const SalesPersonNavs = () => {
 
   const location = useLocation();
   const route = location.pathname;
@@ -11,9 +11,9 @@ const DoctorNavs = () => {
   return (
     <div>
       <Navbar/>
-      {route !== "/doctor/chat" && <DoctorSidebar/> }
+      {route !== "/doctor/chat" && <SalesPersonSidebar/> }
     </div>
   )
 }
 
-export default DoctorNavs
+export default SalesPersonNavs

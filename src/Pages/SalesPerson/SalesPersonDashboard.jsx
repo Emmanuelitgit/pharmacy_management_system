@@ -1,13 +1,13 @@
 import React from 'react';
-import DashboardBoxes from '../../../Componets/DashboardBoxes/DashboardBoxes';
-import Charts from "../../../Componets/Charts/Charts";
+import DashboardBoxes from '../../Componets/DashboardBoxes/DashboardBoxes';
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { MDBDataTable } from 'mdbreact';
-import ManageUser from '../Add User/ManageUser';
+import ManageUser from '../../Pages/Admin/Add User/ManageUser';
 import { useEffect, useState } from 'react';
 
-const AdminDashboard = () => {
+
+const SalesPersonDashboard = () => {
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -67,11 +67,9 @@ const AdminDashboard = () => {
     fetchData()
   },[dep]);
 
-
   return (
     <div className='admin-container'>
       <DashboardBoxes/>
-      <Charts/>
       <div>
       <MDBDataTable
         striped
@@ -91,4 +89,4 @@ const AdminDashboard = () => {
   )
 }
 
-export default AdminDashboard
+export default SalesPersonDashboard

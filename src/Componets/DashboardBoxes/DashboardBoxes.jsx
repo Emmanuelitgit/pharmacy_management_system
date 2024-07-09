@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStaff } from '../../store/data';
 import AdminBoxes from './AdminBoxes';
-import DoctorBoxes from './DoctorBoxes';
+import SalesPersonBoxes from './SalesPersonBoxes';
 
 
 const DashboardBoxes = () => {
@@ -24,17 +24,7 @@ const DashboardBoxes = () => {
   return (
     <div className=''>
         <AdminBoxes/>  
-        <DoctorBoxes/>
-
-        { (role === "doctor" || role === "nurse") && <div className="doctor-nurse-horizontal-line"></div> } 
-        { (role !== "admin" && role !== "doctor" && role !== "nurse") && <div className="other-horizontal-line"></div> } 
-
-        <div className="footer-text-container">
-        </div>
-       {role !== "admin" &&
-          <Calender/>
-       }
-
+        <SalesPersonBoxes/>
     </div>
   )
 }

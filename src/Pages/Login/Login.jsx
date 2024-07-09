@@ -61,7 +61,7 @@ const Login = () => {
           if (role === 'Admin' || role === "admin") {
             navigate("/admin/dashboard");
           } else if (role === 'Doctor' || role === "doctor") {
-            navigate("/doctor/dashboard");
+            navigate("/sales-person/dashboard");
           } else if (role === 'Nurse' || role === "nurse") {
             navigate("/nurse/dashboard");
           } else if (role === 'Pharmacist' || role === "pharmacist") {
