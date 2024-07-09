@@ -1,14 +1,14 @@
 import React from 'react';
-import "../src/Componets/Style/style.css"
-import {createBrowserRouter, Outlet, RouterProvider} from "react-router-dom";
-import AdminNavs from "./Componets/Navs/AdminNavs"
+import "../src/Componets/Style/style.css";
+import { createBrowserRouter, Outlet, RouterProvider, Navigate } from "react-router-dom";
+import AdminNavs from "./Componets/Navs/AdminNavs";
 import Login from "./Pages/Login/Login";
-import AdminDashboard from "./Pages/Admin/Dashboard/AdminDashboard"
+import AdminDashboard from "./Pages/Admin/Dashboard/AdminDashboard";
 import Register from "./Pages/Register/Register";
-import Payment from "./Componets/Payment/Payment"
-import UserList from "./Pages/Admin/User/UserList"
+import Payment from "./Componets/Payment/Payment";
+import UserList from "./Pages/Admin/User/UserList";
 import DoctorNavs from './Componets/Navs/DoctorNavs';
-import DoctorDashboard from "./Pages/Doctor/DoctorDashboard"
+import DoctorDashboard from "./Pages/Doctor/DoctorDashboard";
 import InvoiceList from './Componets/Payment/InvoiceList';
 import Profile from './Componets/Profile/Profile';
 import Settings from './Pages/Admin/Settings/Settings';
@@ -17,36 +17,30 @@ import ViewMedCategory from './Componets/Medicine/ViewMedCategory';
 import ViewMedicine from './Componets/Medicine/ViewMedicine';
 import ViewInvoice from './Componets/Payment/ViewInvoice';
 import MedicineList from "./Componets/Medicine/MedicineList";
-import MedicineCategory from "./Componets/Medicine/MedicineCategory"
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'bootstrap/dist/js/bootstrap.bundle.min.js'
-import '@coreui/coreui/dist/css/coreui.min.css'
-import Chat from "./Componets/Chat/ChatContainer/Chat"
+import MedicineCategory from "./Componets/Medicine/MedicineCategory";
+import '@coreui/coreui/dist/css/coreui.min.css';
+import Chat from "./Componets/Chat/ChatContainer/Chat";
 
+const Admin = () => {
+  return (
+    <> 
+      <AdminNavs/>
+      <Outlet/>
+    </>
+  );
+};
 
-const Admin =()=>{
- return(
-  <> 
-  <AdminNavs/>
-  <Outlet/>
-  </>
- )
-}
-
-const Doctor =()=>{
-  return(
-   <> 
-   <DoctorNavs/>
-   <Outlet/>
-   </>
-  )
- }
-
-
+const Doctor = () => {
+  return (
+    <> 
+      <DoctorNavs/>
+      <Outlet/>
+    </>
+  );
+};
 
 const router = createBrowserRouter([
-
-    // ADMIN MODULE NAVOGATION HERE
+  // ADMIN MODULE NAVIGATION HERE
   {
     path: "/admin",
     element: <Admin/>,
@@ -65,29 +59,31 @@ const router = createBrowserRouter([
   },
 
   // DOCTOR MODULE NAVIGATION HERE
-  {  
+  {
     path: "/doctor",
     element: <Doctor/>,
-    children:[
-      {path: "/doctor/dashboard",element: <DoctorDashboard/>},
+    children: [
+      { path: "/doctor/dashboard", element: <DoctorDashboard /> },
     ]
   },
-  {path: "/register",element: <Register/>},
-  {path: "/login",element: <Login/>},
-])
+  { path: "/register", element: <Register /> },
+  { path: "/login", element: <Login /> },
+  
+  // Redirect all unmatched routes to login
+  {
+    path: "/*",
+    element: <Navigate to="/login" replace />
+  }
+]);
 
 function App() {
   return (
     <div className="App">
       <div className=''>
-        <RouterProvider router={router}/>
+        <RouterProvider router={router} />
       </div>
     </div>
   );
 }
 
-
-
 export default App;
-
-
