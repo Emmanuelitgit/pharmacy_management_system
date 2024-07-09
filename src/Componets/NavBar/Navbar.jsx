@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import "./style.css";
-import { Menu, Notifications, Message, ArrowDropDown } from '@mui/icons-material';
+import { Menu} from '@mui/icons-material';
 import Badge from '@mui/material/Badge';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
