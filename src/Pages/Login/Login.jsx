@@ -90,8 +90,12 @@ const handleShowPassword = () => {
     <div className='login-container'>
       <div className="login-input-container">
       <div className="header-container">
+        <img 
+         src={require("../../uploads/logo 2.png")} 
+         alt="" 
+         className='login-logo'
+         />
         <span className='welcome-text'>PHARMASYS</span>
-        <h3 className='login-title'>LOGIN PANEL</h3>
       </div>
        <div className="input-field">
        <select name="role" onChange={handleChange} className='login-input'>

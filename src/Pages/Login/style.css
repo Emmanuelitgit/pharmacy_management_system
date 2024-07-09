@@ -28,18 +28,22 @@ html {
     justify-content: center;
     flex-direction: column;
     width: 70%;
-    margin-bottom: 5%;
+    margin-bottom: 2%;
     margin-top: 2%;
-    gap: 10px;
+    gap: 5px;
 }
 .welcome-text{
-    font-size: 115%;
+    font-size: 150%;
     color: var(--black);
+}
+.login-logo{
+    width: 20%;
+    height: 60%;
 }
 .login-title{
     font-size: 160%;
     color: var(--black);
-    margin-top: 5%;
+    margin-top: 3%;
 }
 .login-container {
     display: flex;
@@ -62,7 +66,7 @@ html {
 .login-input-container {
     box-shadow: var(--box-shadow);
     background-color: white;
-    height: 75vh;
+    height: 78vh;
     width: 36%;
     display: flex;
     align-items: center;
