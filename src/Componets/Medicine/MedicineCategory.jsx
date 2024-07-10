@@ -7,7 +7,7 @@ import { tableData } from '../../utils/Data';
 import AddMedicineCategory from './AddMedicineCategory';
 import ManageMedicineCategory from './ManageMedicineCategory';
 import { useDispatch, useSelector } from 'react-redux';
-
+import Table from '../Table/Table';
 
 
 const MedicineCategory = () => {
@@ -70,13 +70,13 @@ const MedicineCategory = () => {
   }, [dep]);
 
   return (
-      <div className='main-border'>
+      <div >
            {role === "Admin"  &&
               <div className='add-btn-container'>
                   <AddMedicineCategory name={"Category"}/>
               </div>
           }
-          <MDBDataTable
+          {/* <MDBDataTable
               striped
               bordered
               searchLabel='Search name...'
@@ -88,7 +88,10 @@ const MedicineCategory = () => {
               searching
               displayEntries
               info
-          />
+          /> */}
+          <div className="table-component">
+            <Table/>
+          </div>
       </div>
   );
 }

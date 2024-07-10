@@ -51,7 +51,7 @@ html{
   min-width: 50px;
 }
 
-.table-component input {
+/* .table-component input {
   min-width: 200px;
   padding: 18px;
   border-radius:5px;
@@ -61,7 +61,7 @@ html{
 .table-component tr{
   background-color: black;
   padding: 100px; 
-}
+} */
 
 .table-component select {
   min-width: 50px;
