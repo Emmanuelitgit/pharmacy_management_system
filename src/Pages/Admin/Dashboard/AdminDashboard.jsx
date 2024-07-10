@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MDBDataTable } from 'mdbreact';
 import ManageUser from '../Add User/ManageUser';
 import { useEffect, useState } from 'react';
+import Table from '../../../Componets/Table/Table';
 
 const AdminDashboard = () => {
 
@@ -72,8 +73,8 @@ const AdminDashboard = () => {
     <div className='admin-container'>
       <DashboardBoxes/>
       <Charts/>
-      <div>
-      <MDBDataTable
+      <div className='dashboard-table-component'>
+      {/* <MDBDataTable
         striped
         bordered
         searchLabel='Search a name'
@@ -85,7 +86,8 @@ const AdminDashboard = () => {
         searching
         displayEntries
         info
-      />
+      /> */}
+      <Table/>
       </div>
     </div>
   )
