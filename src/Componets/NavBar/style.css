@@ -25,15 +25,14 @@ html{
     background-color: #f5f5f5;
     box-shadow: var(--box-shadow);
     height:10vh;
-    width: 100%;
+    width: 80%;
     display: flex;
     align-items: center;
     justify-content: space-around;
     position: fixed;
     top: 0;
-    left:0%;
+    left:22%;
     right:0;
-   
     z-index: 1;
 }
 .menu-title-container{
@@ -62,6 +61,9 @@ html{
     width: 17%;
     height: 20%;
     border-radius: 50%;
+}
+.panel-type-container{
+    margin-right: 10%;
 }
 .panel-type-text{
     color: black;

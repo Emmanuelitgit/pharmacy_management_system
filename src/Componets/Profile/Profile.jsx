@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import doctor from "../../Componets/images/staff/doctor 1.png";
 import { useLocation } from 'react-router-dom';
-import AddStaff from "../../Pages/Admin/Add User/AddUser";
+import AddStaff from "../../Pages/Admin/AddUser/AddUser";
 import ManageProfile from './ManageProfile';
 import { Man } from '@mui/icons-material';
 import { useSelector } from 'react-redux';

@@ -23,9 +23,9 @@ html{
 
 .sidebar-container{
     background-color:darkslateblue;
-    height: 140vh;
+    height: 100vh;
     width: 22%;
-    top: 10%;
+    top: 0%;
     left:0;
     right:0;
     position: fixed;
@@ -45,6 +45,7 @@ html{
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin-top: 20%;
 }
 .item{
     display: flex; 
@@ -78,7 +79,6 @@ html{
     justify-content: flex-end;
     width: 0px;
     margin-right: 7.5%;
-    margin-bottom: 370px;
     flex-direction: "row";
 }
 .logout{

@@ -4,7 +4,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStaff, getPatients, getReports } from '../../store/data';
 import { depCountActions } from '../../store/depCount';
-
+import { Dashboard,Settings, Person,PersonAdd,ShoppingCart} from '@mui/icons-material';
+import {Card,Row, Col} from "react-bootstrap";
 
 const AdminBoxes = () => {
 
@@ -45,28 +46,32 @@ const AdminBoxes = () => {
         name:"Users",
         background:"purple",
         link:'/admin/doctor-list',
-        total: doctor.length
+        total: doctor.length,
+        image:require("../../uploads/man.png")
       },
       {
         id:2,
         name:"Sales",
         background:"pink",
         link:'/admin/nurse-list',
-        total: nurse.length
+        total: nurse.length,
+        image:require("../../uploads/economy.png")
       },
       {
         id:3,
         name:"Orders",
         background:"orange",
         link:'/admin/patient-list',
-        total: patients.length
+        total: patients.length,
+        image:require("../../uploads/order.png")
       },
       {
         id:4,
         name:"Drugs",
         background:"red",
         link:'/admin/medicine-list',
-        total: pharmacist.length
+        total: pharmacist.length,
+        image:require("../../uploads/drug.png")
       },
       // {
       //   id:5,
@@ -105,11 +110,17 @@ const AdminBoxes = () => {
         <div class="row">
             {adminBoxes.map((box)=>(
             <div className="col-xl-3 col-md-6">
-                <div className={`card ${box.background} text-white mb-4`} style={{
-                    height:'14.5vh'
+                <div className={`card  text-black mb-4`} style={{
+                    height:'18vh'
                 }}>
                     <div class="card-body">
                         <span className='text-lg'>{box.name}</span>
+                        <img 
+                         src={box.image} 
+                         alt="" 
+                         width={'22%'}
+                         height={'21%'}
+                         />
                         <span style={{
                              position:"absolute",
                              top:"10%",
@@ -119,8 +130,8 @@ const AdminBoxes = () => {
                         }}>{box.total}</span>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="text-sm text-white stretched-link" href={box.link}>View Details</a>
-                        <div class="text-sm text-white"><i class="fas fa-angle-right"></i></div>
+                        <a class="text-sm text-black stretched-link" href={box.link}>View Details</a>
+                        <div class="text-sm text-black"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
             </div>
@@ -128,7 +139,37 @@ const AdminBoxes = () => {
             </div>
             }
     </div>
+
+//     <Row>
+//      {adminBoxes.map((box)=>(
+//        <Col lg="3" sm="6">
+//        <Card className="card-stats">
+//          <Card.Body>
+//            <Row>
+//              <Col xs="5">
+//                <div className="icon-big text-center icon-warning">
+//                  <Person/>
+//                </div>
+//              </Col>
+//              <Col xs="7">
+//                <div className="numbers">
+//                  <p className="card-category">{box.total}</p>
+//                  <Card.Title as="h4">{box.name}</Card.Title>
+//                </div>
+//              </Col>
+//            </Row>
+//          </Card.Body>
+//          <Card.Footer>
+//            <div className="stats">
+//              <i className="fas fa-redo mr-1"></i>
+//              Update Now
+//            </div>
+//          </Card.Footer>
+//        </Card>
+//      </Col>
+//      ))}
+//  </Row>
   )
 }
 
-export default AdminBoxes
+export default AdminBoxes;
