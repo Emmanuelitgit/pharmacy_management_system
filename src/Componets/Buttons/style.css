@@ -22,7 +22,8 @@ html{
 }
 .view-btn{
     background-color: #0390fc;
-    padding: 4px;
+    padding: 8px;
+    width: 23%;
     outline: none;
     border: none;
     border-radius: 5px;
@@ -33,7 +34,8 @@ html{
 }
 .delete-btn{
     background-color: #D22222;
-    padding: 4px;
+    padding: 8px;
+    width: 23%;
     outline: none;
     border: none;
     border-radius: 5px;
@@ -44,7 +46,8 @@ html{
 }
 .update-btn{
     background-color: #27ae60;
-    padding: 4px;
+    padding: 8px;
+    width: 23%;
     outline: none;
     border: none;
     border-radius: 5px;

@@ -1,61 +1,8 @@
 import { useMemo, useState, useEffect } from 'react';
-import {
-  MaterialReactTable,
-  useMaterialReactTable,
-} from 'material-react-table';
-
-//nested data is ok, see accessorKeys in ColumnDef below
-const data = [
-  {
-    name: {
-      firstName: 'John',
-      lastName: 'Doe',
-    },
-    address: '261 Erdman Ford',
-    city: 'East Daphne',
-    state: 'Kentucky',
-  },
-  {
-    name: {
-      firstName: 'Jane',
-      lastName: 'Doe',
-    },
-    address: '769 Dominic Grove',
-    city: 'Columbus',
-    state: 'Ohio',
-  },
-  {
-    name: {
-      firstName: 'Joe',
-      lastName: 'Doe',
-    },
-    address: '566 Brakus Inlet',
-    city: 'South Linda',
-    state: 'West Virginia',
-  },
-  {
-    name: {
-      firstName: 'Kevin',
-      lastName: 'Vandy',
-    },
-    address: '722 Emie Stream',
-    city: 'Lincoln',
-    state: 'Nebraska',
-  },
-  {
-    name: {
-      firstName: 'Joshua',
-      lastName: 'Rolluffs',
-    },
-    address: '32188 Larkin Turnpike',
-    city: 'Charleston',
-    state: 'South Carolina',
-  },
-];
+import {MaterialReactTable,useMaterialReactTable} from 'material-react-table';
 
 const Table = () => {
-
-    const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,43 +20,71 @@ const Table = () => {
     fetchData();
   }, []);
 
+  const handleDelete = (categoryId) => {
+    console.log('Delete category with ID:', categoryId);
+    // Add your delete logic here
+  };
+
+  const handleUpdate = (categoryId) => {
+    console.log('Update category with ID:', categoryId);
+    // Add your update logic here
+  };
+
+  const handleView = (categoryId) => {
+    console.log('View category with ID:', categoryId);
+    // Add your view logic here
+  };
+
+  const truncateText = (text, length) => {
+    if (text.length > length) {
+      return text.substring(0, length) + '...';
+    }
+    return text;
+  };
+
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'name.firstName',
-        header: 'First Name',
+        accessorKey: 'category_id',
+        header: 'Category ID',
+        size: 100,
+      },
+      {
+        accessorKey: 'category_name',
+        header: 'Category Name',
         size: 150,
       },
       {
-        accessorKey: 'name.lastName',
-        header: 'Last Name',
-        size: 150,
+        accessorKey: 'description',
+        header: 'Description',
+        size: 300,
+        Cell: ({ cell }) => (
+          <span>{truncateText(cell.getValue(), 40)}</span>
+        ),
       },
       {
-        accessorKey: 'address',
-        header: 'Address',
+        id: 'actions',
+        header: 'Actions',
         size: 200,
-      },
-      {
-        accessorKey: 'city',
-        header: 'City',
-        size: 150,
-      },
-      {
-        accessorKey: 'state',
-        header: 'State',
-        size: 150,
+        Cell: ({ row }) => {
+          const categoryId = row.original.category_id;
+          return (
+            <div>
+              <button onClick={() => handleView(categoryId)}>View</button>
+              <button onClick={() => handleUpdate(categoryId)}>Update</button>
+              <button onClick={() => handleDelete(categoryId)}>Delete</button>
+            </div>
+          );
+        },
       },
     ],
     []
   );
 
-  const table = useMaterialReactTable({ columns, data});
+  const table = useMaterialReactTable({ columns, data: tableData });
 
   return (
-          <MaterialReactTable 
-          table={table}
-          />
+    <MaterialReactTable table={table} />
   );
 };
 

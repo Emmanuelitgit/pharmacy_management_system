@@ -1,94 +1,89 @@
-import React from 'react';
+import { useMemo, useState, useEffect } from 'react';
+import {MaterialReactTable,useMaterialReactTable} from 'material-react-table';
+import AddUser from "../AddUser/AddUser";
+import ManageUser from "../AddUser/ManageUser";
 import DashboardBoxes from '../../../Componets/DashboardBoxes/DashboardBoxes';
 import Charts from "../../../Componets/Charts/Charts";
-import { useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { MDBDataTable } from 'mdbreact';
-import ManageUser from '../Add User/ManageUser';
-import { useEffect, useState } from 'react';
-import Table from '../../../Componets/Table/Table';
+
 
 const AdminDashboard = () => {
 
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const role = location.pathname.split("/")[2].replace("-list", "");
-  
-  const [data, setData] = useState({ columns: [], rows: [] });
-  const staffData = useSelector(state => state.staff?.staff) || [];
-  const dep = useSelector(state => state.count?.depValue) || [2];
-
-
+  const role = localStorage.getItem("role");
+  const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
-    const fetchData = async()=>{
+    const fetchData = async () => {
       try {
-
-        const response = await fetch(`http://localhost:5000/all_staff`)
-        if(!response.ok){
-          throw new Error("faild to fetch")
+        const response = await fetch('http://localhost:5000/medicine_categories');
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
         }
-        const fetchedData = await response.json()
-
-        const transformedData = {
-          columns: [
-            { label: 'ID', field: 'id', sort: 'asc' },
-            { label: 'USER NAME', field: 'name', sort: 'asc' },
-            { label: 'EMAIL', field: 'email', sort: 'asc' },
-            { label: 'PHONE', field: 'phone', sort: 'asc' },
-            { label: 'ACTIONS', field: 'actions', sort: 'disabled' },
-          ],
-          rows: fetchedData.map(item => ({
-            id: item?.staff_id,
-            name: item?.name,
-            email: item?.email,
-            phone: item?.phone,
-            actions: (
-              <ManageUser
-                name={"Doctor"}
-                staff_name={item.name}
-                id={item?.staff_id}
-                profile={item.profile}
-                role={item.role}
-                phone={item.phone}
-                address={item.address}
-                email={item.email}
-                password={item.password}
-                department={item.department}
-              />
-            ),
-          })),
-        };
-    
-        setData(transformedData);
+        const fetchedData = await response.json();
+        setTableData(fetchedData);
       } catch (error) {
-        console.log(error)
+        console.error('Error fetching data:', error);
       }
-    }
-    fetchData()
-  },[dep]);
+    };
+    fetchData();
+  }, []);
 
+
+  const truncateText = (text, length) => {
+    if (text.length > length) {
+      return text.substring(0, length) + '...';
+    }
+    return text;
+  };
+
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: 'category_id',
+        header: 'Category ID',
+        size: 100,
+      },
+      {
+        accessorKey: 'category_name',
+        header: 'Category Name',
+        size: 150,
+      },
+      {
+        accessorKey: 'description',
+        header: 'Description',
+        size: 300,
+        Cell: ({ cell }) => (
+          <span>{truncateText(cell.getValue(), 40)}</span>
+        ),
+      },
+      {
+        id: 'actions',
+        header: 'Actions',
+        size: 200,
+        Cell: ({ row }) => {
+          const categoryId = row.original.category_id;
+          return (
+            <div>
+              <ManageUser
+               name={'User'}
+               id={categoryId} 
+              />
+            </div>
+          );
+        },
+      },
+    ],
+    []
+  );
+
+  const table = useMaterialReactTable({ columns, data: tableData });
 
   return (
     <div className='admin-container'>
       <DashboardBoxes/>
       <Charts/>
-      <div className='dashboard-table-component'>
-      {/* <MDBDataTable
-        striped
-        bordered
-        searchLabel='Search a name'
-        className='dashboard-table-component'
-        data={data}
-        theadColor='black'
-        theadTextWhite
-        noBottomColumns
-        searching
-        displayEntries
-        info
-      /> */}
-      <Table/>
-      </div>
+      <div className="dashboard-table-component">
+          <MaterialReactTable table={table} />
+        </div>
     </div>
   )
 }

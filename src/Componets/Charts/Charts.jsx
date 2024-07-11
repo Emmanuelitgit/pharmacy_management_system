@@ -11,7 +11,7 @@
       gap:'20px',
       marginBottom:'10%',
       marginTop:'3%',
-      height:'100%'
+      height:'70%'
      }}>
         <AreaChart/>
         <Bar/>

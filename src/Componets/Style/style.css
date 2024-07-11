@@ -40,17 +40,6 @@ html{
  
 }
 
-.dashboard-table-component input {
-  min-width: 200px;
-  padding: 18px;
-  border-radius:5px;
-  margin: 10px; 
-}
-
-.dashboard-table-component select {
-  min-width: 50px;
-}
-
 /* .table-component input {
   min-width: 200px;
   padding: 18px;

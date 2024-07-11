@@ -3,7 +3,7 @@ import DashboardBoxes from '../../Componets/DashboardBoxes/DashboardBoxes';
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { MDBDataTable } from 'mdbreact';
-import ManageUser from '../../Pages/Admin/Add User/ManageUser';
+import ManageUser from '../../Pages/Admin/AddUser/ManageUser';
 import { useEffect, useState } from 'react';
 
 

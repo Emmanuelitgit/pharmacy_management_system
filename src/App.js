@@ -12,7 +12,7 @@ import SalesPersonDashboard from "./Pages/SalesPerson/SalesPersonDashboard";
 import InvoiceList from './Componets/Payment/InvoiceList';
 import Profile from './Componets/Profile/Profile';
 import Settings from './Pages/Admin/Settings/Settings';
-import ViewUser from './Pages/Admin/Add User/ViewUser';
+import ViewUser from './Pages/Admin/AddUser/ViewUser';
 import ViewMedCategory from './Componets/Medicine/ViewMedCategory';
 import ViewMedicine from './Componets/Medicine/ViewMedicine';
 import ViewInvoice from './Componets/Payment/ViewInvoice';

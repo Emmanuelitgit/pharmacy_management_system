@@ -1,99 +1,94 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import { MDBDataTable } from 'mdbreact';
-import { Folder, Delete, Update, Add } from '@mui/icons-material';
-import Button from '../Buttons/Button';
-import { tableData } from '../../utils/Data';
-import AddMedicineCategory from './AddMedicineCategory';
-import ManageMedicineCategory from './ManageMedicineCategory';
-import { useDispatch, useSelector } from 'react-redux';
-import Table from '../Table/Table';
+import { useMemo, useState, useEffect } from 'react';
+import {MaterialReactTable,useMaterialReactTable} from 'material-react-table';
+import ManageMedicine from "../Medicine/ManageMedicine"
+import AddMedicineCategory from "../Medicine/AddMedicine"
+
+
 
 
 const MedicineCategory = () => {
 
   const role = localStorage.getItem("role");
-  const [data, setData] = useState({ columns: [], rows: [] });
+  const [tableData, setTableData] = useState([]);
 
-  const dep = useSelector(state => state.count?.depValue) || [2];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/medicine_categories');
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const fetchedData = await response.json();
+        setTableData(fetchedData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
-   
-  const truncateText = (text, maxLength) => {
-    if (text.length > maxLength) {
-      return text.slice(0, maxLength) + '......';
+
+  const truncateText = (text, length) => {
+    if (text.length > length) {
+      return text.substring(0, length) + '...';
     }
     return text;
   };
 
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: 'category_id',
+        header: 'Category ID',
+        size: 100,
+      },
+      {
+        accessorKey: 'category_name',
+        header: 'Category Name',
+        size: 150,
+      },
+      {
+        accessorKey: 'description',
+        header: 'Description',
+        size: 300,
+        Cell: ({ cell }) => (
+          <span>{truncateText(cell.getValue(), 40)}</span>
+        ),
+      },
+      {
+        id: 'actions',
+        header: 'Actions',
+        size: 200,
+        Cell: ({ row }) => {
+          const categoryId = row.original.category_id;
+          return (
+            <div>
+              <ManageMedicine
+               name={'Category'}
+               id={categoryId} 
+              />
+            </div>
+          );
+        },
+      },
+    ],
+    []
+  );
 
-  useEffect(() => {
-      const fetchData = async () => {
-          try {
-              const response = await fetch('http://localhost:5000/medicine_categories');
-              if (!response.ok) {
-                  throw new Error('Failed to fetch data');
-              }
-              const fetchedData = await response.json();
-
-              // Define columns based on role
-              const columns = [
-                  { label: 'ID', field: 'id', sort: 'asc' },
-                  { label: 'Category Name', field: 'name', sort: 'asc' },
-                  { label: 'Description', field: 'description', sort: 'asc' },
-              ];
-              if (role === "Admin") {
-                  columns.push({ label: 'Actions', field: 'actions', sort: 'disabled' });
-              }
-
-              const transformedData = {
-                  columns: columns,
-                  rows: fetchedData.map(item => ({
-                      id: item.category_id,
-                      name: item.category_name,
-                      description: truncateText(item.description, 60),
-                      actions: (
-                          <ManageMedicineCategory
-                            name={"Medicine Category"}
-                            id={item.category_id}
-                          />
-                      )
-                  })),
-              };
-
-              setData(transformedData);
-          } catch (error) {
-              console.error('Error fetching data:', error);
-          }
-      };
-
-      fetchData();
-  }, [dep]);
+  const table = useMaterialReactTable({ columns, data: tableData });
 
   return (
-      <div >
-           {role === "Admin"  &&
+    <div>
+          {role === "Admin"  &&
               <div className='add-btn-container'>
                   <AddMedicineCategory name={"Category"}/>
               </div>
           }
-          {/* <MDBDataTable
-              striped
-              bordered
-              searchLabel='Search name...'
-              className='table-component'
-              data={data}
-              theadColor='black'
-              theadTextWhite
-              noBottomColumns
-              searching
-              displayEntries
-              info
-          /> */}
-          <div className="table-component">
-            <Table/>
-          </div>
-      </div>
+        <div className="table-component">
+          <MaterialReactTable table={table} />
+        </div>
+    </div>
   );
-}
+};
 
 export default MedicineCategory;
