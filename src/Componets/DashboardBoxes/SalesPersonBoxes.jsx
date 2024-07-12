@@ -52,20 +52,22 @@ const SalesPersonBoxes = () => {
 
 
 
-  const doctorBoxes = [
+  const salesBoxes = [
     {
       id:1,
       name:"Drug",
       background:"purple",
       link:'/admin/doctor-list',
-      total: patients.length
+      total: patients.length,
+      image:require("../../uploads/drug.png")
     },
     {
       id:2,
       name:"Orders",
       background:"pink",
       link:'/admin/nurse-list',
-      total: appointments.length
+      total: appointments.length,
+      image:require("../../uploads/order.png")
     },
       // {
       //   id:8,
@@ -113,33 +115,40 @@ const SalesPersonBoxes = () => {
 
   return (
     <div className=''>
-        {role === "doctor" &&
-        <div class="row">
-            {doctorBoxes.map((box)=>(
-            <div className="col-xl-3 col-md-6">
-                <div className={`card ${box.background} text-white mb-4`} style={{
-                    height:'14.5vh'
-                }}>
-                    <div class="card-body">
-                        <span className='text-lg'>{box.name}</span>
-                        <span style={{
-                             position:"absolute",
-                             top:"10%",
-                             left:'80%',
-                             fontSize:'18px',
-                             fontWeight:600
-                        }}>{box.total}</span>
-                    </div>
-                    <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="text-sm text-white stretched-link" href={box.link}>View Details</a>
-                        <div class="text-sm text-white"><i class="fas fa-angle-right"></i></div>
-                    </div>
+
+    {role === "doctor" &&
+    <div class="row">
+        {salesBoxes.map((box)=>(
+        <div className="col-xl-3 col-md-6">
+            <div className={`card  text-black mb-4`} style={{
+                height:'18vh'
+            }}>
+                <div class="card-body">
+                    <span className='text-lg'>{box.name}</span>
+                    <img 
+                     src={box.image} 
+                     alt="" 
+                     width={'22%'}
+                     height={'21%'}
+                     />
+                    <span style={{
+                         position:"absolute",
+                         top:"10%",
+                         left:'80%',
+                         fontSize:'18px',
+                         fontWeight:600
+                    }}>{box.total}</span>
+                </div>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="text-sm text-black stretched-link" href={box.link}>View Details</a>
+                    <div class="text-sm text-black"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>
-            ))}
-            </div>
-            }
-    </div>
+        </div>
+        ))}
+        </div>
+        }
+</div>
   )
 }
 

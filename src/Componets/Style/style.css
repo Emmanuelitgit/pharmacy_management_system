@@ -36,7 +36,20 @@ html{
 .dashboard-table-component{
   position: absolute;
   width: 100%;
-  top: 88%;
+  top: 87%; 
+}
+
+.sales-person-table-component{
+  position: absolute;
+  width: 100%;
+  top: 100%; 
+}
+
+.orders-table-component{
+  width: 75%;
+  position: absolute;
+  right: 1.5%;
+  top: 18%;
  
 }
 

@@ -1,14 +1,12 @@
-import React from 'react';
-import DashboardBoxes from '../../Componets/DashboardBoxes/DashboardBoxes';
-import { useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
 import { useMemo, useState, useEffect } from 'react';
 import {MaterialReactTable,useMaterialReactTable} from 'material-react-table';
-import ManageOrders from "../../Componets/Orders/ManageOrders"
+import ManageOrders from "./ManageOrders"
+import AddOrders from "./AddOrders"
 
 
 
-const SalesPersonDashboard = () => {
+
+const Orders = () => {
 
   const role = localStorage.getItem("role");
   const [tableData, setTableData] = useState([]);
@@ -80,15 +78,12 @@ const SalesPersonDashboard = () => {
   const table = useMaterialReactTable({ columns, data: tableData });
 
   return (
-    <div className='admin-container'>
-      <DashboardBoxes/>
-      <div>
-        <div className="sales-person-table-component">
+    <div>
+        <div className="orders-table-component">
           <MaterialReactTable table={table} />
         </div>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default SalesPersonDashboard
+export default Orders;

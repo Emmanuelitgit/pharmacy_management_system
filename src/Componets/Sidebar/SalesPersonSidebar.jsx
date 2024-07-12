@@ -41,13 +41,13 @@ const DoctorSidebar = () => {
           </Link>
         </div>
         <div className='item'>
-          <Link className='link' to={"/doctor/patient-list"}>
+          <Link className='link' to={"/sales-person/order-list"}>
           <PersonAdd className='sidebar-icon'/>
           <span className='item-name'>Orders</span>
           </Link>
         </div>
         <div className='item'>
-          <Link className='link' to={"/doctor/profile"}>
+          <Link className='link' to={"/sales-person/profile"}>
           <Person className='sidebar-icon'/>
           <span className='item-name'>Profile</span>
           </Link>
