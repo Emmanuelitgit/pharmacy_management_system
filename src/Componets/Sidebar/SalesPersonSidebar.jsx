@@ -35,7 +35,7 @@ const DoctorSidebar = () => {
           </Link>
         </div>
         <div className='item'>
-          <Link className='link' to={"/doctor/patient-list"}>
+          <Link className='link' to={"/sales-person/medicine-list"}>
           <PersonAdd className='sidebar-icon'/>
           <span className='item-name'>Medidcine List</span>
           </Link>

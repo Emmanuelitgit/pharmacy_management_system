@@ -69,6 +69,7 @@ const router = createBrowserRouter([
     element: <SalesPerson/>,
     children: [
       { path: "/sales-person/dashboard", element: <SalesPersonDashboard /> },
+      { path: "/sales-person/medicine-list", element: <MedicineList /> },
       { path: "/sales-person/order-list", element: <Orders /> },
       { path: "/sales-person/profile", element: <Profile /> },
     ]
