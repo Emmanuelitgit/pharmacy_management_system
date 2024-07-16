@@ -59,7 +59,7 @@ const handleLogin = async () => {
           }
           dispatch(handleToastSuccess("Login Success"))
         }
-       }, 1000)
+       }, 500)
     } catch (error) {
         if (error.response?.status === 404) {
             dispatch(handleToastError("Account not found"));
