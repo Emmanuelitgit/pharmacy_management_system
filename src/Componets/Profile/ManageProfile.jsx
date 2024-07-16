@@ -106,7 +106,6 @@ export default function ManageProfile({ name,backgroundColor,padding,color,width
       <button className='add-btn'
         onClick={handleClickOpen}
         style={{
-          backgroundColor: backgroundColor,
           padding: padding,
           width: width,
           color: color,

@@ -110,7 +110,6 @@ const Profile = () => {
             }}>
               <ManageProfile
                btnName={"Update"}
-               backgroundColor={"darkslateblue"}
                padding={'15%'}
                width={'150%'}
                color={ 'white'}

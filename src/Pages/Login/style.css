@@ -29,7 +29,6 @@ html {
     flex-direction: column;
     width: 70%;
     margin-bottom: 2%;
-    margin-top: 2%;
     gap: 5px;
 }
 .welcome-text{
@@ -45,7 +44,6 @@ html {
 .login-title{
     font-size: 160%;
     color: var(--black);
-    margin-top: 3%;
 }
 .login-container {
     display: flex;
