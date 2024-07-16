@@ -18,8 +18,8 @@ const Navbar = () => {
   const [settings, setSettings] = useState('');
   const [count, setCount] = useState()
    const visible = useSelector((state)=>state.modal?.sidebar_toggle) || [];
-   const roleValue = localStorage.getItem('role');
-   const role = roleValue?.charAt(0).toUpperCase() + roleValue.slice(1);
+   const role = localStorage.getItem('role');
+  //  const role = roleValue?.charAt(0).toUpperCase() + roleValue.slice(1);
    const user = localStorage.getItem('user');
    const location = useLocation();
    const route = location.pathname.split("/")[1];
@@ -83,30 +83,13 @@ const Navbar = () => {
          <h4 className='panel-type-text'>{role} Dashboard</h4>
       </div>
       <div className='nav-profile-container'>
-          <Link to={`/${route}/chat`}>
-          <Badge badgeContent={4} color="primary" className='icons'>
-              <MailIcon color="action" className='profile-icon' style={{color:'black'}} />
-         </Badge>
-          </Link>
-         <Badge badgeContent={4} color="primary" className='icons'>
+         <Badge badgeContent={4} color="warning" className='icons'>
               <NotificationsIcon color="action" className='profile-icon' style={{color:'black'}} />
          </Badge>
          <div className='user-profile-container'>
-            {/* <img 
-            className='nav-profile-img'
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPfO37MK81JIyR1ptwqr_vYO3w4VR-iC2wqQ&usqp=CAU" alt="" />
-            <span className='user-name' style={{color:"white"}}>{user}</span>
-            <ArrowDropDown 
-             className='dropdown-icon'
-             style={{
-               fontWeight:'600',
-               fontSize:'25px'
-             }}
-             /> */}
              <ProfileModal/>
          </div>
       </div>
-      {/* <Panelbar/> */}
     </div>
   )
 }

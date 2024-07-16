@@ -35,6 +35,8 @@ export default function ManageMedicine({name, id}) {
   const route = location.pathname.split("/")[1]
 
   const [open, setOpen] = React.useState(false);
+  const token = localStorage.getItem("token")
+  const[categories, setCategories] = useState()
   const[description, setDescription] = useState()
   const [data, setData] = useState({
     name:'',
@@ -45,9 +47,27 @@ export default function ManageMedicine({name, id}) {
     status:''
   });
 
+  const dep = useSelector(state => state.count?.depValue) || [2];
+
   useEffect(() => {
     setData((prevData) => ({ ...prevData, description }));
   }, [description]);
+
+  useEffect(()=>{
+    const getCategories =async()=>{
+      try {
+        const response = await fetch('http://localhost:5000/medicine_categories');
+        if(!response.ok){
+          throw new Error('Failed to fetch data');
+        }
+        const fetchedData = await response.json();
+        setCategories(fetchedData)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getCategories()
+  }, [dep])
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -84,7 +104,12 @@ export default function ManageMedicine({name, id}) {
 
   const handleUpdate = async() => {
     try {
-      const response = await axios.put(`http://localhost:5000/update_medicine/${id}`, data);
+      const response = await axios.post(`http://localhost:5000/update_medicine/${id}`, data,{
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+      }
+      });
       if(response.status === 201){
         handleDepCount()
         handleClose()
@@ -97,7 +122,12 @@ export default function ManageMedicine({name, id}) {
 
   const handleDelete = async() => {
     try {
-      const response = await axios.delete(`http://localhost:5000/remove_medicine/${id}`);
+      const response = await axios.delete(`http://localhost:5000/remove_medicine/${id}`,{
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+      }
+      });
       if(response.status === 200){
         handleDepCount()
         dispatch(handleToastSuccess("Deleted Successfully"))
@@ -106,6 +136,7 @@ export default function ManageMedicine({name, id}) {
       dispatch(handleToastError('Error! cannot perform operation'))
     }
   };
+
 
   return (
     <React.Fragment>
@@ -144,14 +175,16 @@ export default function ManageMedicine({name, id}) {
             />
           </div>
           <div className='input-container'>
-            <label htmlFor="">Category</label>
-            <input type="text"
-              className='input'
-              placeholder='eg Tablet'
-              name='category'
-              onChange={handleChange}
-            />
-          </div>
+          <label htmlFor="">Doctor</label>
+            <select name="category" onChange={handleChange} value={data.doctor}  className='dropdown'>
+              <option value="">--Select Category--</option>
+              {categories?.map((item)=>(
+                <option value={item.category_name} key={item.category_id}>
+                  {item.category_name}
+                </option>
+              ))}
+            </select>
+        </div>
           <div className='input-container'>
             <label htmlFor="">Price</label>
             <input type="number"
@@ -171,11 +204,11 @@ export default function ManageMedicine({name, id}) {
             />
           </div>
           <div className='input-container'>
-            <label htmlFor="">Status</label>
+            <label htmlFor="">Quantity</label>
             <input type="number"
                className='input'
                placeholder='eg 50'
-               name='status'
+               name='quantity'
                onChange={handleChange}
             />
           </div>
@@ -184,7 +217,7 @@ export default function ManageMedicine({name, id}) {
             <ReactQuill className="editor-input" 
              theme="snow" value={description} 
              onChange={setDescription}
-             placeholder='Write medicine description here..' 
+             placeholder='Write medicine description here..'  
              />
           </div> 
         </DialogContent>

@@ -30,6 +30,7 @@ export default function AddMedicine({name}) {
 
   const dispatch = useDispatch()
 
+  const token = localStorage.getItem("token")
   const [open, setOpen] = React.useState(false);
   const[categories, setCategories] = useState()
   const[description, setDescription] = useState()
@@ -38,8 +39,8 @@ export default function AddMedicine({name}) {
     category:'',
     description:description,
     price:'',
+    quantity:'',
     manufacturer:'',
-    status:''
   });
 
   const dep = useSelector(state => state.count?.depValue) || [2];
@@ -86,7 +87,12 @@ export default function AddMedicine({name}) {
   
   const handleSubmit = async() => {
     try {
-      const response = await axios.post(`http://localhost:5000/add_medicine`, data);
+      const response = await axios.post(`https://pharmacy-v2qn.onrender.com/api/medicine/create/`, data,{
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+      }
+      });
       if(response.status === 201){
         handleDepCount()
         handleClose()
@@ -94,8 +100,11 @@ export default function AddMedicine({name}) {
       }
     } catch (error) {
       dispatch(handleToastError('Error! cannot perform operation'))
+      console.log(error)
     }
   };
+
+  console.log(token)
 
   return (
     <React.Fragment>
@@ -165,11 +174,11 @@ export default function AddMedicine({name}) {
             />
           </div>
           <div className='input-container'>
-            <label htmlFor="">Status</label>
+            <label htmlFor="">Quantity</label>
             <input type="number"
                className='input'
                placeholder='eg 50'
-               name='status'
+               name='quantity'
                onChange={handleChange}
             />
           </div>

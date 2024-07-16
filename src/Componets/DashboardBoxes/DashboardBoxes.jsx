@@ -13,8 +13,6 @@ const DashboardBoxes = () => {
 
     // const role = useSelector((state) => state.auth?.role?.toLowerCase());
     const dispatch = useDispatch()
-    const role = localStorage.getItem('role').toLowerCase()
-
 
 
     useEffect(()=>{

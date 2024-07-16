@@ -19,7 +19,6 @@ import ViewInvoice from './Componets/Payment/ViewInvoice';
 import MedicineList from "./Componets/Medicine/MedicineList";
 import MedicineCategory from "./Componets/Medicine/MedicineCategory";
 import '@coreui/coreui/dist/css/coreui.min.css';
-import Chat from "./Componets/Chat/ChatContainer/Chat";
 import Orders from "./Componets/Orders/Orders"
 
 
@@ -59,7 +58,6 @@ const router = createBrowserRouter([
       { path: "/admin/view-staff/:id", element: <ViewUser /> },
       { path: "/admin/profile", element: <Profile /> },
       { path: "/admin/settings", element: <Settings /> },
-      { path: "/admin/chat", element: <Chat /> },
     ]
   },
 

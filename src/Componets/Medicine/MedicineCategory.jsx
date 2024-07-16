@@ -1,8 +1,7 @@
 import { useMemo, useState, useEffect } from 'react';
 import {MaterialReactTable,useMaterialReactTable} from 'material-react-table';
-import ManageMedicine from "../Medicine/ManageMedicine"
-import AddMedicineCategory from "../Medicine/AddMedicine"
-
+import AddMedicineCategory from './AddMedicineCategory';
+import ManageMedicineCategory from "./ManageMedicineCategory";
 
 
 
@@ -63,7 +62,7 @@ const MedicineCategory = () => {
           const categoryId = row.original.category_id;
           return (
             <div>
-              <ManageMedicine
+              <ManageMedicineCategory
                name={'Category'}
                id={categoryId} 
               />

@@ -1,32 +1,40 @@
 import { useMemo, useState, useEffect } from 'react';
-import {MaterialReactTable,useMaterialReactTable} from 'material-react-table';
-import ManageMedicine from "../Medicine/ManageMedicine"
-import AddMedicine from "../Medicine/AddMedicine"
-
-
-
+import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
+import ManageMedicine from '../Medicine/ManageMedicine';
+import AddMedicine from '../Medicine/AddMedicine';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 const MedicineList = () => {
 
-  const role = localStorage.getItem("role");
+  const role = localStorage.getItem('role');
   const [tableData, setTableData] = useState([]);
+
+  const dep = useSelector((state)=>state.count?.depValue)
+
+  console.log(dep)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/medicine_categories');
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const fetchedData = await response.json();
-        setTableData(fetchedData);
+        const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/medicine/all/');
+        const { medicines } = response.data;
+
+        // Add a sequential ID to each medicine item
+        const dataWithIds = medicines.map((medicine, index) => ({
+          ...medicine,
+          id: index + 1,
+        }));
+
+        setTableData(dataWithIds);
+        console.log(dataWithIds);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
+
     fetchData();
   }, []);
-
 
   const truncateText = (text, length) => {
     if (text.length > length) {
@@ -38,35 +46,45 @@ const MedicineList = () => {
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'category_id',
-        header: 'Category ID',
+        accessorKey: 'id',
+        header: '#ID',
         size: 100,
       },
       {
-        accessorKey: 'category_name',
+        accessorKey: 'category',
         header: 'Category Name',
         size: 150,
       },
       {
-        accessorKey: 'description',
-        header: 'Description',
-        size: 300,
-        Cell: ({ cell }) => (
-          <span>{truncateText(cell.getValue(), 40)}</span>
-        ),
+        accessorKey: 'quantity',
+        header: 'Quantity',
+        size: 100,
       },
+      {
+        accessorKey: 'price',
+        header: 'Price',
+        size: 100,
+      },
+      {
+        accessorKey: 'manufacturer',
+        header: 'Manufacturer',
+        size: 100,
+      },
+      // {
+      //   accessorKey: 'description',
+      //   header: 'Description',
+      //   size: 300,
+      //   Cell: ({ cell }) => <span>{truncateText(cell.getValue(), 40)}</span>,
+      // },
       {
         id: 'actions',
         header: 'Actions',
-        size: 200,
+        size: 300,
         Cell: ({ row }) => {
-          const categoryId = row.original.category_id;
+          const categoryId = row.original.medicine_id;
           return (
             <div>
-              <ManageMedicine
-               name={'Medicine'}
-               id={categoryId} 
-              />
+              <ManageMedicine name={'Medicine'} id={categoryId} />
             </div>
           );
         },
@@ -79,14 +97,14 @@ const MedicineList = () => {
 
   return (
     <div>
-          {role === "Admin"  &&
-              <div className='add-btn-container'>
-                  <AddMedicine name={"Medicine"}/>
-              </div>
-          }
-        <div className="table-component">
-          <MaterialReactTable table={table} />
+      {role === 'Admin' && (
+        <div className="add-btn-container">
+          <AddMedicine name={'Medicine'} />
         </div>
+      )}
+      <div className="table-component">
+        <MaterialReactTable table={table} />
+      </div>
     </div>
   );
 };

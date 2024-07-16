@@ -19,7 +19,6 @@ const Login = () => {
   const [credential, setCrdential] = useState({
     email:'',
     password:'',
-    role:''
   });
 
   const [err, setErr] = useState();
@@ -35,56 +34,43 @@ const Login = () => {
     }));
   };
   
-  const handleLogin = async () => {
-    
+const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/login", credential);
-  
-      if (response?.status === 200) {
-        const { role } = response.data.data[0]; 
-        const { name } = response.data.data[0];
-        const { token } = response.data;
-        const { staff_id } = response.data.data[0];
-        const { profile } = response.data.data[0];
+        const response = await axios.post("https://pharmacy-v2qn.onrender.com/api/login/", credential, {
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
 
-  
-        localStorage.setItem("role", role)
-        localStorage.setItem("user", name);
-        localStorage.setItem("token", token);
-        localStorage.setItem("userId", staff_id)
-        localStorage.setItem("profile", profile)
-  
-        dispatch(handleToastSuccess("Login Success"))
-  
-        // Delay navigation by 2 seconds
-        setTimeout(() => {
-          if (role === 'Admin' || role === "admin") {
-            navigate("/admin/dashboard");
-          } else if (role === 'Doctor' || role === "doctor") {
-            navigate("/sales-person/dashboard");
-          } else if (role === 'Nurse' || role === "nurse") {
-            navigate("/nurse/dashboard");
-          } else if (role === 'Pharmacist' || role === "pharmacist") {
-            navigate("/pharmacist/dashboard");
-          } else if (role === 'Accountant' || role === "accountant") {
-            navigate("/accountant/dashboard");
-          } else if (role === 'Laboratorist' || role === "laboratorist") {
-            navigate("/laboratorist/dashboard");
-          }else if (role === 'Radiographer' || role === "radiographer") {
-            navigate("/radiographer/dashboard");
+        const {full_name, email, is_admin, user_id, user_image,role} = response.data?.user
+        const {access} = response.data?.token
+        localStorage.setItem("token",access)
+        localStorage.setItem("user",full_name)
+        is_admin?localStorage.setItem("role","Admin"):localStorage.setItem("role",role)
+
+       setTimeout(()=>{
+        if (response?.status === 200) {
+          if(is_admin){
+            navigate("/admin/dashboard")
+          }else if(role === "sales_person"){
+            navigate("/sales-person/dashboard")
+          }else{
+            navigate("/login")
           }
-        }, 1000);
-      }
+          dispatch(handleToastSuccess("Login Success"))
+        }
+       }, 1000)
     } catch (error) {
-      if (error.response?.status === 404) {
-        dispatch(handleToastError("Account not found"))
-      }
+        if (error.response?.status === 404) {
+            dispatch(handleToastError("Account not found"));
+        }
     }
-  };
-  
+};
+
 const handleShowPassword = () => {
-  setShowPassword(!showPassword)
-}
+    setShowPassword(!showPassword);
+};
+
 
   return (
     <div className='login-container'>
@@ -97,13 +83,6 @@ const handleShowPassword = () => {
          />
         <span className='welcome-text'>PHARMASYS</span>
       </div>
-       <div className="input-field">
-       <select name="role" onChange={handleChange} className='login-input'>
-          <option value="">--select role--</option>
-          <option value="Admin">Admin</option>
-          <option value="Doctor">Sales Person</option>  
-        </select>
-       </div>
         <div className="input-field">
           <input type="email" 
           className='login-input' 

@@ -63,7 +63,7 @@ export default function AddMedicineCategory({name}) {
   
   const handleSubmit = async() => {
     try {
-      const response = await axios.post(`http://localhost:5000/add_category`, data);
+      const response = await axios.post(`https://pharmacy-v2qn.onrender.com/api/medicine/create/`, data);
       if(response.status === 201){
         handleDepCount()
         handleClose()
