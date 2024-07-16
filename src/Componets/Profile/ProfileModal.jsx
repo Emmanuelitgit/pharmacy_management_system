@@ -16,7 +16,7 @@ function ProfileModal() {
   const navigate = useNavigate()
   const dispatch = useDispatch();
 
-  const user = localStorage.getItem('user');
+  // const user = localStorage.getItem('user');
   const profile = localStorage?.getItem("profile")
   const [show, setShow] = useState(false);
 
@@ -45,7 +45,7 @@ function ProfileModal() {
             src={require(`../../uploads/default.png`)}
             onClick={handleShow} 
             />}
-            <span className='user-name' style={{color:"black"}}>{user}</span>
+            <span className='user-name' style={{color:"black"}}>Ofori Justice</span>
             <ArrowDropDown 
              className='dropdown-icon'
              style={{

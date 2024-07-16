@@ -20,7 +20,6 @@ const Navbar = () => {
    const visible = useSelector((state)=>state.modal?.sidebar_toggle) || [];
    const role = localStorage.getItem('role');
   //  const role = roleValue?.charAt(0).toUpperCase() + roleValue.slice(1);
-   const user = localStorage.getItem('user');
    const location = useLocation();
    const route = location.pathname.split("/")[1];
    const dep = useSelector(state => state.count?.depValue) || [2];
