@@ -42,7 +42,7 @@ function ProfileModal() {
             />}
             {profile ==='null' &&  <img 
             className='nav-profile-img'
-            src={require(`../../uploads/default.png`)}
+            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'}
             onClick={handleShow} 
             />}
             <span className='user-name' style={{color:"black"}}>Ofori Justice</span>
