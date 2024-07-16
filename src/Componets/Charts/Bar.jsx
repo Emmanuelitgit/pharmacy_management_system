@@ -21,44 +21,44 @@ const BarChart = () => {
   const year = new Date().getFullYear()
 
   // GRABING REVENUE AMOUNT BASED ON MONTH
-  const januaryPayments = payments.filter((data) => data?.date >= `${year}-01-01` &&  data?.date <= `${year}-01-31`);
-  const februaryPayments = payments.filter((data) => data?.date >= `${year}-02-01` &&  data?.date <= `${year}-02-29`);
-  const marchPayments = payments.filter((data) => data?.date >= `${year}-03-01` &&  data?.date <= `${year}-03-31`);
-  const aprilPayments = payments.filter((data) => data?.date >= `${year}-04-01` &&  data?.date <= `${year}-04-30`);
-  const mayPayments = payments.filter((data) => data?.date >= `${year}-05-01` &&  data?.date <= `${year}-05-31`);
-  const junePayments = payments.filter((data) => data?.date >= `${year}-06-01` &&  data?.date <= `${year}-06-30`);
-  const julyPayments = payments.filter((data) => data?.date >= `${year}-07-01` &&  data?.date <= `${year}-07-31`);
-  const augustPayments = payments.filter((data) => data?.date >= `${year}-08-01` &&  data?.date <= `${year}-08-31`);
-  const septemberPayments = payments.filter((data) => data?.date >= `${year}-09-01` &&  data?.date <= `${year}-09-30`);
-  const octoberPayments = payments.filter((data) => data?.date >= `${year}-10-01` &&  data?.date <= `${year}-10-31`);
-  const novemberPayments = payments.filter((data) => data?.date >= `${year}-11-01` &&  data?.date <= `${year}-11-30`);
-  const decemberPayments = payments.filter((data) => data?.date >= `${year}-12-01` &&  data?.date <= `${year}-12-31`);
+  // const januaryPayments = payments.filter((data) => data?.date >= `${year}-01-01` &&  data?.date <= `${year}-01-31`);
+  // const februaryPayments = payments.filter((data) => data?.date >= `${year}-02-01` &&  data?.date <= `${year}-02-29`);
+  // const marchPayments = payments.filter((data) => data?.date >= `${year}-03-01` &&  data?.date <= `${year}-03-31`);
+  // const aprilPayments = payments.filter((data) => data?.date >= `${year}-04-01` &&  data?.date <= `${year}-04-30`);
+  // const mayPayments = payments.filter((data) => data?.date >= `${year}-05-01` &&  data?.date <= `${year}-05-31`);
+  // const junePayments = payments.filter((data) => data?.date >= `${year}-06-01` &&  data?.date <= `${year}-06-30`);
+  // const julyPayments = payments.filter((data) => data?.date >= `${year}-07-01` &&  data?.date <= `${year}-07-31`);
+  // const augustPayments = payments.filter((data) => data?.date >= `${year}-08-01` &&  data?.date <= `${year}-08-31`);
+  // const septemberPayments = payments.filter((data) => data?.date >= `${year}-09-01` &&  data?.date <= `${year}-09-30`);
+  // const octoberPayments = payments.filter((data) => data?.date >= `${year}-10-01` &&  data?.date <= `${year}-10-31`);
+  // const novemberPayments = payments.filter((data) => data?.date >= `${year}-11-01` &&  data?.date <= `${year}-11-30`);
+  // const decemberPayments = payments.filter((data) => data?.date >= `${year}-12-01` &&  data?.date <= `${year}-12-31`);
 
   // REVENUE TOTAL AMOUNT COMPUTATION
-  const JanuaryAmount = januaryPayments.map((pay) => pay.amount);
-  const JanuaryTotalAmount = JanuaryAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-  const februaryAmount = februaryPayments.map((pay) => pay.amount);
-  const februaryTotalAmount = februaryAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-  const marchAmount = marchPayments.map((pay) => pay.amount);
-  const marchTotalAmount = marchAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-  const aprilAmount = aprilPayments.map((pay) => pay.amount);
-  const aprilTotalAmount = aprilAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-  const mayAmount = mayPayments.map((pay) => pay.amount);
-  const mayTotalAmount = mayAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-  const juneAmount = junePayments.map((pay) => pay.amount);
-  const juneTotalAmount = juneAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-  const julyAmount = julyPayments.map((pay) => pay.amount);
-  const julyTotalAmount = julyAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-  const augustAmount = augustPayments.map((pay) => pay.amount);
-  const augustTotalAmount = augustAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-  const septemberAmount = septemberPayments.map((pay) => pay.amount);
-  const septemberTotalAmount = septemberAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-  const octoberAmount = octoberPayments.map((pay) => pay.amount);
-  const octoberTotalAmount = octoberAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-  const novemberAmount = novemberPayments.map((pay) => pay.amount);
-  const novemberTotalAmount = novemberAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-  const decemberAmount = decemberPayments.map((pay) => pay.amount);
-  const decemberTotalAmount = decemberAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  // const JanuaryAmount = januaryPayments.map((pay) => pay.amount);
+  // const JanuaryTotalAmount = JanuaryAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  // const februaryAmount = februaryPayments.map((pay) => pay.amount);
+  // const februaryTotalAmount = februaryAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  // const marchAmount = marchPayments.map((pay) => pay.amount);
+  // const marchTotalAmount = marchAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  // const aprilAmount = aprilPayments.map((pay) => pay.amount);
+  // const aprilTotalAmount = aprilAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  // const mayAmount = mayPayments.map((pay) => pay.amount);
+  // const mayTotalAmount = mayAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  // const juneAmount = junePayments.map((pay) => pay.amount);
+  // const juneTotalAmount = juneAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  // const julyAmount = julyPayments.map((pay) => pay.amount);
+  // const julyTotalAmount = julyAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  // const augustAmount = augustPayments.map((pay) => pay.amount);
+  // const augustTotalAmount = augustAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  // const septemberAmount = septemberPayments.map((pay) => pay.amount);
+  // const septemberTotalAmount = septemberAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  // const octoberAmount = octoberPayments.map((pay) => pay.amount);
+  // const octoberTotalAmount = octoberAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  // const novemberAmount = novemberPayments.map((pay) => pay.amount);
+  // const novemberTotalAmount = novemberAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  // const decemberAmount = decemberPayments.map((pay) => pay.amount);
+  // const decemberTotalAmount = decemberAmount.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
 
   useEffect(()=>{
     dispatch(getInvoiceList())

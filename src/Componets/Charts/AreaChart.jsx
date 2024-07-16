@@ -19,18 +19,18 @@ const AreaChart = () => {
 
   const year = new Date().getFullYear()
 
-  const januaryAppointments = appointments.filter((data) => data?.date >= `${year}-01-01` &&  data?.date <= `${year}-01-31`);
-  const februaryAppointments = appointments.filter((data) => data?.date >= `${year}-02-01` &&  data?.date <= `${year}-02-29`);
-  const marchAppointments = appointments.filter((data) => data?.date >= `${year}-03-01` &&  data?.date <= `${year}-03-31`);
-  const aprilAppointments = appointments.filter((data) => data?.date >= `${year}-04-01` &&  data?.date <= `${year}-04-30`);
-  const mayAppointments = appointments.filter((data) => data?.date >= `${year}-05-01` &&  data?.date <= `${year}-05-31`);
-  const juneAppointments = appointments.filter((data) => data?.date >= `${year}-06-01` &&  data?.date <= `${year}-06-30`);
-  const julyAppointments = appointments.filter((data) => data?.date >= `${year}-07-01` &&  data?.date <= `${year}-07-31`);
-  const augustAppointments = appointments.filter((data) => data?.date >= `${year}-08-01` &&  data?.date <= `${year}-08-31`);
-  const septemberAppointments = appointments.filter((data) => data?.date >= `${year}-09-01` &&  data?.date <= `${year}-09-30`);
-  const octoberAppointments = appointments.filter((data) => data?.date >= `${year}-10-01` &&  data?.date <= `${year}-10-31`);
-  const novemberAppointments = appointments.filter((data) => data?.date >= `${year}-11-01` &&  data?.date <= `${year}-11-30`);
-  const decemberAppointments = appointments.filter((data) => data?.date >= `${year}-12-01` &&  data?.date <= `${year}-12-31`);
+  // const januaryAppointments = appointments.filter((data) => data?.date >= `${year}-01-01` &&  data?.date <= `${year}-01-31`);
+  // const februaryAppointments = appointments.filter((data) => data?.date >= `${year}-02-01` &&  data?.date <= `${year}-02-29`);
+  // const marchAppointments = appointments.filter((data) => data?.date >= `${year}-03-01` &&  data?.date <= `${year}-03-31`);
+  // const aprilAppointments = appointments.filter((data) => data?.date >= `${year}-04-01` &&  data?.date <= `${year}-04-30`);
+  // const mayAppointments = appointments.filter((data) => data?.date >= `${year}-05-01` &&  data?.date <= `${year}-05-31`);
+  // const juneAppointments = appointments.filter((data) => data?.date >= `${year}-06-01` &&  data?.date <= `${year}-06-30`);
+  // const julyAppointments = appointments.filter((data) => data?.date >= `${year}-07-01` &&  data?.date <= `${year}-07-31`);
+  // const augustAppointments = appointments.filter((data) => data?.date >= `${year}-08-01` &&  data?.date <= `${year}-08-31`);
+  // const septemberAppointments = appointments.filter((data) => data?.date >= `${year}-09-01` &&  data?.date <= `${year}-09-30`);
+  // const octoberAppointments = appointments.filter((data) => data?.date >= `${year}-10-01` &&  data?.date <= `${year}-10-31`);
+  // const novemberAppointments = appointments.filter((data) => data?.date >= `${year}-11-01` &&  data?.date <= `${year}-11-30`);
+  // const decemberAppointments = appointments.filter((data) => data?.date >= `${year}-12-01` &&  data?.date <= `${year}-12-31`);
 
 
   useEffect(()=>{

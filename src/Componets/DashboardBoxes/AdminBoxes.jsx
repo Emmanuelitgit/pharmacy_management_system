@@ -19,12 +19,12 @@ const AdminBoxes = () => {
     const dep = useSelector(state => state.count?.depValue) || [2];
 
 
-    const doctor = getAllStaff.filter((data) => data?.role?.toLowerCase() === "doctor");
-    const nurse = getAllStaff.filter((data) => data?.role?.toLowerCase() === "nurse");
-    const laboratorist = getAllStaff.filter((data) => data?.role?.toLowerCase() === "laboratorist");
-    const pharmacist = getAllStaff.filter((data) => data?.role?.toLowerCase() === "pharmacist");
-    const radiographer = getAllStaff.filter((data) => data?.role?.toLowerCase() === "radiographer");
-    const accountant = getAllStaff.filter((data) => data?.role?.toLowerCase() === "accountant");
+    // const doctor = getAllStaff.filter((data) => data?.role?.toLowerCase() === "doctor");
+    // const nurse = getAllStaff.filter((data) => data?.role?.toLowerCase() === "nurse");
+    // const laboratorist = getAllStaff.filter((data) => data?.role?.toLowerCase() === "laboratorist");
+    // const pharmacist = getAllStaff.filter((data) => data?.role?.toLowerCase() === "pharmacist");
+    // const radiographer = getAllStaff.filter((data) => data?.role?.toLowerCase() === "radiographer");
+    // const accountant = getAllStaff.filter((data) => data?.role?.toLowerCase() === "accountant");
     
 
 
@@ -46,7 +46,7 @@ const AdminBoxes = () => {
         name:"Users",
         background:"purple",
         link:'/admin/doctor-list',
-        total: doctor.length,
+        total: 10,
         image:require("../../uploads/man.png")
       },
       {
@@ -54,7 +54,7 @@ const AdminBoxes = () => {
         name:"Sales",
         background:"pink",
         link:'/admin/nurse-list',
-        total: nurse.length,
+        total: 25,
         image:require("../../uploads/economy.png")
       },
       {
@@ -62,7 +62,7 @@ const AdminBoxes = () => {
         name:"Orders",
         background:"orange",
         link:'/admin/patient-list',
-        total: patients.length,
+        total: 17,
         image:require("../../uploads/order.png")
       },
       {
@@ -70,7 +70,7 @@ const AdminBoxes = () => {
         name:"Drugs",
         background:"red",
         link:'/admin/medicine-list',
-        total: pharmacist.length,
+        total: 9,
         image:require("../../uploads/drug.png")
       },
       // {

@@ -21,9 +21,9 @@ const SalesPersonBoxes = () => {
     const bedAllotments = useSelector((state)=>state.data?.bedAllotment);
 
 
-    const birth_report = reports.filter((data) => data?.report_type?.toLowerCase() === "birth report");
-    const death_report = reports.filter((data) => data?.report_type?.toLowerCase() === "death report");
-    const operation_report = reports.filter((data) => data?.report_type?.toLowerCase() === "operation report");
+    // const birth_report = reports.filter((data) => data?.report_type?.toLowerCase() === "birth report");
+    // const death_report = reports.filter((data) => data?.report_type?.toLowerCase() === "death report");
+    // const operation_report = reports.filter((data) => data?.report_type?.toLowerCase() === "operation report");
 
 
     useEffect(()=>{
@@ -58,7 +58,7 @@ const SalesPersonBoxes = () => {
       name:"Drug",
       background:"purple",
       link:'/admin/doctor-list',
-      total: patients.length,
+      total: 18,
       image:require("../../uploads/drug.png")
     },
     {
@@ -66,7 +66,7 @@ const SalesPersonBoxes = () => {
       name:"Orders",
       background:"pink",
       link:'/admin/nurse-list',
-      total: appointments.length,
+      total: 25,
       image:require("../../uploads/order.png")
     },
       // {
