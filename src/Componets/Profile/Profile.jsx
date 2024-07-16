@@ -27,24 +27,32 @@ const Profile = () => {
     let lastName = getFirstWord(sentence, 1);
 
    
-    useEffect(()=>{
-        const getStaff = async()=>{
-          const id =localStorage.getItem("userId")
-            try {
-            const response = await fetch(`http://localhost:5000/single_staff/${id}`)
-            if(!response.ok){
-            console.log("faild to fetch data...")
-            }
-            const fetchedData = await response.json()
-            const { profile } = fetchedData[0];
-            setProfile(profile)
-            setData(fetchedData)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getStaff()
-    }, [dep])
+    // useEffect(()=>{
+    //     const getStaff = async()=>{
+    //       const id =localStorage.getItem("userId")
+    //         try {
+    //         const response = await fetch(`http://localhost:5000/single_staff/${id}`)
+    //         if(!response.ok){
+    //         console.log("faild to fetch data...")
+    //         }
+    //         const fetchedData = await response.json()
+    //         const { profile } = fetchedData[0];
+    //         setProfile(profile)
+    //         setData(fetchedData)
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     }
+    //     getStaff()
+    // }, [dep])
+
+    const userData = [{
+      first_name:'Ofori',
+      last_name:'Justice',
+      email:'oforijustice@gmail.com',
+      phone:'0597893082',
+      address:'Accra, Legon'
+    }]
 
   return (
     <div className='view-staff-container'>
@@ -58,7 +66,7 @@ const Profile = () => {
          </div>
          <div className="view-staff-horozontally-line"></div>
          <h3 className='bio-title'>Bio Info:</h3>
-            {data?.map((staff)=>(
+            {userData?.map((staff)=>(
             <div className='bio-info-container' key={staff.staff_id}>
                 <div className="bio-info-items">
                   <div className="bio-info-item">
@@ -67,15 +75,11 @@ const Profile = () => {
                   </div>
                   <div className="bio-info-item">
                     <span className='bio-info-item-text-title'>First Name:</span>
-                    <span>{firstName}</span>
+                    <span>{staff.first_name}</span>
                   </div>
                   <div className="bio-info-item">
                     <span className='bio-info-item-text-title'>Last Name:</span>
-                    <span>{lastName}</span>
-                  </div>
-                  <div className="bio-info-item">
-                    <span className='bio-info-item-text-title'>Sex:</span>
-                    <span>Male</span>
+                    <span>{staff.last_name}</span>
                   </div>
                 </div>
                 <div className="bio-info-items">
@@ -90,15 +94,6 @@ const Profile = () => {
                   <div className="bio-info-item">
                     <span className='bio-info-item-text-title'>Address</span>
                     <span>{staff.address}</span>
-                  </div>
-                  <div className="bio-info-item">
-                    <span className='bio-info-item-text-title'>Department:</span>
-                    {staff?.department &&
-                      <span>{staff?.department}</span>
-                    }
-                     {!staff?.department &&
-                      <span>None</span>
-                    }
                   </div>
                 </div>
             </div>

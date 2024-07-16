@@ -6,25 +6,18 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const Settings = () => {
 
-  const [settings, setSettings] = useState()
+  // const [settings, setSettings] = useState()
   const dep = useSelector(state => state.count?.depValue) || [2];
 
 
-  useEffect(()=>{
-    const getsettings = async()=>{
-      try {
-        const response = await fetch('http://localhost:5000/settings');
-        if(!response.ok){
-          console.log('faild to fetch data..')
-        }
-        const fetchedData = await response.json();
-        setSettings(fetchedData)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getsettings()
-  }, [dep])
+  const settings = [{
+    system_email:'oforijustice@gmail.com',
+    system_name:'Pharmacy Management System',
+    address:'Accra, Legon',
+    phone:'0597893052',
+    currency:'GHC',
+    language:'English'
+  }]
 
 
 

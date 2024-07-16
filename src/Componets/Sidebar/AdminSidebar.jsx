@@ -43,7 +43,7 @@ const AdminSidebar = () => {
       <div className='sidebar-items-container'>
        <div className='item'>
           <img 
-           src={require("../../uploads/1720173408398patient 1.png")} 
+           src={require("../../uploads/default.png")} 
            alt="" 
            className='sidebar-img'
            />

@@ -2,7 +2,7 @@ import { useMemo, useState, useEffect } from 'react';
 import {MaterialReactTable,useMaterialReactTable} from 'material-react-table';
 import AddMedicineCategory from './AddMedicineCategory';
 import ManageMedicineCategory from "./ManageMedicineCategory";
-
+import axios from 'axios';
 
 
 const MedicineCategory = () => {
@@ -13,12 +13,14 @@ const MedicineCategory = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/medicine_categories');
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const fetchedData = await response.json();
-        setTableData(fetchedData);
+        const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/medicine/all/');
+      
+        const {medicines} = await response.data;
+        const dataWithIds = medicines.map((medicine, index) => ({
+          ...medicine,
+          id: index + 1,
+        }));
+        setTableData(dataWithIds);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -37,19 +39,19 @@ const MedicineCategory = () => {
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'category_id',
+        accessorKey: 'id',
         header: 'Category ID',
         size: 100,
       },
       {
-        accessorKey: 'category_name',
+        accessorKey: 'category',
         header: 'Category Name',
         size: 150,
       },
       {
         accessorKey: 'description',
         header: 'Description',
-        size: 300,
+        size: 100,
         Cell: ({ cell }) => (
           <span>{truncateText(cell.getValue(), 40)}</span>
         ),
@@ -59,7 +61,7 @@ const MedicineCategory = () => {
         header: 'Actions',
         size: 200,
         Cell: ({ row }) => {
-          const categoryId = row.original.category_id;
+          const categoryId = row.original.medicine_id;
           return (
             <div>
               <ManageMedicineCategory

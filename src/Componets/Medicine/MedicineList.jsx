@@ -27,7 +27,6 @@ const MedicineList = () => {
         }));
 
         setTableData(dataWithIds);
-        console.log(dataWithIds);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
