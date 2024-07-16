@@ -54,63 +54,21 @@ const SalesPersonBoxes = () => {
 
   const salesBoxes = [
     {
-      id:1,
-      name:"Drug",
-      background:"purple",
-      link:'/admin/doctor-list',
-      total: 18,
-      image:require("../../uploads/drug.png")
-    },
-    {
-      id:2,
-      name:"Orders",
-      background:"pink",
-      link:'/admin/nurse-list',
-      total: 25,
-      image:require("../../uploads/order.png")
-    },
-      // {
-      //   id:8,
-      //   name:"Prescription",
-      //   background:"bg-success",
-      //   link:'/doctor/prescription-list',
-      //   total: prescriptions?.length
-      // },
-      // {
-      //   id:9,
-      //   name:"Blood Bank",
-      //   background:"purple",
-      //   link:'/doctor/blood-bank',
-      //   total: bloodBank?.length
-      // },
-      // {
-      //   id:11,
-      //   name:"Operation Report",
-      //   background:"bg-danger",
-      //   link:'/doctor/operation-report',
-      //   total: operation_report?.length
-      // },
-      // {
-      //   id:12,
-      //   name:"Birth Report",
-      //   background:"teal",
-      //   link:'/doctor/birth-report',
-      //   total: birth_report?.length
-      // },
-      // {
-      //   id:13,
-      //   name:"Death Report",
-      //   background:"brown",
-      //   link:'/doctor/death-report',
-      //   total: death_report?.length
-      // },
-      // {
-      //   id:14,
-      //   name:"Bed Allotment",
-      //   background:"bg-info",
-      //   link:'/doctor/bed-allotment-list',
-      //   total: bedAllotments?.length
-      // },
+        id:3,
+        name:"Orders",
+        background:"orange",
+        link:'/admin/patient-list',
+        total: 17,
+        image:'https://cdn-icons-png.flaticon.com/128/4290/4290854.png'
+      },
+      {
+        id:4,
+        name:"Drugs",
+        background:"red",
+        link:'/admin/medicine-list',
+        total: 9,
+        image:'https://cdn-icons-png.flaticon.com/128/4320/4320365.png'
+      }
       ]
 
   return (

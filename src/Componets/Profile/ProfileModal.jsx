@@ -37,7 +37,7 @@ function ProfileModal() {
     <>
         {profile !=='null' &&  <img 
             className='nav-profile-img'
-            src={require(`../../uploads/${profile}`)}
+            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'}
             onClick={handleShow} 
             />}
             {profile ==='null' &&  <img 
@@ -63,12 +63,12 @@ function ProfileModal() {
         <Modal.Header closeButton>
         {profile ==='null' &&  <img 
             className='nav-profile-img'
-            src={require(`../../uploads/default.png`)}
+            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'}
             onClick={handleShow} 
             />}
            {profile !=='null' &&  <img 
             className='nav-profile-img'
-            src={require(`../../uploads/${profile}`)}
+            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'}
             onClick={handleShow} 
             />}
         </Modal.Header>

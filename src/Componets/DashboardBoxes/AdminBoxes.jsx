@@ -47,7 +47,7 @@ const AdminBoxes = () => {
         background:"purple",
         link:'/admin/doctor-list',
         total: 10,
-        image:require("../../uploads/man.png")
+        image:'https://cdn-icons-png.flaticon.com/128/476/476863.png'
       },
       {
         id:2,
@@ -55,7 +55,7 @@ const AdminBoxes = () => {
         background:"pink",
         link:'/admin/nurse-list',
         total: 25,
-        image:require("../../uploads/economy.png")
+        image:'https://cdn-icons-png.flaticon.com/128/3271/3271314.png'
       },
       {
         id:3,
@@ -63,7 +63,7 @@ const AdminBoxes = () => {
         background:"orange",
         link:'/admin/patient-list',
         total: 17,
-        image:require("../../uploads/order.png")
+        image:'https://cdn-icons-png.flaticon.com/128/4290/4290854.png'
       },
       {
         id:4,
@@ -71,7 +71,7 @@ const AdminBoxes = () => {
         background:"red",
         link:'/admin/medicine-list',
         total: 9,
-        image:require("../../uploads/drug.png")
+        image:'https://cdn-icons-png.flaticon.com/128/4320/4320365.png'
       },
       // {
       //   id:5,

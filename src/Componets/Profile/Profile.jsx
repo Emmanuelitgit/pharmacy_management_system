@@ -59,8 +59,13 @@ const Profile = () => {
          <div className='view-staff-sub-container'>
             <div className="view-staff-profile-items">
                 {/* <span className="view-staff-profile-item ">{name}</span> */}
-                  {profile && <img src={require(`../../uploads/${profile}`)} alt=""  className='view-staff-profile'/>}
-                  {!profile && <img src={require(`../../uploads/default.png`)} alt=""  className='view-staff-profile'/>}
+                  {profile && <img 
+                   src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'} 
+                   alt=""  
+                   className='view-staff-profile'/>}
+                  {!profile && <img 
+                   src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'} 
+                   alt=""  className='view-staff-profile'/>}
                 {/* <span className="view-staff-profile-item profile-item-role">{role}</span> */}
             </div>
          </div>
