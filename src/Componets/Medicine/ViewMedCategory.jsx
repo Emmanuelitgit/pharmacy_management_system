@@ -5,7 +5,10 @@ import { useLocation } from 'react-router-dom';
 
 const ViewMedCategory = () => {
 
-    const[data, setData] = useState()
+    const[data, setData] = useState([{
+      name:'Tablet',
+      description:'Hello this is the category'
+    }])
     const location = useLocation();
     const id = location.pathname.split("/")[3];
     let category_name = data?.map((d)=>d?.category_name)

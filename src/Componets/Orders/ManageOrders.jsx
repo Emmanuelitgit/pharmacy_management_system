@@ -53,7 +53,7 @@ export default function ManageOrders({name, id}) {
   };
 
   const handleNavigate = () =>{
-    navigate(`/${route}/view-medicine-category/${id}`)
+    navigate(`/${route}/view-order/${id}`)
   }
 
   const handleClose = () => {

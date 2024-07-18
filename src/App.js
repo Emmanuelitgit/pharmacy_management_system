@@ -20,6 +20,7 @@ import MedicineList from "./Componets/Medicine/MedicineList";
 import MedicineCategory from "./Componets/Medicine/MedicineCategory";
 import '@coreui/coreui/dist/css/coreui.min.css';
 import Orders from "./Componets/Orders/Orders"
+import ViewOrder from './Componets/Orders/VeiwOrder';
 
 
 const Admin = () => {
@@ -51,8 +52,9 @@ const router = createBrowserRouter([
       { path: "/admin/payment-list", element: <Payment /> },
       { path: "/admin/medicine-list", element: <MedicineList /> },
       { path: "/admin/medicine-category", element: <MedicineCategory /> },
-      { path: "/admin/view-medicine", element: <ViewMedicine /> },
-      { path: "/admin/view-category", element: <ViewMedCategory /> },
+      { path: "/admin/view-medicine/:id", element: <ViewMedicine /> },
+      { path: "/admin/view-category/:id", element: <ViewMedCategory /> },
+      { path: "/admin/view-order/:id", element: <ViewOrder /> },
       { path: "/admin/user-list", element: <UserList /> },
       { path: "/admin/order-list", element: <Orders /> },
       { path: "/admin/view-staff/:id", element: <ViewUser /> },

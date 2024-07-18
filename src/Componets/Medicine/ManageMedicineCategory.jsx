@@ -54,7 +54,7 @@ export default function ManageMedicineCategory({name, id}) {
   };
 
   const handleNavigate = () =>{
-    navigate(`/${route}/view-medicine-category/${id}`)
+    navigate(`/${route}/view-category/${id}`)
   }
 
   const handleClose = () => {

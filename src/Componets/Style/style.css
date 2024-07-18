@@ -352,11 +352,11 @@ html{
   margin-top: 3%;
 }
 .medical-history-container{
-  /* position: absolute; */
-  /* top: 75%; */
-  margin-top: 2%;
-  width: 100%;
+  position: absolute; 
+  top: 20%;
+  left: 23%;
   height: auto;
+  width: 75%;
 }
 .medical-history-table{
   width: 96%;
