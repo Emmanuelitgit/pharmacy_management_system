@@ -3,6 +3,7 @@ import {MaterialReactTable,useMaterialReactTable} from 'material-react-table';
 import AddMedicineCategory from './AddMedicineCategory';
 import ManageMedicineCategory from "./ManageMedicineCategory";
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 
 const MedicineCategory = () => {
@@ -10,14 +11,16 @@ const MedicineCategory = () => {
   const role = localStorage.getItem("role");
   const [tableData, setTableData] = useState([]);
 
+  const dep = useSelector((state)=>state.count?.depValue)
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/medicine/all/');
+        const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/category/all/');
       
-        const {medicines} = await response.data;
-        const dataWithIds = medicines.map((medicine, index) => ({
-          ...medicine,
+        const {categories} = await response.data;
+        const dataWithIds = categories.map((category, index) => ({
+          ...category,
           id: index + 1,
         }));
         setTableData(dataWithIds);
@@ -26,7 +29,7 @@ const MedicineCategory = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [dep]);
 
 
   const truncateText = (text, length) => {
@@ -44,7 +47,7 @@ const MedicineCategory = () => {
         size: 100,
       },
       {
-        accessorKey: 'category',
+        accessorKey: 'name',
         header: 'Category Name',
         size: 150,
       },
@@ -61,7 +64,7 @@ const MedicineCategory = () => {
         header: 'Actions',
         size: 200,
         Cell: ({ row }) => {
-          const categoryId = row.original.medicine_id;
+          const categoryId = row.original.id;
           return (
             <div>
               <ManageMedicineCategory

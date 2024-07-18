@@ -42,13 +42,14 @@ const handleLogin = async () => {
             }
         });
 
+        console.log(response)
+
         const {full_name, email, is_admin, user_id, user_image,role} = response.data?.user
         const {access} = response.data?.token
         localStorage.setItem("token",access)
         localStorage.setItem("user",full_name)
         is_admin?localStorage.setItem("role","Admin"):localStorage.setItem("role",role)
 
-       setTimeout(()=>{
         if (response?.status === 200) {
           if(is_admin){
             navigate("/admin/dashboard")
@@ -59,7 +60,7 @@ const handleLogin = async () => {
           }
           dispatch(handleToastSuccess("Login Success"))
         }
-       }, 500)
+    
     } catch (error) {
         if (error.response?.status === 404) {
             dispatch(handleToastError("Account not found"));

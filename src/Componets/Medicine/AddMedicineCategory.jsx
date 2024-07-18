@@ -29,11 +29,11 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 export default function AddMedicineCategory({name}) {
 
   const dispatch = useDispatch()
-
+  const token = localStorage.getItem("token")
   const [open, setOpen] = React.useState(false);
   const[description, setDescription] = useState()
   const [data, setData] = useState({
-    category_name:'',
+    name:'',
     description:description
   });
 
@@ -63,7 +63,12 @@ export default function AddMedicineCategory({name}) {
   
   const handleSubmit = async() => {
     try {
-      const response = await axios.post(`https://pharmacy-v2qn.onrender.com/api/medicine/create/`, data);
+      const response = await axios.post(`https://pharmacy-v2qn.onrender.com/api/category/create/`, data, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+      }
+      });
       if(response.status === 201){
         handleDepCount()
         handleClose()
@@ -109,7 +114,7 @@ export default function AddMedicineCategory({name}) {
             <input type="text"
               className='input'
               placeholder='eg Tablet'
-              name='category_name'
+              name='name'
               onChange={handleChange}
             />
           </div>

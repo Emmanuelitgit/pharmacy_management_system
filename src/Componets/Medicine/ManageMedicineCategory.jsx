@@ -37,10 +37,11 @@ export default function ManageMedicineCategory({name, id}) {
   const location = useLocation()
   const route = location.pathname.split("/")[1]
 
+  const token = localStorage.getItem("token")
   const [open, setOpen] = React.useState(false);
   const[description, setDescription] = useState()
   const [data, setData] = useState({
-    category_name:'',
+    name:'',
     description:description
   });
 
@@ -83,8 +84,13 @@ export default function ManageMedicineCategory({name, id}) {
 
   const handleUpdate = async() => {
     try {
-      const response = await axios.put(`http://localhost:5000/update_category/${id}`, data);
-      if(response.status === 201){
+      const response = await axios.post(`https://pharmacy-v2qn.onrender.com/api/category/update/${id}/`, data, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+      }
+      });
+      if(response.status === 200){
         handleDepCount()
         handleClose()
         dispatch(handleToastSuccess("Updated Successfully"))
@@ -96,7 +102,12 @@ export default function ManageMedicineCategory({name, id}) {
 
   const handleDelete = async() => {
     try {
-      const response = await axios.delete(`http://localhost:5000/remove_category/${id}`);
+      const response = await axios.delete(`https://pharmacy-v2qn.onrender.com/api/category/delete/${id}/`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+      }
+      });
       if(response.status === 200){
         handleDepCount()
         dispatch(handleToastSuccess("Deleted Successfully"))
@@ -138,7 +149,7 @@ export default function ManageMedicineCategory({name, id}) {
             <input type="text"
               className='input'
               placeholder='eg Tablet'
-              name='category_name'
+              name='name'
               onChange={handleChange}
             />
         </div>

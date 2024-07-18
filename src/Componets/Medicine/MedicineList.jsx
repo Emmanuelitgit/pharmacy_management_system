@@ -12,8 +12,6 @@ const MedicineList = () => {
 
   const dep = useSelector((state)=>state.count?.depValue)
 
-  console.log(dep)
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -23,7 +21,7 @@ const MedicineList = () => {
         // Add a sequential ID to each medicine item
         const dataWithIds = medicines.map((medicine, index) => ({
           ...medicine,
-          id: index + 1,
+          id: index +1,
         }));
 
         setTableData(dataWithIds);
@@ -33,7 +31,7 @@ const MedicineList = () => {
     };
 
     fetchData();
-  }, []);
+  }, [dep]);
 
   const truncateText = (text, length) => {
     if (text.length > length) {
@@ -51,12 +49,12 @@ const MedicineList = () => {
       },
       {
         accessorKey: 'category',
-        header: 'Category Name',
+        header: 'Medicine Name',
         size: 150,
       },
       {
         accessorKey: 'quantity',
-        header: 'Quantity',
+        header: 'Status',
         size: 100,
       },
       {

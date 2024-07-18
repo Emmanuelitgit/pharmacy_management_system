@@ -43,8 +43,8 @@ export default function ManageMedicine({name, id}) {
     category:'',
     description:description,
     price:'',
+    quantity:'',
     manufacturer:'',
-    status:''
   });
 
   const dep = useSelector(state => state.count?.depValue) || [2];
@@ -56,18 +56,18 @@ export default function ManageMedicine({name, id}) {
   useEffect(()=>{
     const getCategories =async()=>{
       try {
-        const response = await fetch('http://localhost:5000/medicine_categories');
-        if(!response.ok){
-          throw new Error('Failed to fetch data');
-        }
-        const fetchedData = await response.json();
-        setCategories(fetchedData)
+        const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/category/all/');
+      
+        const {categories} = await response.data;
+        setCategories(categories)
       } catch (error) {
         console.log(error)
       }
     }
     getCategories()
   }, [dep])
+
+  console.log(categories)
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -104,13 +104,13 @@ export default function ManageMedicine({name, id}) {
 
   const handleUpdate = async() => {
     try {
-      const response = await axios.post(`http://localhost:5000/update_medicine/${id}`, data,{
+      const response = await axios.post(`https://pharmacy-v2qn.onrender.com/api/medicine/update/${id}/`, data,{
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
       }
       });
-      if(response.status === 201){
+      if(response.status === 200){
         handleDepCount()
         handleClose()
         dispatch(handleToastSuccess("Updated Successfully"))
@@ -122,7 +122,7 @@ export default function ManageMedicine({name, id}) {
 
   const handleDelete = async() => {
     try {
-      const response = await axios.delete(`http://localhost:5000/remove_medicine/${id}`,{
+      const response = await axios.delete(`https://pharmacy-v2qn.onrender.com/api/medicine/delete/${id}/`,{
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -175,12 +175,12 @@ export default function ManageMedicine({name, id}) {
             />
           </div>
           <div className='input-container'>
-          <label htmlFor="">Doctor</label>
+          <label htmlFor="">Category Name</label>
             <select name="category" onChange={handleChange} value={data.doctor}  className='dropdown'>
               <option value="">--Select Category--</option>
               {categories?.map((item)=>(
-                <option value={item.category_name} key={item.category_id}>
-                  {item.category_name}
+                <option value={item.name} key={item.id}>
+                  {item.name}
                 </option>
               ))}
             </select>

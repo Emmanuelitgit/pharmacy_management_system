@@ -32,13 +32,10 @@ export default function AddStaff({name}) {
   const [open, setOpen] = React.useState(false);
   const[file, setFile] = useState(null);
   const [data, setData] = React.useState({
-    name:"",
+    full_name:"",
     role:role,
     phone:"",
-    address:"",
     email:"",
-    password:"",
-    department:"",
   })
 
   const upload = async ()=>{
@@ -79,15 +76,12 @@ export default function AddStaff({name}) {
   const handleSubmit = async() => {
     const imgUrl = await upload()
     try {
-      const response = await axios.post(`http://localhost:5000/add_staff`, {
+      const response = await axios.post(`https://pharmacy-v2qn.onrender.com/api/accounts/create`, {
         name:data.name,
         role:data.role,
         phone:data.phone,
-        address:data.address,
         email:data.email,
-        password:data.password,
-        department:data.department,
-        profile:file? imgUrl : ""
+        user_image:file? imgUrl : ""
       });
       if(response.status === 201){
         handleDepCount()
@@ -128,25 +122,14 @@ return (
         </IconButton>
         <DialogContent dividers>
           <div className='input-container'>
-            <label htmlFor="">{name} Name</label>
+            <label htmlFor="">Full Name</label>
             <input type="text"
               className='input'
               placeholder='eg Emmanuel Yidana'
-              name='name'
+              name='full_name'
               onChange={handleChange} 
             />
           </div>
-          {name === "Doctor" &&
-          <div className='input-container'>
-          <label htmlFor="">Department Name</label>
-          <input type="text"
-            className='input'
-            placeholder='eg Public Health'
-            name='department'
-            onChange={handleChange} 
-          />
-        </div>
-          }
           <div className='input-container'>
             <label htmlFor="">Email</label>
             <input type="text"
@@ -157,29 +140,11 @@ return (
             />
           </div>
           <div className='input-container'>
-            <label htmlFor="" className='label'>Password</label>
-            <input type="password"
-               className='input'
-               placeholder='enter a strong password'
-               name='password'
-               onChange={handleChange}
-            />
-          </div>
-          <div className='input-container'>
             <label htmlFor="">Phone</label>
             <input type="text"
                className='input'
                placeholder='eg 0597893082'
                name='phone'
-               onChange={handleChange}
-            />
-          </div>
-          <div className='input-container'>
-            <label htmlFor="" className='label'>Address</label>
-            <input type="text"
-               className='input'
-               placeholder='University of Ghana'
-               name='address'
                onChange={handleChange}
             />
           </div>

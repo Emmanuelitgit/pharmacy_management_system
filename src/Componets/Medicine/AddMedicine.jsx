@@ -93,6 +93,7 @@ export default function AddMedicine({name}) {
           'Content-Type': 'application/json',
       }
       });
+      console.log(response)
       if(response.status === 201){
         handleDepCount()
         handleClose()
@@ -103,8 +104,6 @@ export default function AddMedicine({name}) {
       console.log(error)
     }
   };
-
-  console.log(token)
 
   return (
     <React.Fragment>
@@ -145,14 +144,15 @@ export default function AddMedicine({name}) {
             />
           </div>
           <div className='input-container'>
-          <label htmlFor="">Doctor</label>
+          <label htmlFor="">Category</label>
             <select name="category" onChange={handleChange} value={data.doctor}  className='dropdown'>
-              <option value="">--Select Category--</option>
+              {/* <option value="">--Select Category--</option>
               {categories?.map((item)=>(
                 <option value={item.category_name} key={item.category_id}>
                   {item.category_name}
                 </option>
-              ))}
+              ))} */}
+              <option value="Tablet">Tablet</option>
             </select>
         </div>
           <div className='input-container'>
