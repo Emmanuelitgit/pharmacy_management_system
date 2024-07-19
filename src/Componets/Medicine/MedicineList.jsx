@@ -4,6 +4,7 @@ import ManageMedicine from '../Medicine/ManageMedicine';
 import AddMedicine from '../Medicine/AddMedicine';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { data } from 'autoprefixer';
 
 const MedicineList = () => {
 
@@ -32,6 +33,8 @@ const MedicineList = () => {
 
     fetchData();
   }, [dep]);
+
+  console.log(tableData)
 
   const truncateText = (text, length) => {
     if (text.length > length) {

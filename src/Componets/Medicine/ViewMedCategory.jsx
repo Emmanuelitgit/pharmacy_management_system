@@ -1,29 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import doctor from "../../Componets/images/staff/doctor 1.png";
 import { useLocation } from 'react-router-dom';
-
+import axios from 'axios';
 
 const ViewMedCategory = () => {
 
-    const[data, setData] = useState([{
-      name:'Tablet',
-      description:'Hello this is the category'
-    }])
+    const[data, setData] = useState()
     const location = useLocation();
     const id = location.pathname.split("/")[3];
-    let category_name = data?.map((d)=>d?.category_name)
 
 
     useEffect(()=>{
         const getStaff = async()=>{
             try {
-            const response = await fetch(`http://localhost:5000/medicine_category/${id}`)
-            if(!response.ok){
-            console.log("faild to fetch data...")
+            const response = await axios.get(`https://pharmacy-v2qn.onrender.com/api/category/retrieve/${id}/`, {
+              headers: {
+                'Content-Type': 'application/json',
             }
-            console.log(response)
-            const fetchedData = await response.json()
-            setData(fetchedData)
+            })
+            const {category} = await response.data
+            setData(category)
             } catch (error) {
                 console.log(error)
             }
@@ -33,7 +29,6 @@ const ViewMedCategory = () => {
 
   return (
     <div className='view-result-container'>
-            <h3 className='result-title'>Medicine Category ({category_name})</h3>
                 <div className="medical-history-container">
                 <table className='medical-history-table'>
                   <thead className='table-head'>
@@ -43,12 +38,10 @@ const ViewMedCategory = () => {
                      </tr>
                    </thead>
                    <tbody>
-                     {data?.map((category)=>(
-                     <tr className='medical-history-td-tr view-patient-tr' key={category.category_id}>
-                       <td className='medical-history-td-tr'>{category.description}</td>
-                       <td className='medical-history-td-tr'>{category.category_name}</td>
+                     <tr className='medical-history-td-tr view-patient-tr' key={data.id}>
+                       <td className='medical-history-td-tr'>{data.description}</td>
+                       <td className='medical-history-td-tr'>{data.name}</td>
                      </tr>
-                     ))}
                    </tbody>
                 </table>
              </div>  

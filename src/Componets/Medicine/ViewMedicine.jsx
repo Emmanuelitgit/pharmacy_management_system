@@ -1,43 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import doctor from "../../Componets/images/staff/doctor 1.png";
 import { useLocation } from 'react-router-dom';
-
+import axios from 'axios';
 
 const ViewMedicine = () => {
 
-    const[data, setData] = useState([{
-      category:'Tablet',
-      description:'Hello this is description',
-      price:50,
-      status:20,
-      manufacturer:'Himalaya',
-      name:'Tenofovir'
-    }])
+    const token = localStorage.getItem("token")
+    const[data, setData] = useState([])
     const location = useLocation();
     const id = location.pathname.split("/")[3];
-    let medicine_name = data?.map((d)=>d?.name)
 
 
     useEffect(()=>{
-        const getStaff = async()=>{
-            try {
-            const response = await fetch(`http://localhost:5000/medicine/${id}`)
-            if(!response.ok){
-            console.log("faild to fetch data...")
-            }
-            console.log(response)
-            const fetchedData = await response.json()
-            setData(fetchedData)
-            } catch (error) {
-                console.log(error)
-            }
-        }
-        getStaff()
-    }, [])
+      const getStaff = async()=>{
+          try {
+          const response = await axios.get(`https://pharmacy-v2qn.onrender.com/api/medicine/retrieve/${id}/`, {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+          }
+          })
+          const {medicine} = await response.data
+          setData(medicine)
+          } catch (error) {
+              console.log(error)
+          }
+      }
+      getStaff()
+  }, [])
+
+  console.log(data)
 
   return (
     <div className='view-satff-container'>
-            <h3 className='result-title'>Medicine Category ({medicine_name})</h3>
                 <div className="medical-history-container">
                 <table className='medical-history-table'>
                   <thead className='table-head'>
@@ -49,16 +44,14 @@ const ViewMedicine = () => {
                          <th className='view-patient-th '>Status</th>
                      </tr>
                    </thead>
-                   <tbody>
-                     {data?.map((medicine)=>(
-                     <tr className='medical-history-td-tr view-patient-tr' key={medicine.medicine_id}>
-                       <td className='medical-history-td-tr'>{medicine.description}</td>
-                       <td className='medical-history-td-tr'>{medicine.category}</td>
-                       <td className='medical-history-td-tr'>{medicine.price}</td>
-                       <td className='medical-history-td-tr'>{medicine.manufacturer}</td>
-                       <td className='medical-history-td-tr'>{medicine.status}</td>
+                   <tbody>           
+                     <tr className='medical-history-td-tr view-patient-tr' key={data.medicine_id}>
+                       <td className='medical-history-td-tr'>{data.description}</td>
+                       <td className='medical-history-td-tr'>{data.category}</td>
+                       <td className='medical-history-td-tr'>{data.price}</td>
+                       <td className='medical-history-td-tr'>{data.manufacturer}</td>
+                       <td className='medical-history-td-tr'>{data.quantity}</td>
                      </tr>
-                     ))}
                    </tbody>
                 </table>
              </div>  
