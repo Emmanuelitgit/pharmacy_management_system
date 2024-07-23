@@ -38,9 +38,9 @@ const ViewMedCategory = () => {
                      </tr>
                    </thead>
                    <tbody>
-                     <tr className='medical-history-td-tr view-patient-tr' key={data.id}>
-                       <td className='medical-history-td-tr'>{data.description}</td>
-                       <td className='medical-history-td-tr'>{data.name}</td>
+                     <tr className='medical-history-td-tr view-patient-tr' key={data?.id}>
+                       <td className='medical-history-td-tr'>{data?.description}</td>
+                       <td className='medical-history-td-tr'>{data?.name}</td>
                      </tr>
                    </tbody>
                 </table>

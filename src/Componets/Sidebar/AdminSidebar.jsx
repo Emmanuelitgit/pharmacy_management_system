@@ -15,7 +15,7 @@ const AdminSidebar = () => {
   const [visible, setVisible] = useState(false)
   const sidebarVisible = useSelector((state)=>state.modal?.sidebar_toggle)
   const [windowSize, setWindowSize] = useState()
-
+  const profile = localStorage?.getItem("profile")
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,11 +42,16 @@ const AdminSidebar = () => {
     <div className={sidebarVisible && windowSize < 1000? 'sidebar-toggle' : 'sidebar-container'}>
       <div className='sidebar-items-container'>
        <div className='item'>
-          <img 
+          {profile !== null && <img 
+           src={`https://pharmacy-v2qn.onrender.com${profile}`}
+           alt="" 
+           className='sidebar-img'
+           />}
+           {profile === null && <img 
            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'} 
            alt="" 
            className='sidebar-img'
-           />
+           />}
         </div>
         <div className='item'>
           <Link to={"/admin/dashboard"} className='link' onClick={handleToggle}>
@@ -74,12 +79,6 @@ const AdminSidebar = () => {
           <Link to={"/admin/order-list"} className='link' onClick={handleToggle}>
           <ShoppingCart className='sidebar-icon'/>
           <span className='item-name'>Orders</span></Link>
-        </div>
-        <div className='item' style={{marginTop: visible ? "300px" : "0px"}}>
-         <Link to={"/admin/settings"} className='link' onClick={handleToggle}>
-         <Settings className='sidebar-icon'/>
-          <span className='item-name'>Settings</span>
-         </Link>
         </div>
         <div className='item'>
           <Link to={"/admin/profile"} className='link' onClick={handleToggle}>

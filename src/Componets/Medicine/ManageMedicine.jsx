@@ -67,8 +67,6 @@ export default function ManageMedicine({name, id}) {
     getCategories()
   }, [dep])
 
-  console.log(categories)
-
   const handleClickOpen = () => {
     setOpen(true);
   };

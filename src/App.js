@@ -11,7 +11,6 @@ import SalesPersonNavs from './Componets/Navs/SalesPersonNavs';
 import SalesPersonDashboard from "./Pages/SalesPerson/SalesPersonDashboard";
 import InvoiceList from './Componets/Payment/InvoiceList';
 import Profile from './Componets/Profile/Profile';
-import Settings from './Pages/Admin/Settings/Settings';
 import ViewUser from './Pages/Admin/AddUser/ViewUser';
 import ViewMedCategory from './Componets/Medicine/ViewMedCategory';
 import ViewMedicine from './Componets/Medicine/ViewMedicine';
@@ -59,7 +58,6 @@ const router = createBrowserRouter([
       { path: "/admin/order-list", element: <Orders /> },
       { path: "/admin/view-staff/:id", element: <ViewUser /> },
       { path: "/admin/profile", element: <Profile /> },
-      { path: "/admin/settings", element: <Settings /> },
     ]
   },
 

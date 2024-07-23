@@ -5,7 +5,7 @@ import ManageUser from "../AddUser/ManageUser";
 import DashboardBoxes from '../../../Componets/DashboardBoxes/DashboardBoxes';
 import Charts from "../../../Componets/Charts/Charts"
 import axios from 'axios';
-
+import ManageMedicine from '../../../Componets/Medicine/ManageMedicine';
 
 const AdminDashboard = () => {
 
@@ -31,12 +31,6 @@ const AdminDashboard = () => {
   }, []);
 
 
-  const truncateText = (text, length) => {
-    if (text.length > length) {
-      return text.substring(0, length) + '...';
-    }
-    return text;
-  };
 
   const columns = useMemo(
     () => [
@@ -46,29 +40,35 @@ const AdminDashboard = () => {
         size: 100,
       },
       {
-        accessorKey: 'category',
-        header: 'Full Name',
+        accessorKey: 'name',
+        header: 'Medicine Name',
         size: 150,
       },
       {
-        accessorKey: 'description',
-        header: 'Description',
+        accessorKey: 'price',
+        header: 'Price',
         size: 100,
-        Cell: ({ cell }) => (
-          <span>{truncateText(cell.getValue(), 40)}</span>
-        ),
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Status',
+        size: 100,
+      },
+      {
+        accessorKey: 'manufacturer',
+        header: 'Manufacturer',
+        size: 100,
       },
       {
         id: 'actions',
         header: 'Actions',
         size: 200,
         Cell: ({ row }) => {
-          const categoryId = row.original.medicine_id;
           return (
             <div>
-              <ManageUser
+              <ManageMedicine
                name={'User'}
-               id={categoryId} 
+               id={row.original.medicine_id} 
               />
             </div>
           );

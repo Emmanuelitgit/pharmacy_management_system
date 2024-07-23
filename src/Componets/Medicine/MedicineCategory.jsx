@@ -31,9 +31,6 @@ const MedicineCategory = () => {
     fetchData();
   }, [dep]);
 
-  console.log(tableData)
-
-
   const truncateText = (text, length) => {
     if (text.length > length) {
       return text.substring(0, length) + '...';

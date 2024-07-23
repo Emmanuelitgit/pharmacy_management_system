@@ -4,7 +4,6 @@ import ManageMedicine from '../Medicine/ManageMedicine';
 import AddMedicine from '../Medicine/AddMedicine';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { data } from 'autoprefixer';
 
 const MedicineList = () => {
 
@@ -34,14 +33,6 @@ const MedicineList = () => {
     fetchData();
   }, [dep]);
 
-  console.log(tableData)
-
-  const truncateText = (text, length) => {
-    if (text.length > length) {
-      return text.substring(0, length) + '...';
-    }
-    return text;
-  };
 
   const columns = useMemo(
     () => [
@@ -51,18 +42,18 @@ const MedicineList = () => {
         size: 100,
       },
       {
-        accessorKey: 'category',
+        accessorKey: 'name',
         header: 'Medicine Name',
         size: 150,
       },
       {
-        accessorKey: 'quantity',
-        header: 'Status',
+        accessorKey: 'price',
+        header: 'Price',
         size: 100,
       },
       {
-        accessorKey: 'price',
-        header: 'Price',
+        accessorKey: 'quantity',
+        header: 'Status',
         size: 100,
       },
       {

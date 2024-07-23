@@ -34,6 +34,7 @@ export default function AddMedicine({name}) {
   const [open, setOpen] = React.useState(false);
   const[categories, setCategories] = useState()
   const[description, setDescription] = useState()
+  const [thumbnail, setThumbnail] = useState(null)
   const [data, setData] = useState({
     name:'',
     category:'',
@@ -59,18 +60,18 @@ export default function AddMedicine({name}) {
   useEffect(()=>{
     const getCategories =async()=>{
       try {
-        const response = await fetch('http://localhost:5000/medicine_categories');
-        if(!response.ok){
-          throw new Error('Failed to fetch data');
+        const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/category/all');
+        if(response.status === 200){
+          const {categories} = await response.data;
+          setCategories(categories)
         }
-        const fetchedData = await response.json();
-        setCategories(fetchedData)
       } catch (error) {
         console.log(error)
       }
     }
     getCategories()
   }, [dep])
+
 
   const handleChange = (e) => {
     const { name, value } = e.target; 
@@ -86,11 +87,20 @@ export default function AddMedicine({name}) {
   }
   
   const handleSubmit = async() => {
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("category", data.category);
+    formData.append("description", data.description);
+    formData.append("price", data.price);
+    formData.append("quantity", data.quantity);
+    formData.append("manufacturer", data.manufacturer);
+    if (thumbnail) {
+      formData.append("thumbnail", thumbnail);
+    }
     try {
-      const response = await axios.post(`https://pharmacy-v2qn.onrender.com/api/medicine/create/`, data,{
+      const response = await axios.post(`https://pharmacy-v2qn.onrender.com/api/medicine/create/`, formData,{
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
       }
       });
       console.log(response)
@@ -145,14 +155,11 @@ export default function AddMedicine({name}) {
           </div>
           <div className='input-container'>
           <label htmlFor="">Category</label>
-            <select name="category" onChange={handleChange} value={data.doctor}  className='dropdown'>
-              {/* <option value="">--Select Category--</option>
-              {categories?.map((item)=>(
-                <option value={item.category_name} key={item.category_id}>
-                  {item.category_name}
-                </option>
-              ))} */}
-              <option value="Tablet">Tablet</option>
+            <select name="category" onChange={handleChange}  className='dropdown'>
+              <option value="">--Select category--</option>
+              {categories.map((category)=>(
+                <option value={category.name}>{category.name}</option>
+              ))}
             </select>
         </div>
           <div className='input-container'>
@@ -189,6 +196,10 @@ export default function AddMedicine({name}) {
              onChange={setDescription}
              placeholder='Write medicine description here..'  
              />
+          </div>
+          <div className='input-container'>
+              <label htmlFor="" className='label'>Product Image</label>
+              <input type="file" name="thumbnail" id="file" onChange={e=>setThumbnail(e.target.files[0])} />
           </div> 
         </DialogContent>
         <DialogActions>

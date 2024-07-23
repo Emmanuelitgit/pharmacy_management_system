@@ -18,15 +18,22 @@ import LogoutBtn from '../Buttons/LogoutBtn';
 
 const DoctorSidebar = () => {
 
+  const profile = localStorage?.getItem("profile")
+
   return (
     <div className='sidebar-container'>
       <div className='sidebar-items-container'>
         <div className='item'>
-          <img 
+        {profile !== null && <img 
+            src={`https://pharmacy-v2qn.onrender.com/media/${profile}`}
+           alt="" 
+           className='sidebar-img'
+           />}
+           {profile === null && <img 
            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'} 
            alt="" 
            className='sidebar-img'
-           />
+           />}
         </div>
         <div className='item'>
           <Link className='link' to={"/sales-person/dashboard"}>

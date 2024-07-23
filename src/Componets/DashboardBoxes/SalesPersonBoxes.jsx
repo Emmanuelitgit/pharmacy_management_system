@@ -1,55 +1,51 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./style.css";
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPrescription, getPatients, getReports, getAppointmentList, getBloodGroup, getBedAllotment } from '../../store/data';
 import { depCountActions } from '../../store/depCount';
-
+import axios from 'axios';
 
 const SalesPersonBoxes = () => {
 
-
-    // const role = useSelector((state) => state.auth?.role?.toLowerCase());
-    const dispatch = useDispatch()
     const role = localStorage.getItem('role').toLowerCase()
-    const patients = useSelector((state)=>state.data?.patients)
-    const dep = useSelector(state => state.count?.depValue) || [2];
-    const reports = useSelector((state)=>state.data?.reports);
-    const appointments = useSelector((state)=>state.data?.appointments);
-    const prescriptions = useSelector((state)=>state.data?.prescriptions);
-    const bloodBank = useSelector((state)=>state.data?.bloodBank);
-    const bedAllotments = useSelector((state)=>state.data?.bedAllotment);
+    const [orders, setOrders] = useState('')
+    const [medicine, setMedicine] = useState('')
+    const dep = useSelector((state)=>state.count?.depValue)
 
 
-    // const birth_report = reports.filter((data) => data?.report_type?.toLowerCase() === "birth report");
-    // const death_report = reports.filter((data) => data?.report_type?.toLowerCase() === "death report");
-    // const operation_report = reports.filter((data) => data?.report_type?.toLowerCase() === "operation report");
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const token = localStorage.getItem("token")
+            const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/medicine/order/all/', {
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            }
+            });
+            const {orders} = await response.data;           
+            setOrders(orders);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };
+        fetchData();
+      }, [dep]);
 
-
-    useEffect(()=>{
-        dispatch(getPatients())
-       },[dep]);
-
-    useEffect(()=>{
-        dispatch(getReports())
-       },[dep]);
-
-    useEffect(()=>{
-        dispatch(getAppointmentList())
-       },[dep]);
-
-    useEffect(()=>{
-        dispatch(getPrescription())
-       },[dep]);
-
-    useEffect(()=>{
-        dispatch(getBloodGroup())
-       },[dep]);
-
-    useEffect(()=>{
-        dispatch(getBedAllotment())
-       },[dep]);
-
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/medicine/all/');
+            const { medicines } = response.data;
+            setMedicine(medicines);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };
+    
+        fetchData();
+      }, [dep]);
 
 
   const salesBoxes = [
@@ -58,7 +54,7 @@ const SalesPersonBoxes = () => {
         name:"Orders",
         background:"orange",
         link:'/admin/patient-list',
-        total: 17,
+        total: orders?.length,
         image:'https://cdn-icons-png.flaticon.com/128/4290/4290854.png'
       },
       {
@@ -66,7 +62,7 @@ const SalesPersonBoxes = () => {
         name:"Drugs",
         background:"red",
         link:'/admin/medicine-list',
-        total: 9,
+        total: medicine?.length,
         image:'https://cdn-icons-png.flaticon.com/128/4320/4320365.png'
       }
       ]
@@ -74,7 +70,7 @@ const SalesPersonBoxes = () => {
   return (
     <div className=''>
 
-    {role === "doctor" &&
+    {role === "sales_person" &&
     <div class="row">
         {salesBoxes.map((box)=>(
         <div className="col-xl-3 col-md-6">

@@ -23,32 +23,30 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function ManageProfile({ name,backgroundColor,padding,color,width,marginRight,btnName,handleProfileClose }) {
+export default function ManageProfile({ name, id,email,padding,color,width,marginRight,btnName,phone,full_name,role, password }) {
   const location = useLocation();
-  const role = location.pathname.split("/")[2].replace("-list", "");
   const dep = useSelector(state => state.count?.depValue) || [2];
+  const profile = localStorage.getItem("profile")
+  const[user_image, setUserImage] = useState(null);
   const [open, setOpen] = useState(false);
-  const [staff, setStaff] = useState([]);
   const [data, setData] = useState({
-    name: "",
+    full_name: "",
+    role: "",
     phone: "",
-    address: "",
     email: "",
-    password: "",
-    role:staff[0]?.email,
-    department:staff[0]?.department
+    password:''
   });
 
 
   const handleClickOpen = () => {
     setOpen(true);
     setData({
-      name: staff[0]?.name,
-      phone: staff[0]?.phone,
-      address: staff[0]?.address,
-      email: staff[0]?.email,
-      password: staff[0]?.password,
-      role:staff[0]?.role
+    full_name:full_name,
+    email:email,
+    role:role,
+    phone:phone,
+    password:password,
+    user_image:profile
     });
   };
 
@@ -70,36 +68,33 @@ export default function ManageProfile({ name,backgroundColor,padding,color,width
     dispatch(depCountActions.handleCount());
   };
 
-  const handleSubmit = async () => {
-    const userId = localStorage.getItem("userId");
+  const handleUpdate = async () => {
     try {
-      const response = await axios.put(`http://localhost:5000/update_staff/${userId}`, data);
-      if (response.status === 201) {
+      const token = localStorage.getItem("token")
+      const formData = new FormData();
+      formData.append("full_name", data.full_name);
+      formData.append("role", data.role);
+      formData.append("phone", data.phone);
+      formData.append("email", data.email);
+      formData.append("password", data.password)
+      if (user_image) {
+        formData.append("user_image", user_image);
+      }
+      const response = await axios.post(`https://pharmacy-v2qn.onrender.com/api/accounts/update/${id}/`, formData, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      if (response.status === 200) {
         handleDepCount();
         handleClose();
-        dispatch(handleToastSuccess("Successfully Updated"));
+        dispatch(handleToastSuccess("Successfully Updated"))
       }
     } catch (error) {
-      dispatch(handleToastError("Error! Cannot perform operation"));
+      dispatch(handleToastError("Error! cannot perform operation"))
     }
   };
-
-  useEffect(() => {
-    const getStaff = async () => {
-      const id = localStorage.getItem("userId");
-      try {
-        const response = await fetch(`http://localhost:5000/single_staff/${id}`);
-        if (!response.ok) {
-          console.log("Failed to fetch data...");
-        }
-        const fetchedData = await response.json();
-        setStaff(fetchedData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getStaff();
-  }, [dep]);
 
   return (
     <React.Fragment>
@@ -134,74 +129,62 @@ export default function ManageProfile({ name,backgroundColor,padding,color,width
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <div>
-            <div className='input-container'>
-              <label htmlFor="">{name} Name</label>
-              <input
-                type="text"
-                className='input'
-                placeholder='eg Emmanuel Yidana'
-                name='name'
-                value={data.name}
-                onChange={handleChange}
-              />
-            </div>
-            <div className='input-container'>
-              <label htmlFor="">Email</label>
-              <input
-                type="text"
-                className='input'
-                placeholder='eg eyidana001@gmial.com'
-                name='email'
-                value={data.email}
-                onChange={handleChange}
-              />
-            </div>
-            <div className='input-container'>
-              <label htmlFor="" className='label'>Password</label>
-              <input
-                type="password"
-                className='input'
-                placeholder='Enter a strong password'
-                name='password'
-                value={data.password}
-                onChange={handleChange}
-              />
-            </div>
-            <div className='input-container'>
-              <label htmlFor="">Phone</label>
-              <input
-                type="text"
-                className='input'
-                placeholder='eg 0597893082'
-                value={data.phone}
-                onChange={handleChange}
-              />
-            </div>
-            <div className='input-container'>
-              <label htmlFor="" className='label'>Address</label>
-              <input
-                type="text"
-                className='input'
-                placeholder='University of Ghana'
-                name='address'
-                value={data.address}
-                onChange={handleChange}
-              />
-            </div>
-            <div className='input-container'>
+        <div className='input-container'>
+            <label htmlFor="">Full Name</label>
+            <input type="text"
+              className='input'
+              placeholder='eg Emmanuel Yidana'
+              name='full_name'
+              onChange={handleChange} 
+              value={data.full_name}
+            />
+          </div>
+          <div className='input-container'>
+            <label htmlFor="">Email</label>
+            <input type="text"
+              className='input'
+              placeholder='eg eyidana001@gmial.com'
+              name='email'
+              onChange={handleChange}
+              value={data.email}
+            />
+          </div>
+          <div className='input-container'>
+            <label htmlFor="">Phone</label>
+            <input type="text"
+               className='input'
+               placeholder='eg 0597893082'
+               name='phone'
+               onChange={handleChange}
+               value={data.phone}
+            />
+          </div>
+          {/* <div className='input-container'>
+          <label htmlFor="">Role</label>
+            <select name="role" onChange={handleChange}  className='dropdown' value={data.role}>
+              <option value="">--Select role--</option>
+              <option value="sales_person">Sales Person</option>
+              <option value="Admin">Admin</option>
+            </select>
+        </div> */}
+        <div className='input-container'>
+            <label htmlFor="">Password</label>
+            <input type="text"
+               className='input'
+               placeholder='eg fj8sdoi'
+               name='password'
+               onChange={handleChange}
+               value={data.password}
+            />
+          </div>
+          <div className='input-container'>
               <label htmlFor="" className='label'>Profile Image</label>
-              <input
-                type="file"
-                name='file'
-                onChange={handleChange}
-              />
-            </div>
+              <input type="file" name="file" id="file" onChange={e=>setUserImage(e.target.files[0])} />
           </div>
         </DialogContent>
         <DialogActions>
           <button autoFocus
-            onClick={handleSubmit}
+            onClick={handleUpdate}
             className='modal-btn'
           >
             Save changes

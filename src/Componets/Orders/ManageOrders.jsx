@@ -7,16 +7,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { Add } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
-import Button from '../Buttons/Button';
 import { Link, useNavigate, useLocation } from "react-router-dom"
-import { data } from 'autoprefixer';
 import { depCountActions } from '../../store/depCount';
 import axios from "axios";
 import { useEffect, useState } from 'react';
-import ReactQuill from "react-quill";
-import 'react-quill/dist/quill.snow.css';
+import { ArrowDropDown } from '@mui/icons-material';
 import {handleToastSuccess, handleToastError} from "../../store/modalState"
 
 
@@ -30,7 +26,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function ManageOrders({name, id}) {
+export default function ManageOrders({name, id, status}) {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -40,13 +36,15 @@ export default function ManageOrders({name, id}) {
   const [open, setOpen] = React.useState(false);
   const[description, setDescription] = useState()
   const [data, setData] = useState({
-    category_name:'',
-    description:description
+    status:'False'
   });
+  
+  const dep = useSelector((state)=>state.count?.depValue)
 
   useEffect(() => {
     setData((prevData) => ({ ...prevData, description }));
   }, [description]);
+  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -83,8 +81,11 @@ export default function ManageOrders({name, id}) {
 
   const handleUpdate = async() => {
     try {
-      const response = await axios.put(`http://localhost:5000/update_category/${id}`, data);
-      if(response.status === 201){
+      const response = await axios.put(`https://pharmacy-v2qn.onrender.com/api/medicine/order/update/${id}/`,
+        {status:data.status}
+      );
+      console.log(response)
+      if(response.status === 200){
         handleDepCount()
         handleClose()
         dispatch(handleToastSuccess("Updated Successfully"))
@@ -94,31 +95,25 @@ export default function ManageOrders({name, id}) {
     }
   };
 
-  const handleDelete = async() => {
-    try {
-      const response = await axios.delete(`http://localhost:5000/remove_category/${id}`);
-      if(response.status === 200){
-        handleDepCount()
-        dispatch(handleToastSuccess("Deleted Successfully"))
-      }
-    } catch (error) {
-      dispatch(handleToastError('Error! cannot perform operation'))
-    }
-  };
-
   return (
     <React.Fragment>
-      <Button
-       handleClickOpen={handleClickOpen}
-       handleDelete={ handleDelete}
-       handleNavigate={handleNavigate} 
-      />
+      <button
+      onClick={handleClickOpen}
+      style={{
+        backgroundColor:status===true?'green':'purple',
+        color:'white',
+        padding:'5px',
+        borderRadius:'5px'
+      }}
+      >
+        {status === true ? 'Delivered' : 'Pending'}<ArrowDropDown/>
+      </button>
       <BootstrapDialog
         aria-labelledby="customized-dialog-title"
         open={open}
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-         Update {name}
+         Update {name} status
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -134,22 +129,13 @@ export default function ManageOrders({name, id}) {
         </IconButton>
         <DialogContent dividers>
         <div className='input-container'>
-            <label htmlFor="">Category Name</label>
-            <input type="text"
-              className='input'
-              placeholder='eg Tablet'
-              name='category_name'
-              onChange={handleChange}
-            />
+          <label htmlFor="">Category</label>
+            <select name="status" onChange={handleChange}  className='dropdown'>
+              <option value="">--Select order status--</option>
+              <option value={'False'}>Pending</option>
+              <option value={'True'}>Delivered</option>
+            </select>
         </div>
-        <div className="editor-container">
-            <label htmlFor="" className='edtor-label'>Description</label>
-            <ReactQuill className="editor-input" 
-             theme="snow" value={description} 
-             onChange={setDescription}
-             placeholder='Write medicine category description here..' 
-             />
-         </div> 
         </DialogContent>
         <DialogActions>
           <button autoFocus 

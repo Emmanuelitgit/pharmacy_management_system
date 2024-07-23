@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useMemo, useState, useEffect } from 'react';
 import {MaterialReactTable,useMaterialReactTable} from 'material-react-table';
 import ManageOrders from "../../Componets/Orders/ManageOrders"
-
-
+import axios from 'axios';
+import ManageMedicine from '../../Componets/Medicine/ManageMedicine';
 
 const SalesPersonDashboard = () => {
 
@@ -16,12 +16,14 @@ const SalesPersonDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/medicine_categories');
-        if (!response.ok) {
-          throw new Error('Failed to fetch data');
-        }
-        const fetchedData = await response.json();
-        setTableData(fetchedData);
+        const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/medicine/all/');
+      
+        const {medicines} = await response.data;
+        const dataWithIds = medicines.map((medicine, index) => ({
+          ...medicine,
+          id: index + 1,
+        }));
+        setTableData(dataWithIds);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -30,44 +32,43 @@ const SalesPersonDashboard = () => {
   }, []);
 
 
-  const truncateText = (text, length) => {
-    if (text.length > length) {
-      return text.substring(0, length) + '...';
-    }
-    return text;
-  };
-
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'category_id',
-        header: 'ORDER ID',
+        accessorKey: 'id',
+        header: 'User ID',
         size: 100,
       },
       {
-        accessorKey: 'category_name',
-        header: 'CATEGORY NAME',
+        accessorKey: 'name',
+        header: 'Medicine Name',
         size: 150,
       },
       {
-        accessorKey: 'description',
-        header: 'DESCRIPTION',
-        size: 300,
-        Cell: ({ cell }) => (
-          <span>{truncateText(cell.getValue(), 40)}</span>
-        ),
+        accessorKey: 'price',
+        header: 'Price',
+        size: 100,
+      },
+      {
+        accessorKey: 'quantity',
+        header: 'Status',
+        size: 100,
+      },
+      {
+        accessorKey: 'manufacturer',
+        header: 'Manufacturer',
+        size: 100,
       },
       {
         id: 'actions',
-        header: 'ACTIONS',
+        header: 'Actions',
         size: 200,
         Cell: ({ row }) => {
-          const categoryId = row.original.category_id;
           return (
             <div>
-              <ManageOrders
-               name={'Order'}
-               id={categoryId} 
+              <ManageMedicine
+               name={'User'}
+               id={row.original.medicine_id} 
               />
             </div>
           );

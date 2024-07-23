@@ -1,44 +1,56 @@
 import React from 'react'
 import "./style.css";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStaff, getPatients, getReports } from '../../store/data';
 import { depCountActions } from '../../store/depCount';
 import { Dashboard,Settings, Person,PersonAdd,ShoppingCart} from '@mui/icons-material';
 import {Card,Row, Col} from "react-bootstrap";
+import axios from 'axios';
+
 
 const AdminBoxes = () => {
 
-
-    // const role = useSelector((state) => state.auth?.role?.toLowerCase());
-    const dispatch = useDispatch()
     const role = localStorage.getItem('role').toLowerCase()
-    const getAllStaff = useSelector((state)=>state.data?.staff)
-    const patients = useSelector((state)=>state.data?.patients)
-    const reports = useSelector((state)=>state.data?.reports)
-    const dep = useSelector(state => state.count?.depValue) || [2];
-
-
-    // const doctor = getAllStaff.filter((data) => data?.role?.toLowerCase() === "doctor");
-    // const nurse = getAllStaff.filter((data) => data?.role?.toLowerCase() === "nurse");
-    // const laboratorist = getAllStaff.filter((data) => data?.role?.toLowerCase() === "laboratorist");
-    // const pharmacist = getAllStaff.filter((data) => data?.role?.toLowerCase() === "pharmacist");
-    // const radiographer = getAllStaff.filter((data) => data?.role?.toLowerCase() === "radiographer");
-    // const accountant = getAllStaff.filter((data) => data?.role?.toLowerCase() === "accountant");
     
+    const [orders, setOrders] = useState('')
+    const [medicine, setMedicine] = useState('')
+    const dep = useSelector((state)=>state.count?.depValue)
 
 
-    useEffect(()=>{
-        dispatch(getStaff())
-       },[dep]);
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const token = localStorage.getItem("token")
+            const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/medicine/order/all/', {
+              headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            }
+            });
+            const {orders} = await response.data;           
+            setOrders(orders);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };
+        fetchData();
+      }, [dep]);
 
-    useEffect(()=>{
-        dispatch(getPatients())
-       },[dep]);
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/medicine/all/');
+            const { medicines } = response.data;
+            setMedicine(medicines);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };
+    
+        fetchData();
+      }, [dep]);
 
-    useEffect(()=>{
-        dispatch(getReports())
-       },[dep])
 
    const adminBoxes = [
         {
@@ -62,7 +74,7 @@ const AdminBoxes = () => {
         name:"Orders",
         background:"orange",
         link:'/admin/patient-list',
-        total: 17,
+        total: orders?.length,
         image:'https://cdn-icons-png.flaticon.com/128/4290/4290854.png'
       },
       {
@@ -70,7 +82,7 @@ const AdminBoxes = () => {
         name:"Drugs",
         background:"red",
         link:'/admin/medicine-list',
-        total: 9,
+        total: medicine?.length,
         image:'https://cdn-icons-png.flaticon.com/128/4320/4320365.png'
       },
       // {

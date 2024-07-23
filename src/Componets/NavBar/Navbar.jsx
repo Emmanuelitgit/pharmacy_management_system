@@ -79,7 +79,8 @@ const Navbar = () => {
             </span>
       </div>
       <div className='panel-type-container'>
-         <h4 className='panel-type-text'>{role} Dashboard</h4>
+         <h4 className='panel-type-text'>
+          {role === "sales_person"? "Sales Person" : "Admin" + " "}  Dashboard</h4>
       </div>
       <div className='nav-profile-container'>
          <Badge badgeContent={4} color="warning" className='icons'>

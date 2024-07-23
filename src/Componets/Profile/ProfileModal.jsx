@@ -18,6 +18,7 @@ function ProfileModal() {
 
   // const user = localStorage.getItem('user');
   const profile = localStorage?.getItem("profile")
+  const name = localStorage.getItem("user")
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -32,20 +33,21 @@ function ProfileModal() {
     navigate("/login")
   }
 
+  console.log(profile)
   
   return (
     <>
-        {profile !=='null' &&  <img 
+        {profile !== null &&  <img 
+            className='nav-profile-img'
+            src={`https://pharmacy-v2qn.onrender.com/media/${profile}`}
+            onClick={handleShow} 
+            />}
+            {profile === null &&  <img 
             className='nav-profile-img'
             src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'}
             onClick={handleShow} 
             />}
-            {profile ==='null' &&  <img 
-            className='nav-profile-img'
-            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'}
-            onClick={handleShow} 
-            />}
-            <span className='user-name' style={{color:"black"}}>Ofori Justice</span>
+            <span className='user-name' style={{color:"black"}}>{name}</span>
             <ArrowDropDown 
              className='dropdown-icon'
              style={{

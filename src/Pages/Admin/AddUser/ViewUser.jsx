@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import doctor from "../../../Componets/images/staff/doctor 1.png";
 import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const ViewStaff = () => {
 
@@ -8,8 +9,8 @@ const ViewStaff = () => {
     const location = useLocation();
     const id = location.pathname.split("/")[3]; 
 
-    const role = data?.map((d)=>d.role)
-    const name = data?.map((d)=>d.name)
+    const role = data?.role
+    const name = data?.full_name
 
     function getFirstWord(str, num) {
         let words = str?.trim().split(/\s+/);
@@ -24,12 +25,12 @@ const ViewStaff = () => {
     useEffect(()=>{
         const getStaff = async()=>{
             try {
-            const response = await fetch(`http://localhost:5000/single_staff/${id}`)
-            if(!response.ok){
-            console.log("faild to fetch data...")
+            const response = await axios.get(`https://pharmacy-v2qn.onrender.com/api/accounts/retrieve/${id}/`)
+
+            if(response.status === 200){
+              const user = response.data
+              setData(user)
             }
-            const fetchedData = await response.json()
-            setData(fetchedData)
             } catch (error) {
                 console.log(error)
             }
@@ -43,17 +44,15 @@ const ViewStaff = () => {
             <div className="view-staff-profile-items">
                 <span className="view-staff-profile-item ">{name}</span>
                 <img src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'} alt=""  className='view-staff-profile'/>
-                <span className="view-staff-profile-item profile-item-role">{role}</span>
             </div>
          </div>
          <div className="view-staff-horozontally-line"></div>
          <h3 className='bio-title'>Bio Info:</h3>
-            {data?.map((staff)=>(
-            <div className='bio-info-container' key={staff.staff_id}>
+            <div className='bio-info-container' key={data?.user_id}>
                 <div className="bio-info-items">
                   <div className="bio-info-item">
                     <span className='bio-info-item-text-title'>Staff ID:</span>
-                    <span>10445445</span>
+                    <span>10457272</span>
                   </div>
                   <div className="bio-info-item">
                     <span className='bio-info-item-text-title'>First Name:</span>
@@ -63,36 +62,22 @@ const ViewStaff = () => {
                     <span className='bio-info-item-text-title'>Last Name:</span>
                     <span>{lastName}</span>
                   </div>
-                  <div className="bio-info-item">
-                    <span className='bio-info-item-text-title'>Sex:</span>
-                    <span>Male</span>
-                  </div>
                 </div>
                 <div className="bio-info-items">
                   <div className="bio-info-item">
                     <span className='bio-info-item-text-title'>Email:</span>
-                    <span>{staff.email}</span>
+                    <span>{data?.email}</span>
                   </div>
                   <div className="bio-info-item">
                     <span className='bio-info-item-text-title'>Phone:</span>
-                    <span>{staff.phone}</span>
+                    <span>{data?.phone}</span>
                   </div>
                   <div className="bio-info-item">
-                    <span className='bio-info-item-text-title'>Address</span>
-                    <span>{staff.address}</span>
-                  </div>
-                  <div className="bio-info-item">
-                    <span className='bio-info-item-text-title'>Department:</span>
-                    {staff?.department &&
-                      <span>{staff?.department}</span>
-                    }
-                     {!staff?.department &&
-                      <span>None</span>
-                    }
-                  </div>
+                    <span className='bio-info-item-text-title'>Role:</span>
+                    {role==="sales_person"? "Sales Person": "Admin"}
+                    </div>
                 </div>
             </div>
-            ))}
     </div>
   )
 }

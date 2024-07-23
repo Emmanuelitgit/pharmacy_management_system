@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom"
 import { login } from '../../store/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleToastError, handleToastSuccess } from '../../store/modalState';
-
+import Spinner from 'react-bootstrap/Spinner';
 
 
 const Login = () => {
@@ -20,8 +20,7 @@ const Login = () => {
     email:'',
     password:'',
   });
-
-  const [err, setErr] = useState();
+  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false)
 
 
@@ -35,21 +34,20 @@ const Login = () => {
   };
   
 const handleLogin = async () => {
+       setLoading(true)
     try {
         const response = await axios.post("https://pharmacy-v2qn.onrender.com/api/login/", credential, {
             headers: {
                 'Content-Type': 'application/json',
             }
         });
-
-        console.log(response)
-
         const {full_name, email, is_admin, user_id, user_image,role} = response.data?.user
         const {access} = response.data?.token
         localStorage.setItem("token",access)
+        localStorage.setItem("user_id",user_id)
         localStorage.setItem("user",full_name)
+        localStorage.setItem("profile",user_image)
         is_admin?localStorage.setItem("role","Admin"):localStorage.setItem("role",role)
-
         if (response?.status === 200) {
           if(is_admin){
             navigate("/admin/dashboard")
@@ -65,6 +63,8 @@ const handleLogin = async () => {
         if (error.response?.status === 404) {
             dispatch(handleToastError("Account not found"));
         }
+    }finally{
+      setLoading(false)
     }
 };
 
@@ -124,11 +124,21 @@ const handleShowPassword = () => {
           }
         </div>
         <div className="button-container">
-          <input type="submit" 
-          title='Sigin' 
-          className='button' 
-          onClick={handleLogin} 
-          />
+          <button className='button' 
+           type='submit'
+           onClick={handleLogin} 
+           >
+           Login
+          </button>
+          {loading && 
+          <Spinner animation="border"
+          style={{
+          position:'absolute',
+          color:'green',
+          top:'62.5%',
+          left:'49%'
+          }}/>
+          }
         </div>
         <p className='copyright'>@2024 Pharmacy Management System. Developed by Justice Ofori</p>
       </div>

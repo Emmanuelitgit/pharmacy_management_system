@@ -3,6 +3,7 @@ import {MaterialReactTable,useMaterialReactTable} from 'material-react-table';
 import AddUser from "../AddUser/AddUser"
 import ManageUser from "../AddUser/ManageUser"
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 
 
@@ -10,15 +11,16 @@ const UserList = () => {
 
   const role = localStorage.getItem("role");
   const [tableData, setTableData] = useState([]);
+  const dep = useSelector((state)=>state.count?.depValue)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/medicine/all/');
+        const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/accounts/sales-person/');
       
-        const {medicines} = await response.data;
-        const dataWithIds = medicines.map((medicine, index) => ({
-          ...medicine,
+        const sales_person = await response.data;
+        const dataWithIds = sales_person.map((user, index) => ({
+          ...user,
           id: index + 1,
         }));
         setTableData(dataWithIds);
@@ -27,15 +29,8 @@ const UserList = () => {
       }
     };
     fetchData();
-  }, []);
+  }, [dep]);
 
-
-  const truncateText = (text, length) => {
-    if (text.length > length) {
-      return text.substring(0, length) + '...';
-    }
-    return text;
-  };
 
   const columns = useMemo(
     () => [
@@ -45,29 +40,35 @@ const UserList = () => {
         size: 100,
       },
       {
-        accessorKey: 'category',
+        accessorKey: 'full_name',
         header: 'Full Name',
         size: 150,
       },
       {
-        accessorKey: 'price',
-        header: 'Age',
-        size: 100,
-        Cell: ({ cell }) => (
-          <span>{truncateText(cell.getValue(), 40)}</span>
-        ),
+        accessorKey: 'email',
+        header: 'Email',
+        size: 150,
+      },
+      {
+        accessorKey: 'phone',
+        header: 'Phone',
+        size: 150,
       },
       {
         id: 'actions',
         header: 'Actions',
-        size: 200,
+        size: 220,
         Cell: ({ row }) => {
-          const categoryId = row.original.medicine_id;
           return (
             <div>
               <ManageUser
                name={'User'}
-               id={categoryId} 
+               staff_name={row.original.full_name}
+               email={row.original.email}
+               phone={row.original.phone}
+               id={row.original.user_id} 
+               profile={row.original.user_image}
+               role={row.original.role}
               />
             </div>
           );

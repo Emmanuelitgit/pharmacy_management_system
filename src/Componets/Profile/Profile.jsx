@@ -5,6 +5,7 @@ import AddStaff from "../../Pages/Admin/AddUser/AddUser";
 import ManageProfile from './ManageProfile';
 import { Man } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const Profile = () => {
 
@@ -12,10 +13,9 @@ const Profile = () => {
     const[profile, setProfile] = useState();
     const dep = useSelector(state => state.count?.depValue) || [2];
     const location = useLocation();
-    const id = location.pathname.split("/")[3]; 
 
-    const role = data?.map((d)=>d.role)
-    const name = data?.map((d)=>d.name)
+    const role = data?.role
+    const name = data?.full_name
 
     function getFirstWord(str, num) {
         let words = str?.trim().split(/\s+/);
@@ -27,32 +27,30 @@ const Profile = () => {
     let lastName = getFirstWord(sentence, 1);
 
    
-    // useEffect(()=>{
-    //     const getStaff = async()=>{
-    //       const id =localStorage.getItem("userId")
-    //         try {
-    //         const response = await fetch(`http://localhost:5000/single_staff/${id}`)
-    //         if(!response.ok){
-    //         console.log("faild to fetch data...")
-    //         }
-    //         const fetchedData = await response.json()
-    //         const { profile } = fetchedData[0];
-    //         setProfile(profile)
-    //         setData(fetchedData)
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     }
-    //     getStaff()
-    // }, [dep])
+    useEffect(()=>{
+      const getStaff = async()=>{
+        const id = localStorage.getItem('user_id')
+          try {
+          const response = await axios.get(`https://pharmacy-v2qn.onrender.com/api/accounts/retrieve/${id}/`)
 
-    const userData = [{
-      first_name:'Ofori',
-      last_name:'Justice',
-      email:'oforijustice@gmail.com',
-      phone:'0597893082',
-      address:'Accra, Legon'
-    }]
+          if(response.status === 200){
+            const user = response.data
+            setData(user)
+          }
+          } catch (error) {
+              console.log(error)
+          }
+      }
+      getStaff()
+  }, [dep])
+
+    // const userData = [{
+    //   first_name:'Ofori',
+    //   last_name:'Justice',
+    //   email:'oforijustice@gmail.com',
+    //   phone:'0597893082',
+    //   address:'Accra, Legon'
+    // }]
 
   return (
     <div className='view-staff-container'>
@@ -71,8 +69,7 @@ const Profile = () => {
          </div>
          <div className="view-staff-horozontally-line"></div>
          <h3 className='bio-title'>Bio Info:</h3>
-            {userData?.map((staff)=>(
-            <div className='bio-info-container' key={staff.staff_id}>
+            <div className='bio-info-container' key={data?.user_id}>
                 <div className="bio-info-items">
                   <div className="bio-info-item">
                     <span className='bio-info-item-text-title'>Staff ID:</span>
@@ -80,29 +77,28 @@ const Profile = () => {
                   </div>
                   <div className="bio-info-item">
                     <span className='bio-info-item-text-title'>First Name:</span>
-                    <span>{staff.first_name}</span>
+                    <span>{firstName}</span>
                   </div>
                   <div className="bio-info-item">
                     <span className='bio-info-item-text-title'>Last Name:</span>
-                    <span>{staff.last_name}</span>
+                    <span>{lastName}</span>
                   </div>
                 </div>
                 <div className="bio-info-items">
                   <div className="bio-info-item">
                     <span className='bio-info-item-text-title'>Email:</span>
-                    <span>{staff.email}</span>
+                    <span>{data?.email}</span>
                   </div>
                   <div className="bio-info-item">
                     <span className='bio-info-item-text-title'>Phone:</span>
-                    <span>{staff.phone}</span>
+                    <span>{data?.phone}</span>
                   </div>
                   <div className="bio-info-item">
                     <span className='bio-info-item-text-title'>Address</span>
-                    <span>{staff.address}</span>
+                    <span>{data?.address? data?.address:'null'}</span>
                   </div>
                 </div>
             </div>
-            ))}
             <div style={{
               position:'absolute',
               top:"90%",
@@ -113,6 +109,12 @@ const Profile = () => {
                padding={'15%'}
                width={'150%'}
                color={ 'white'}
+               role={data?.role}
+               email={data?.email}
+               phone={data?.phone}
+               password={data?.password}
+               full_name={data?.full_name}
+               id={data?.user_id}
               />
             </div>
     </div>

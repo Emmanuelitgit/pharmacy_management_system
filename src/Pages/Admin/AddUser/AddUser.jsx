@@ -28,26 +28,15 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 export default function AddStaff({name}) {
   
   const location = useLocation();
-  const role = location.pathname.split("/")[2].replace("-list", "");
+  const [role, setRole] = useState('')
   const [open, setOpen] = React.useState(false);
-  const[file, setFile] = useState(null);
+  const[user_image, setUserImage] = useState(null);
   const [data, setData] = React.useState({
     full_name:"",
-    role:role,
+    role:'',
     phone:"",
     email:"",
   })
-
-  const upload = async ()=>{
-    try{
-        const formData = new FormData();
-        formData.append("file", file)
-        const res = await axios.post("http://localhost:5000/upload", formData)
-        return res.data
-    }catch(err){
-        console.log(err)
-    }
-}
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -74,14 +63,19 @@ export default function AddStaff({name}) {
 
 
   const handleSubmit = async() => {
-    const imgUrl = await upload()
     try {
-      const response = await axios.post(`https://pharmacy-v2qn.onrender.com/api/accounts/create`, {
-        name:data.name,
-        role:data.role,
-        phone:data.phone,
-        email:data.email,
-        user_image:file? imgUrl : ""
+      const formData = new FormData();
+      formData.append("full_name", data.full_name);
+      formData.append("role", data.role);
+      formData.append("phone", data.phone);
+      formData.append("email", data.email);
+      if (user_image) {
+        formData.append("user_image", user_image);
+      }
+      const response = await axios.post(`https://pharmacy-v2qn.onrender.com/api/accounts/create/`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
       });
       if(response.status === 201){
         handleDepCount()
@@ -149,8 +143,16 @@ return (
             />
           </div>
           <div className='input-container'>
+          <label htmlFor="">Role</label>
+            <select name="role" onChange={handleChange}  className='dropdown'>
+              <option value="">--Select role--</option>
+              <option value="sales_person">Sales Person</option>
+              <option value="Admin">Admin</option>
+            </select>
+        </div>
+          <div className='input-container'>
               <label htmlFor="" className='label'>Profile Image</label>
-              <input type="file" name="file" id="file" onChange={e=>setFile(e.target.files[0])} />
+              <input type="file" name="file" id="file" onChange={e=>setUserImage(e.target.files[0])} />
           </div>
         </DialogContent>
         <DialogActions>

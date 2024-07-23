@@ -23,35 +23,29 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function ManageStaff({ name,id,profile,role,phone,address,email,password,department, staff_name}) {
+export default function ManageStaff({ staff_name,name,id,profile,role,phone,email}) {
 
   const navigate = useNavigate();
   const existingProfile = profile !== null? profile : ''
-  const[file, setFile] = useState(null);
+  const[user_image, setUserImage] = useState(null);
   const [open, setOpen] = useState(false);
   const [data, setData] = useState({
-    name: "",
+    full_name: "",
     role: "",
     phone: "",
-    address: "",
     email: "",
-    password: "",
-    department: "",
   });
 
-  console.log(profile)
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
     setData({
-      name:staff_name,
+      full_name:staff_name,
       role:role,
       phone:phone,
-      address:address,
       email:email,
-      password:password,
-      department:department,
+      user_image:profile
     })
   };
 
@@ -66,31 +60,26 @@ export default function ManageStaff({ name,id,profile,role,phone,address,email,p
     dispatch(depCountActions.handleCount());
   };
 
-  const upload = async ()=>{
-    try{
-        const formData = new FormData();
-        formData.append("file", file)
-        const res = await axios.post("http://localhost:5000/upload", formData)
-        return res.data
-    }catch(err){
-        console.log(err)
-    }
- }
-
   const handleUpdate = async () => {
-    const imgUrl = await upload()
     try {
-      const response = await axios.put(`http://localhost:5000/update_staff/${id}`, {
-        name:data.name,
-        role:data.role,
-        phone:data.phone,
-        address:data.address,
-        email:data.email,
-        password:data.password,
-        department:data.department,
-        profile:file? imgUrl : existingProfile
+      const token = localStorage.getItem("token")
+      const formData = new FormData();
+      formData.append("full_name", data.full_name);
+      formData.append("role", data.role);
+      formData.append("phone", data.phone);
+      formData.append("email", data.email);
+      if (user_image) {
+        formData.append("user_image", user_image);
+      }
+
+      const response = await axios.post(`https://pharmacy-v2qn.onrender.com/api/accounts/update/${id}/`, formData, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data',
+        },
       });
-      if (response.status === 201) {
+
+      if (response.status === 200) {
         handleDepCount();
         handleClose();
         dispatch(handleToastSuccess("Successfully Updated"))
@@ -102,7 +91,7 @@ export default function ManageStaff({ name,id,profile,role,phone,address,email,p
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete(`http://localhost:5000/remove_staff/${id}`);
+      const response = await axios.delete(`https://pharmacy-v2qn.onrender.com/api/accounts/delete/${id}/`);
       if (response.status === 200) {
         handleDepCount();
         dispatch(handleToastSuccess("Successfully Deleted"))
@@ -155,14 +144,14 @@ export default function ManageStaff({ name,id,profile,role,phone,address,email,p
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <div className='input-container'>
-            <label htmlFor="">{name} Name</label>
+        <div className='input-container'>
+            <label htmlFor="">Full Name</label>
             <input type="text"
               className='input'
               placeholder='eg Emmanuel Yidana'
-              name='name'
-              value={data.name}
-              onChange={handleChange}
+              name='full_name'
+              onChange={handleChange} 
+              value={data.full_name}
             />
           </div>
           <div className='input-container'>
@@ -171,67 +160,31 @@ export default function ManageStaff({ name,id,profile,role,phone,address,email,p
               className='input'
               placeholder='eg eyidana001@gmial.com'
               name='email'
+              onChange={handleChange}
               value={data.email}
-              onChange={handleChange}
-            />
-          </div>
-          <div className='input-container'>
-            <label htmlFor="" className='label'>Password</label>
-            <input type="password"
-              className='input'
-              placeholder='enter a strong password'
-              name='password'
-              value={data.password}
-              onChange={handleChange}
             />
           </div>
           <div className='input-container'>
             <label htmlFor="">Phone</label>
             <input type="text"
-              className='input'
-              placeholder='eg 0597893082'
-              name='phone'
-              value={data.phone}
-              onChange={handleChange}
-            />
-          </div>
-          <div className='input-container'>
-            <label htmlFor="" className='label'>Address</label>
-            <input type="text"
-              className='input'
-              placeholder='University of Ghana'
-              name='address'
-              value={data.address}
-              onChange={handleChange}
+               className='input'
+               placeholder='eg 0597893082'
+               name='phone'
+               onChange={handleChange}
+               value={data.phone}
             />
           </div>
           <div className='input-container'>
           <label htmlFor="">Role</label>
-            <select name="role" onChange={handleChange} className='dropdown'>
-              <option value="">{data.role}</option>
-              <option value='Doctor'>Doctor</option>
-              <option value="Nurse">Nurse</option>
-              <option value="Pharmacist">Pharmacist</option>
-              <option value="Laboratorist">Laboratorist</option>
-              <option value="Radiographer">Radiographer</option>
-              <option value="Accountant">Accountant</option>
+            <select name="role" onChange={handleChange}  className='dropdown' value={data.role}>
+              <option value="">--Select role--</option>
+              <option value="sales_person">Sales Person</option>
+              <option value="Admin">Admin</option>
             </select>
-          </div>
-          {name === "Doctor" &&
-            <div className='input-container'>
-              <label htmlFor="">Department Name</label>
-              <input type="text"
-                className='input'
-                placeholder='eg Public Health'
-                name='department'
-                value={data.department}
-                onChange={handleChange}
-              />
-            </div>
-          }
-           <div className='input-container'>
+        </div>
+          <div className='input-container'>
               <label htmlFor="" className='label'>Profile Image</label>
-              <input type="file" name="file" id="file" onChange={e=>setFile(e.target.files[0])} />
+              <input type="file" name="file" id="file" onChange={e=>setUserImage(e.target.files[0])} />
           </div>
         </DialogContent>
         <DialogActions>
