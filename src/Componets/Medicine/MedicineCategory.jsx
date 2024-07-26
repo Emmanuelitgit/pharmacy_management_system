@@ -38,6 +38,11 @@ const MedicineCategory = () => {
     return text;
   };
 
+  const getText = (html) =>{
+    const doc = new DOMParser().parseFromString(html, "text/html")
+    return doc.body.textContent
+ }
+
   const columns = useMemo(
     () => [
       {
@@ -55,7 +60,7 @@ const MedicineCategory = () => {
         header: 'Description',
         size: 100,
         Cell: ({ cell }) => (
-          <span>{truncateText(cell.getValue(), 40)}</span>
+          <span>{getText(truncateText(cell.getValue(), 40))}</span>
         ),
       },
       {
@@ -77,6 +82,7 @@ const MedicineCategory = () => {
     ],
     []
   );
+  
 
   const table = useMaterialReactTable({ columns, data: tableData });
 

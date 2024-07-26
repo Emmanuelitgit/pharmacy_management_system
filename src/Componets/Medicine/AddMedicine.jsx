@@ -60,9 +60,9 @@ export default function AddMedicine({name}) {
   useEffect(()=>{
     const getCategories =async()=>{
       try {
-        const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/category/all');
+        const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/category/all/');
         if(response.status === 200){
-          const {categories} = await response.data;
+          const {categories} = await response?.data;
           setCategories(categories)
         }
       } catch (error) {
@@ -157,7 +157,7 @@ export default function AddMedicine({name}) {
           <label htmlFor="">Category</label>
             <select name="category" onChange={handleChange}  className='dropdown'>
               <option value="">--Select category--</option>
-              {categories.map((category)=>(
+              {categories?.map((category)=>(
                 <option value={category.name}>{category.name}</option>
               ))}
             </select>

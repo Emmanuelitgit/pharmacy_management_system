@@ -24,12 +24,12 @@ const DoctorSidebar = () => {
     <div className='sidebar-container'>
       <div className='sidebar-items-container'>
         <div className='item'>
-        {profile !== null && <img 
-            src={`https://pharmacy-v2qn.onrender.com/media/${profile}`}
+        {profile !== 'null' && <img 
+            src={`https://pharmacy-v2qn.onrender.com/media/${profile}/`}
            alt="" 
            className='sidebar-img'
            />}
-           {profile === null && <img 
+           {profile === 'null' && <img 
            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'} 
            alt="" 
            className='sidebar-img'

@@ -16,10 +16,10 @@ const MedicineList = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/medicine/all/');
-        const { medicines } = response.data;
+        const { medicines } = response?.data;
 
         // Add a sequential ID to each medicine item
-        const dataWithIds = medicines.map((medicine, index) => ({
+        const dataWithIds = medicines?.map((medicine, index) => ({
           ...medicine,
           id: index +1,
         }));
@@ -72,7 +72,7 @@ const MedicineList = () => {
         header: 'Actions',
         size: 300,
         Cell: ({ row }) => {
-          const categoryId = row.original.medicine_id;
+          const categoryId = row.original?.medicine_id;
           return (
             <div>
               <ManageMedicine name={'Medicine'} id={categoryId} />

@@ -26,6 +26,11 @@ const ViewMedicine = () => {
         getStaff()
     }, [id, token])
 
+    const getText = (html) =>{
+        const doc = new DOMParser().parseFromString(html, "text/html")
+        return doc.body.textContent
+     }
+
     return (
         <div className='view-satff-container'>
             <div className="medical-history-container">
@@ -42,7 +47,7 @@ const ViewMedicine = () => {
                     </thead>
                     <tbody>
                         <tr className='medical-history-td-tr view-patient-tr' key={data.medicine_id}>
-                            <td className='medical-history-td-tr'>{data?.description}</td>
+                            <td className='medical-history-td-tr'>{getText(data?.description)}</td>
                             <td className='medical-history-td-tr'>{data?.category}</td>
                             <td className='medical-history-td-tr'>{data?.price}</td>
                             <td className='medical-history-td-tr'>{data?.manufacturer}</td>

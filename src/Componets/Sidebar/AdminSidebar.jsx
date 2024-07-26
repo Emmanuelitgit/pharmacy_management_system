@@ -38,16 +38,17 @@ const AdminSidebar = () => {
     dispatch(handleSidebarToggle())
    }
 
+
   return (
     <div className={sidebarVisible && windowSize < 1000? 'sidebar-toggle' : 'sidebar-container'}>
       <div className='sidebar-items-container'>
        <div className='item'>
-          {profile !== null && <img 
-           src={`https://pharmacy-v2qn.onrender.com${profile}`}
+          {!profile === 'null' && <img 
+           src={`https://pharmacy-v2qn.onrender.com/media/${profile}/`}
            alt="" 
            className='sidebar-img'
            />}
-           {profile === null && <img 
+           {profile === 'null' && <img 
            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'} 
            alt="" 
            className='sidebar-img'

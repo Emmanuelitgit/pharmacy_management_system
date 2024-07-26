@@ -37,17 +37,18 @@ function ProfileModal() {
   
   return (
     <>
-        {profile !== null &&  <img 
+        {profile !== 'null' &&  <img 
             className='nav-profile-img'
             src={`https://pharmacy-v2qn.onrender.com/media/${profile}`}
             onClick={handleShow} 
             />}
-            {profile === null &&  <img 
+            {profile === 'null' &&  <img 
             className='nav-profile-img'
             src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'}
             onClick={handleShow} 
             />}
-            <span className='user-name' style={{color:"black"}}>{name}</span>
+            {name !=='null' && <span className='user-name' style={{color:"black"}}>{name}</span>}
+            {name === 'null' && <span className='user-name' style={{color:"black"}}>Admin</span>} 
             <ArrowDropDown 
              className='dropdown-icon'
              style={{

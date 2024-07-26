@@ -37,6 +37,7 @@ const ViewOrder = () => {
         getStaff()
     }, [])
 
+    
   return (
     <div className='view-satff-container'>
             <h3 className='result-title'>Medicine Category ({medicine_name})</h3>
