@@ -53,7 +53,7 @@ const SalesPersonBoxes = () => {
         id:3,
         name:"Orders",
         background:"orange",
-        link:'/admin/patient-list',
+        link:'/admin/order-list',
         total: orders?.length,
         image:'https://cdn-icons-png.flaticon.com/128/4290/4290854.png'
       },

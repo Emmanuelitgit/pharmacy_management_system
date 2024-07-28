@@ -57,7 +57,7 @@ const AdminBoxes = () => {
         id:1,
         name:"Users",
         background:"purple",
-        link:'/admin/doctor-list',
+        link:'/admin/user-list',
         total: 10,
         image:'https://cdn-icons-png.flaticon.com/128/476/476863.png'
       },
@@ -65,7 +65,6 @@ const AdminBoxes = () => {
         id:2,
         name:"Sales",
         background:"pink",
-        link:'/admin/nurse-list',
         total: 25,
         image:'https://cdn-icons-png.flaticon.com/128/3271/3271314.png'
       },
@@ -73,7 +72,7 @@ const AdminBoxes = () => {
         id:3,
         name:"Orders",
         background:"orange",
-        link:'/admin/patient-list',
+        link:'/admin/order-list',
         total: orders?.length,
         image:'https://cdn-icons-png.flaticon.com/128/4290/4290854.png'
       },

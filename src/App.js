@@ -54,7 +54,6 @@ const router = createBrowserRouter([
       { path: "/admin/view-medicine/:id", element: <ViewMedicine /> },
       { path: "/admin/view-category/:id", element: <ViewMedCategory /> },
       { path: "/admin/view-order/:id", element: <ViewOrder /> },
-      { path: "/admin/user-list", element: <UserList /> },
       { path: "/admin/order-list", element: <Orders /> },
       { path: "/admin/view-staff/:id", element: <ViewUser /> },
       { path: "/admin/profile", element: <Profile /> },
