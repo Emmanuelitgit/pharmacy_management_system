@@ -15,6 +15,7 @@ const AdminBoxes = () => {
     
     const [orders, setOrders] = useState('')
     const [medicine, setMedicine] = useState('')
+    const [user, setUser] = useState('')
     const dep = useSelector((state)=>state.count?.depValue)
 
 
@@ -51,6 +52,20 @@ const AdminBoxes = () => {
         fetchData();
       }, [dep]);
 
+      useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/accounts/sales-person/');
+          
+            const sales_person = await response.data;
+            setUser(sales_person)
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };
+        fetchData();
+      }, [dep]);
+
 
    const adminBoxes = [
         {
@@ -58,14 +73,14 @@ const AdminBoxes = () => {
         name:"Users",
         background:"purple",
         link:'/admin/user-list',
-        total: 10,
+        total: user?.length,
         image:'https://cdn-icons-png.flaticon.com/128/476/476863.png'
       },
       {
         id:2,
         name:"Sales",
         background:"pink",
-        total: 25,
+        total: 5,
         image:'https://cdn-icons-png.flaticon.com/128/3271/3271314.png'
       },
       {

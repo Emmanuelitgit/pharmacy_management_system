@@ -1,17 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import "./style.css";
 import { Dashboard,
-        Logout, 
-        Settings, 
         Person, 
-        Science, 
-        LocalPharmacy,
-        MedicalServices,
-        PeopleAlt,
-        Bloodtype,
-        ArrowDropDown,
-        PersonAdd,
-        Healing } from '@mui/icons-material';
+        PersonAdd, } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import LogoutBtn from '../Buttons/LogoutBtn';
 import axios from 'axios';
