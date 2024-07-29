@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import "./style.css";
 import { Dashboard,
         Logout, 
@@ -14,18 +14,39 @@ import { Dashboard,
         Healing } from '@mui/icons-material';
 import { Link } from 'react-router-dom';
 import LogoutBtn from '../Buttons/LogoutBtn';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 
 const DoctorSidebar = () => {
 
-  const profile = localStorage?.getItem("profile")
+  const [profile, setProfile] = useState()
+  const dep = useSelector(state => state.count?.depValue) || [2];
+
+  useEffect(()=>{
+    const getStaff = async()=>{
+      const id = localStorage.getItem('user_id')
+        try {
+        const response = await axios.get(`https://pharmacy-v2qn.onrender.com/api/accounts/retrieve/${id}/`)
+
+        if(response.status === 200){
+          const user = response.data
+          setProfile(user)
+        }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    getStaff()
+}, [dep])
+
 
   return (
     <div className='sidebar-container'>
       <div className='sidebar-items-container'>
         <div className='item'>
-        {profile !== 'null' && <img 
-            src={`https://pharmacy-v2qn.onrender.com/media/${profile}/`}
+        {profile !== null && <img 
+            src={profile?.user_image}
            alt="" 
            className='sidebar-img'
            />}

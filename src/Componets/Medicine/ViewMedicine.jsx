@@ -54,7 +54,7 @@ const ViewMedicine = () => {
                             <td className='medical-history-td-tr'>{data?.quantity}</td>
                             <td className='medical-history-td-tr'>
                                 <img 
-                                    src={`https://pharmacy-v2qn.onrender.com${data?.thumbnail}`}
+                                    src={data?.thumbnail}
                                     style={{
                                         width: '100px',
                                         height: '100px',

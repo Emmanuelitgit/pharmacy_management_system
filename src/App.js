@@ -69,6 +69,8 @@ const router = createBrowserRouter([
       { path: "/sales-person/medicine-list", element: <MedicineList /> },
       { path: "/sales-person/order-list", element: <Orders /> },
       { path: "/sales-person/profile", element: <Profile /> },
+      { path: "/sales-person/view-medicine/:id", element: <ViewMedicine /> },
+      { path: "/sales-person/view-category/:id", element: <ViewMedCategory /> },
     ]
   },
   { path: "/register", element: <Register /> },

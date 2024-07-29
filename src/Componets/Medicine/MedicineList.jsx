@@ -88,11 +88,10 @@ const MedicineList = () => {
 
   return (
     <div>
-      {role === 'Admin' && (
         <div className="add-btn-container">
           <AddMedicine name={'Medicine'} />
         </div>
-      )}
+    
       <div className="table-component">
         <MaterialReactTable table={table} />
       </div>

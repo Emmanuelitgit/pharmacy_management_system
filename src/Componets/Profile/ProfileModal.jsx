@@ -1,25 +1,21 @@
-import { useState } from 'react';
-import Button from 'react-bootstrap/Button';
+import { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import {  ArrowDropDown } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/auth';
-import { Logout } from '@mui/icons-material';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import LogoutBtn from "../Buttons/LogoutBtn";
 import ManageProfile from "./ManageProfile";
-import { Person, PersonRounded } from '@mui/icons-material';
-
+import axios from 'axios';
 
 function ProfileModal() {
 
   const navigate = useNavigate()
   const dispatch = useDispatch();
 
-  // const user = localStorage.getItem('user');
-  const profile = localStorage?.getItem("profile")
   const name = localStorage.getItem("user")
   const [show, setShow] = useState(false);
+  const [profile, setProfile] = useState()
+  const dep = useSelector(state => state.count?.depValue) || [2];
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -33,16 +29,33 @@ function ProfileModal() {
     navigate("/login")
   }
 
-  console.log(profile)
+
+
+  useEffect(()=>{
+    const getStaff = async()=>{
+      const id = localStorage.getItem('user_id')
+        try {
+        const response = await axios.get(`https://pharmacy-v2qn.onrender.com/api/accounts/retrieve/${id}/`)
+
+        if(response.status === 200){
+          const user = response.data
+          setProfile(user)
+        }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    getStaff()
+}, [dep])
   
   return (
     <>
-        {profile !== 'null' &&  <img 
+        {profile?.user_image !== null &&  <img 
             className='nav-profile-img'
-            src={`https://pharmacy-v2qn.onrender.com/media/${profile}`}
+            src={profile?.user_image}
             onClick={handleShow} 
             />}
-            {profile === 'null' &&  <img 
+            {profile?.user_image === null &&  <img 
             className='nav-profile-img'
             src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'}
             onClick={handleShow} 
@@ -64,14 +77,14 @@ function ProfileModal() {
         }}
         >
         <Modal.Header closeButton>
-        {profile ==='null' &&  <img 
+        {profile?.user_image === null &&  <img 
             className='nav-profile-img'
             src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'}
             onClick={handleShow} 
             />}
-           {profile !=='null' &&  <img 
+           {profile !==null &&  <img 
             className='nav-profile-img'
-            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'}
+            src={profile?.user_image}
             onClick={handleShow} 
             />}
         </Modal.Header>

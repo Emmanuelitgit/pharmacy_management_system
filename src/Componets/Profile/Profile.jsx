@@ -60,7 +60,7 @@ const Profile = () => {
             <div className="view-staff-profile-items">
                 {/* <span className="view-staff-profile-item ">{name}</span> */}
                   {data?.user_image !== null && <img 
-                   src={`https://pharmacy-v2qn.onrender.com${data?.user_image}/`}
+                   src={data?.user_image}
                    alt=""  
                    className='view-staff-profile'/>}
                   {data?.user_image === null && <img 

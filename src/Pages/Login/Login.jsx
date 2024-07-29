@@ -41,6 +41,7 @@ const handleLogin = async () => {
                 'Content-Type': 'application/json',
             }
         });
+        console.log(response.data)
         const {full_name, email, is_admin, user_id, user_image,role} = response.data?.user
         const {access} = response.data?.token
         localStorage.setItem("token",access)

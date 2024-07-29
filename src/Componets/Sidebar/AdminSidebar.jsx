@@ -7,6 +7,7 @@ import { useState } from 'react';
 import LogoutBtn from '../Buttons/LogoutBtn';
 import { useDispatch, useSelector } from 'react-redux';
 import { handleSidebarToggle } from '../../store/modalState';
+import axios from 'axios';
 
 
 
@@ -15,7 +16,9 @@ const AdminSidebar = () => {
   const [visible, setVisible] = useState(false)
   const sidebarVisible = useSelector((state)=>state.modal?.sidebar_toggle)
   const [windowSize, setWindowSize] = useState()
-  const profile = localStorage?.getItem("profile")
+  const [profile, setProfile] = useState(null)
+  const dep = useSelector(state => state.count?.depValue) || [2];
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -38,21 +41,38 @@ const AdminSidebar = () => {
     dispatch(handleSidebarToggle())
    }
 
+   useEffect(()=>{
+    const getStaff = async()=>{
+      const id = localStorage.getItem('user_id')
+        try {
+        const response = await axios.get(`https://pharmacy-v2qn.onrender.com/api/accounts/retrieve/${id}/`)
+
+        if(response.status === 200){
+          const user = response.data
+          setProfile(user)
+        }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    getStaff()
+}, [dep])
+
 
   return (
     <div className={sidebarVisible && windowSize < 1000? 'sidebar-toggle' : 'sidebar-container'}>
       <div className='sidebar-items-container'>
        <div className='item'>
-          {!profile === 'null' && <img 
-           src={`https://pharmacy-v2qn.onrender.com/media/${profile}/`}
+          {/* {profile?.user_image !== null && <img 
+           src={profile?.user_image}
            alt="" 
            className='sidebar-img'
-           />}
-           {profile === 'null' && <img 
+           />} */}
+          <img 
            src={'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSusvPVRdrInwIDn6yQygRR4Asmf2uRXgZJQ&s'} 
            alt="" 
            className='sidebar-img'
-           />}
+           />
         </div>
         <div className='item'>
           <Link to={"/admin/dashboard"} className='link' onClick={handleToggle}>

@@ -12,48 +12,9 @@ import ProfileModal from "../Profile/ProfileModal";
 
 const Navbar = () => {
 
-  //  const user = useSelector((state)=>state.auth?.currentUser) || []
-  //  const role = useSelector((state)=>state.auth?.role) || []
   const dispatch = useDispatch()
-  const [settings, setSettings] = useState('');
-  const [count, setCount] = useState()
-   const visible = useSelector((state)=>state.modal?.sidebar_toggle) || [];
    const role = localStorage.getItem('role');
-  //  const role = roleValue?.charAt(0).toUpperCase() + roleValue.slice(1);
-   const location = useLocation();
-   const route = location.pathname.split("/")[1];
-   const dep = useSelector(state => state.count?.depValue) || [2];
 
-
-   useEffect(()=>{
-    const getsettings = async()=>{
-      try {
-        const response = await fetch('http://localhost:5000/settings');
-        if(!response.ok){
-          console.log('faild to fetch data..')
-        }
-        const fetchedData = await response.json();
-        setSettings(fetchedData)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getsettings()
-  }, [dep])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/staff/${role}`);
-        const data = response.data;
-        setCount(data.length);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, [dep]);
 
   const handleToggle = () =>{
     dispatch(handleSidebarToggle())
