@@ -73,7 +73,9 @@ const MedicineCategory = () => {
             <div>
               <ManageMedicineCategory
                name={'Category'}
-               id={categoryId} 
+               id={categoryId}
+               category_name={row.original?.name}
+               desc={row.original?.description} 
               />
             </div>
           );

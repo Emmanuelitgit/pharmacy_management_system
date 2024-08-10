@@ -36,7 +36,7 @@ const SalesPersonDashboard = () => {
     () => [
       {
         accessorKey: 'id',
-        header: 'User ID',
+        header: 'Medicine ID',
         size: 100,
       },
       {
@@ -67,8 +67,14 @@ const SalesPersonDashboard = () => {
           return (
             <div>
               <ManageMedicine
-               name={'User'}
+               name={'Medicine'}
                id={row.original.medicine_id} 
+               medicine_name={row.original?.name}
+               price={row.original?.price}
+               quantity={row.original?.quantity}
+               manufacturer={row.original?.manufacturer}
+               desc={row.original?.description}
+               category={row.original?.category}
               />
             </div>
           );

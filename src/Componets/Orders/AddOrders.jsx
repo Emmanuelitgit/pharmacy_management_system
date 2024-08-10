@@ -31,15 +31,11 @@ export default function AddOrders({name}) {
   const dispatch = useDispatch()
 
   const [open, setOpen] = React.useState(false);
-  const[categories, setCategories] = useState()
-  const[description, setDescription] = useState()
+  const[medicine, setMedicine] = useState()
   const [data, setData] = useState({
-    name:'',
-    category:'',
-    description:description,
-    price:'',
-    manufacturer:'',
-    status:''
+    medicine_id:'',
+    quantity:null,
+    address:''
   });
 
   const dep = useSelector(state => state.count?.depValue) || [2];
@@ -51,24 +47,22 @@ export default function AddOrders({name}) {
     setOpen(false);
   };
 
-  useEffect(() => {
-    setData((prevData) => ({ ...prevData, description }));
-  }, [description]);
 
   useEffect(()=>{
-    const getCategories =async()=>{
+    const getMedicines =async()=>{
       try {
-        const response = await fetch('http://localhost:5000/medicine_categories');
+        const response = await fetch('https://pharmacy-v2qn.onrender.com/api/medicine/all/');
         if(!response.ok){
           throw new Error('Failed to fetch data');
         }
         const fetchedData = await response.json();
-        setCategories(fetchedData)
+        const {medicines} = fetchedData
+        setMedicine(medicines)
       } catch (error) {
         console.log(error)
       }
     }
-    getCategories()
+    getMedicines()
   }, [dep])
 
   const handleChange = (e) => {
@@ -84,18 +78,35 @@ export default function AddOrders({name}) {
     dispatch(depCountActions.handleCount())
   }
   
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     try {
-      const response = await axios.post(`http://localhost:5000/add_medicine`, data);
-      if(response.status === 201){
+      const accessToken = await localStorage.getItem('token')
+  
+      const response = await axios.post('https://pharmacy-v2qn.onrender.com/api/medicine/order/',
+        {
+          medicine_id:data?.medicine_id,
+          quantity:data?.quantity,
+          address:data?.address
+        },
+        {
+            headers: {
+             'Content-Type': 'application/json',
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+      );
+      
+      if (response.status === 200) {
         handleDepCount()
-        handleClose()
-        dispatch(handleToastSuccess("Created Successfully"))
-      }
+        const {authorization_url} = response.data.data
+        window.location.href = authorization_url;    }
     } catch (error) {
-      dispatch(handleToastError('Error! cannot perform operation'))
+        console.log(error)
+    }finally{
+      handleDepCount()
     }
   };
+
 
   return (
     <React.Fragment>
@@ -126,61 +137,35 @@ export default function AddOrders({name}) {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers >
-        <div className='input-container'>
-            <label htmlFor="">Medicine Name</label>
-            <input type="text"
-              className='input'
-              placeholder='eg Tenonvovir'
-              name='name'
-              onChange={handleChange}
-            />
-          </div>
           <div className='input-container'>
           <label htmlFor="">Doctor</label>
             <select name="category" onChange={handleChange} value={data.doctor}  className='dropdown'>
-              <option value="">--Select Category--</option>
-              {categories?.map((item)=>(
-                <option value={item.category_name} key={item.category_id}>
-                  {item.category_name}
+              <option value="">--Select Medicine--</option>
+              {medicine?.map((item)=>(
+                <option value={item.medicine_id} key={item.medicine_id}>
+                  {item.name}
                 </option>
               ))}
             </select>
-        </div>
-          <div className='input-container'>
-            <label htmlFor="">Price</label>
+        </div> 
+        <div className='input-container'>
+            <label htmlFor="">Quantity</label>
             <input type="number"
               className='input'
-              placeholder='eg 25'
-              name='price'
+              placeholder='eg 10'
+              name='quantity'
               onChange={handleChange}
             />
           </div>
           <div className='input-container'>
-            <label htmlFor="">Manufacturer</label>
+            <label htmlFor="">Customer's Address</label>
             <input type="text"
-               className='input'
-               placeholder='eg Himalaya'
-               name='manufacturer'
-               onChange={handleChange}
+              className='input'
+              placeholder='eg University of Ghana, Legon'
+              name='address'
+              onChange={handleChange}
             />
           </div>
-          <div className='input-container'>
-            <label htmlFor="">Status</label>
-            <input type="number"
-               className='input'
-               placeholder='eg 50'
-               name='status'
-               onChange={handleChange}
-            />
-          </div>
-          <div className="editor-container">
-            <label htmlFor="" className='edtor-label'>Description</label>
-            <ReactQuill className="editor-input" 
-             theme="snow" value={description} 
-             onChange={setDescription}
-             placeholder='Write medicine description here..'  
-             />
-          </div> 
         </DialogContent>
         <DialogActions>
           <button autoFocus 

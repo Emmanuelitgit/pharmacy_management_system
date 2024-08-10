@@ -68,7 +68,13 @@ const AdminDashboard = () => {
             <div>
               <ManageMedicine
                name={'User'}
-               id={row.original.medicine_id} 
+               id={row.original.medicine_id}
+               medicine_name={row.original?.name}
+               price={row.original?.price}
+               quantity={row.original?.quantity}
+               manufacturer={row.original?.manufacturer}
+               desc={row.original?.description}
+               category={row.original?.category} 
               />
             </div>
           );

@@ -27,7 +27,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function ManageMedicine({name, id}) {
+export default function ManageMedicine({name, id, medicine_name, price, quantity, manufacturer, desc, category}) {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -67,8 +67,20 @@ export default function ManageMedicine({name, id}) {
     getCategories()
   }, [dep])
 
+  useEffect(()=>{
+    setDescription(desc)
+  }, [open])
+
   const handleClickOpen = () => {
     setOpen(true);
+    setData({
+      name:medicine_name,
+      category:category,
+      description:desc,
+      price:price,
+      quantity:quantity,
+      manufacturer:manufacturer
+    })
   };
 
   const handleNavigate = () =>{
@@ -170,11 +182,12 @@ export default function ManageMedicine({name, id}) {
               placeholder='eg Tenonvovir'
               name='name'
               onChange={handleChange}
+              value={data?.name}
             />
           </div>
           <div className='input-container'>
           <label htmlFor="">Category Name</label>
-            <select name="category" onChange={handleChange} value={data.doctor}  className='dropdown'>
+            <select name="category" onChange={handleChange} value={data?.category}  className='dropdown'>
               <option value="">--Select Category--</option>
               {categories?.map((item)=>(
                 <option value={item.name} key={item.id}>
@@ -190,6 +203,7 @@ export default function ManageMedicine({name, id}) {
               placeholder='eg 25'
               name='price'
               onChange={handleChange}
+              value={data?.price}
             />
           </div>
           <div className='input-container'>
@@ -199,6 +213,7 @@ export default function ManageMedicine({name, id}) {
                placeholder='eg Himalaya'
                name='manufacturer'
                onChange={handleChange}
+               value={data?.manufacturer}
             />
           </div>
           <div className='input-container'>
@@ -208,6 +223,7 @@ export default function ManageMedicine({name, id}) {
                placeholder='eg 50'
                name='quantity'
                onChange={handleChange}
+               value={data?.quantity}
             />
           </div>
           <div className="editor-container">

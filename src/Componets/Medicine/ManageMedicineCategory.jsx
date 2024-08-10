@@ -30,7 +30,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function ManageMedicineCategory({name, id}) {
+export default function ManageMedicineCategory({name, id, category_name, desc}) {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -49,8 +49,15 @@ export default function ManageMedicineCategory({name, id}) {
     setData((prevData) => ({ ...prevData, description }));
   }, [description]);
 
+  useEffect(()=>{
+    setDescription(desc)
+  }, [open])
+
   const handleClickOpen = () => {
     setOpen(true);
+    setData({
+      name:category_name,
+    })
   };
 
   const handleNavigate = () =>{
@@ -151,6 +158,7 @@ export default function ManageMedicineCategory({name, id}) {
               placeholder='eg Tablet'
               name='name'
               onChange={handleChange}
+              value={data?.name}
             />
         </div>
         <div className="editor-container">

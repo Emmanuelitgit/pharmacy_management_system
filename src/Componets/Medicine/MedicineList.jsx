@@ -53,7 +53,7 @@ const MedicineList = () => {
       },
       {
         accessorKey: 'quantity',
-        header: 'Status',
+        header: 'Quantity',
         size: 100,
       },
       {
@@ -75,7 +75,16 @@ const MedicineList = () => {
           const categoryId = row.original?.medicine_id;
           return (
             <div>
-              <ManageMedicine name={'Medicine'} id={categoryId} />
+              <ManageMedicine 
+               name={'Medicine'} 
+               id={categoryId}
+               medicine_name={row.original?.name}
+               price={row.original?.price}
+               quantity={row.original?.quantity}
+               manufacturer={row.original?.manufacturer}
+               desc={row.original?.description}
+               category={row.original?.category}
+               />
             </div>
           );
         },

@@ -109,7 +109,10 @@ const Orders = () => {
 
   return (
     <div>
-        <div className="orders-table-component">
+       <div className="add-btn-container">
+          <AddOrders name={'Order'} />
+        </div>
+        <div className="table-component">
           <MaterialReactTable table={table} />
         </div>
     </div>
