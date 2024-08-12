@@ -90,6 +90,11 @@ export default function ManageStaff({ staff_name,name,id,profile,role,phone,emai
   };
 
   const handleDelete = async () => {
+    const isConfirmed = window.confirm('Are you sure you want to delete this item?');
+
+    if (!isConfirmed) {
+      return; 
+    }
     try {
       const response = await axios.delete(`https://pharmacy-v2qn.onrender.com/api/accounts/delete/${id}/`);
       if (response.status === 200) {

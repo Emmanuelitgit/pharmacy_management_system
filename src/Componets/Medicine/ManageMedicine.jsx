@@ -131,6 +131,11 @@ export default function ManageMedicine({name, id, medicine_name, price, quantity
   };
 
   const handleDelete = async() => {
+    const isConfirmed = window.confirm('Are you sure you want to delete this item?');
+
+    if (!isConfirmed) {
+      return; 
+    }
     try {
       const response = await axios.delete(`https://pharmacy-v2qn.onrender.com/api/medicine/delete/${id}/`,{
         headers: {

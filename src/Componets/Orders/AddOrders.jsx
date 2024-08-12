@@ -35,6 +35,7 @@ export default function AddOrders({name}) {
   const [data, setData] = useState({
     medicine_id:'',
     quantity:null,
+    full_name:'',
     address:''
   });
 
@@ -46,7 +47,6 @@ export default function AddOrders({name}) {
   const handleClose = () => {
     setOpen(false);
   };
-
 
   useEffect(()=>{
     const getMedicines =async()=>{
@@ -73,6 +73,7 @@ export default function AddOrders({name}) {
       [name]: value
     }));
   };
+
   
   const handleDepCount =()=>{
     dispatch(depCountActions.handleCount())
@@ -86,6 +87,7 @@ export default function AddOrders({name}) {
         {
           medicine_id:data?.medicine_id,
           quantity:data?.quantity,
+          full_name:data?.full_name,
           address:data?.address
         },
         {
@@ -138,8 +140,8 @@ export default function AddOrders({name}) {
         </IconButton>
         <DialogContent dividers >
           <div className='input-container'>
-          <label htmlFor="">Doctor</label>
-            <select name="category" onChange={handleChange} value={data.doctor}  className='dropdown'>
+          <label htmlFor="">Medicine Name</label>
+            <select name="medicine_id" onChange={handleChange}  className='dropdown'>
               <option value="">--Select Medicine--</option>
               {medicine?.map((item)=>(
                 <option value={item.medicine_id} key={item.medicine_id}>
@@ -154,6 +156,15 @@ export default function AddOrders({name}) {
               className='input'
               placeholder='eg 10'
               name='quantity'
+              onChange={handleChange}
+            />
+          </div>
+          <div className='input-container'>
+            <label htmlFor="">Customer's Name</label>
+            <input type="text"
+              className='input'
+              placeholder='eg Justice Ofori'
+              name='full_name'
               onChange={handleChange}
             />
           </div>
