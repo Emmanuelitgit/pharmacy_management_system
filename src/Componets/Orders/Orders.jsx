@@ -22,12 +22,13 @@ const Orders = () => {
         const token = localStorage.getItem("token")
         const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/medicine/order/all/', {
           headers: {
-            'Authorization': `Bearer ${token}`,
+            // 'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
         }
         });
-      console.log(response.data)
+
         const {orders} = await response.data;
+
 
         const mappedData = orders?.map((order) => ({
           order_id: order.order_id,
@@ -37,12 +38,10 @@ const Orders = () => {
           price: order.medicine.price,
           quantity: order.quantity,
           status: order.status,
-          customer_id: order.customer.user_id,
-          email: order.customer.email,
-          full_name: order.customer.full_name,
-          phone: order.customer.phone,
-          address: order.address,
+           address: order.address,
         }));
+
+        console.log(mappedData)
         
         const dataWithIds = mappedData?.map((order, index) => ({
           ...order,

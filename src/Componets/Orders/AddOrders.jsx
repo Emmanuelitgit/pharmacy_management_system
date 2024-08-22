@@ -36,7 +36,7 @@ export default function AddOrders({name}) {
     medicine_id:'',
     quantity:null,
     full_name:'',
-    address:''
+    email:''
   });
 
   const dep = useSelector(state => state.count?.depValue) || [2];
@@ -88,12 +88,12 @@ export default function AddOrders({name}) {
           medicine_id:data?.medicine_id,
           quantity:data?.quantity,
           full_name:data?.full_name,
-          address:data?.address
+          email:data?.email
         },
         {
             headers: {
              'Content-Type': 'application/json',
-              Authorization: `Bearer ${accessToken}`,
+              // Authorization: `Bearer ${accessToken}`,
             },
           }
       );
@@ -169,11 +169,11 @@ export default function AddOrders({name}) {
             />
           </div>
           <div className='input-container'>
-            <label htmlFor="">Customer's Address</label>
-            <input type="text"
+            <label htmlFor="">Customer's email</label>
+            <input type="email"
               className='input'
               placeholder='eg University of Ghana, Legon'
-              name='address'
+              name='email'
               onChange={handleChange}
             />
           </div>
