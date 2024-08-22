@@ -38,7 +38,8 @@ const Orders = () => {
           price: order.medicine.price,
           quantity: order.quantity,
           status: order.status,
-           address: order.address,
+          full_name:order.full_name,
+          address: order.address,
         }));
 
         console.log(mappedData)
