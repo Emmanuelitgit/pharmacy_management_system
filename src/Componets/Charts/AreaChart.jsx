@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import "./style.css"
 import { getAppointmentList } from '../../store/data';
+import axios from 'axios';
 
 
 
@@ -14,8 +15,52 @@ const AreaChart = () => {
 
   const dispatch = useDispatch()
   const [windowSize, setWindowSize] = useState()
-  const dep = useSelector(state => state.count?.depValue) || [2];
   const appointments = useSelector((state)=>state.data?.appointments);
+
+  const role = localStorage.getItem("role");
+  const [sales, setData] = useState([])
+  const [medicineOrdered, setMedicineOrdered] = useState('')
+  const dep = useSelector((state)=>state.count?.depValue)
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/medicine/order/all/', {
+          headers: {
+            // 'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        }
+        });
+
+        console.log(response)
+
+        const {orders} = await response.data;
+
+
+        const mappedData = orders?.map((order) => ({
+          order_id: order.order_id,
+          medicine_id: order.medicine.medicine_id,
+          name: order.medicine.name,
+          category: order.medicine.category,
+          price: order.medicine.price,
+          quantity: order.quantity,
+          status: order.status,
+          full_name:order.full_name,
+          address: order.address,
+        }));
+        
+        const dataWithIds = mappedData?.map((order, index) => ({
+          ...order,
+          id: index + 1,
+        }));
+        setData(dataWithIds);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, [dep]);
 
   const year = new Date().getFullYear()
 

@@ -124,7 +124,7 @@ export default function AddOrders({name}) {
         open={open}
       >
         <DialogTitle sx={{ m: 0, p: 2, width:"400px" }} id="customized-dialog-title">
-         Add New Medicine
+         Add New Order
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -172,7 +172,7 @@ export default function AddOrders({name}) {
             <label htmlFor="">Customer's email</label>
             <input type="email"
               className='input'
-              placeholder='eg University of Ghana, Legon'
+              placeholder='eg Ofori Justice'
               name='email'
               onChange={handleChange}
             />
