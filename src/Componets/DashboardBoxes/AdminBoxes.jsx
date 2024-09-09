@@ -78,8 +78,9 @@ const AdminBoxes = () => {
       },
       {
         id:2,
-        name:"Sales",
+        name:"Monthly Sales",
         background:"pink",
+        link:'/admin/report',
         total: 5,
         image:'https://cdn-icons-png.flaticon.com/128/3271/3271314.png'
       },

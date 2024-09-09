@@ -20,7 +20,8 @@ import MedicineCategory from "./Componets/Medicine/MedicineCategory";
 import '@coreui/coreui/dist/css/coreui.min.css';
 import Orders from "./Componets/Orders/Orders"
 import ViewOrder from './Componets/Orders/VeiwOrder';
-
+import Report from './Componets/Reports/Report';
+// import ReportGenerator from './Componets/Reports/ReportGenerator';
 
 const Admin = () => {
   return (
@@ -56,6 +57,7 @@ const router = createBrowserRouter([
       { path: "/admin/view-order/:id", element: <ViewOrder /> },
       { path: "/admin/order-list", element: <Orders /> },
       { path: "/admin/view-staff/:id", element: <ViewUser /> },
+      { path: "/admin/report", element: <Report /> },
       { path: "/admin/profile", element: <Profile /> },
     ]
   },
@@ -71,11 +73,14 @@ const router = createBrowserRouter([
       { path: "/sales-person/profile", element: <Profile /> },
       { path: "/sales-person/view-medicine/:id", element: <ViewMedicine /> },
       { path: "/sales-person/view-category/:id", element: <ViewMedCategory /> },
+      { path: "/sales-person/report", element: <Report /> },
     ]
   },
   { path: "/register", element: <Register /> },
   { path: "/login", element: <Login /> },
-  
+  // { path: "/report", element: <ReportGenerator /> },
+
+
   // Redirect all unmatched routes to login
   {
     path: "/*",
