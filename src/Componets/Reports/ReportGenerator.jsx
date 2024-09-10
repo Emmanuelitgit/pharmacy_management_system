@@ -1,18 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import PDFDocument from "./PDFDocument";
 import { PDFDownloadLink, pdf } from "@react-pdf/renderer";
 import './style.css'
+import { useDispatch } from "react-redux";
+import { handleReports } from "../../store/data";
+import { useSelector } from "react-redux";
 
 
-const ReportGenerator = ({id}) => {
+const ReportGenerator = ({orders}) => {
+
+  const [medicines, setMedicines] = useState([]);
+  const dispatch = useDispatch()
+  const [added, setAdded] = useState(false)
   
   const handleViewPDF = async () => {
-    const blob = await pdf(<PDFDocument />).toBlob(); // Convert PDF to a Blob
-    const url = URL.createObjectURL(blob); 
-    window.open(url, '_blank'); 
+    try {
+      await setMedicines(orders) 
+      const blob = await pdf(<PDFDocument data={orders}/>).toBlob(); // Convert PDF to a Blob
+      const url = URL.createObjectURL(blob); 
+      window.open(url, '_blank');
+    } catch (error) {
+      console.log(error)
+    }
   };
 
-  console.log(id)
+
+  const data = useSelector((state)=>state?.data?.salesReport)
 
   return (
     <div className="reportGeneratorContainer">
@@ -20,7 +33,7 @@ const ReportGenerator = ({id}) => {
         View
       </button>
 
-      <PDFDownloadLink document={<PDFDocument />} fileName="report.pdf">
+      <PDFDownloadLink document={<PDFDocument data={orders}/>} fileName="report.pdf">
         {({ loading }) =>
           loading ? <button>Loading Document...</button> : <button>Download</button>
         }

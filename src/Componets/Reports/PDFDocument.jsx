@@ -4,6 +4,7 @@ import logo from "../../Componets/images/logo 2.png";
 import { Font } from "@react-pdf/renderer";
 import MyCustomFont from "../../fonts/Anton-Regular.ttf";
 
+
 Font.register({
   family: "AntonFamily",
   src: MyCustomFont,
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     marginLeft: "40%",
   },
   header: {
-    fontSize: 10,
+    fontSize: 12,
     marginTop: '5%',
     textAlign: "center",
     textDecoration: 'underline',
@@ -91,64 +92,74 @@ const styles = StyleSheet.create({
   }
 });
 
-const PDFDocument = () => {
+const PDFDocument = ({data}) => {
+
   const medicines = [
     { itemNo: 1, name: "Paracetamol", unitPrice: 5.0, quantity: 10, totalAmount: 50.0 },
     { itemNo: 2, name: "Amoxicillin", unitPrice: 7.5, quantity: 5, totalAmount: 37.5 },
     { itemNo: 3, name: "Ibuprofen", unitPrice: 8.0, quantity: 8, totalAmount: 64.0 },
   ];
 
+  const date = data?.map((item) => new Date(item?.date)); 
+
+  const uniqueDate = date[0];
+  
+  const formattedDate = uniqueDate?.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+  
+  const revenue = data?.map((item) => (item?.price * item?.quantity))
+  
+  const sum = revenue?.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+
+
   return (
     <Document>
       <Page style={styles.body}>
         <Image style={styles.image} src={logo} />
         <Text style={styles.header}>
-          Below is the breakdown of the monthly sales report for January 5th, 2024
+          Below is the breakdown of the monthly sales report for {formattedDate}
         </Text>
 
         <View style={styles.table}>
           <View style={styles.tableRow}>
             <View style={styles.tableCol}>
-              <Text style={styles.tableHeader}>Item No.</Text>
+              <Text style={styles.tableHeader}>#ID</Text>
             </View>
             <View style={styles.tableCol}>
               <Text style={styles.tableHeader}>Medicine</Text>
             </View>
             <View style={styles.tableCol}>
-              <Text style={styles.tableHeader}>Unit Price</Text>
+              <Text style={styles.tableHeader}>Unit Price(Ghc)</Text>
             </View>
             <View style={styles.tableCol}>
               <Text style={styles.tableHeader}>Quantity Sold</Text>
             </View>
             <View style={styles.tableCol}>
-              <Text style={styles.tableHeader}>Total Amount</Text>
+              <Text style={styles.tableHeader}>Total(Ghc)</Text>
             </View>
           </View>
-
-          {/* Table Rows */}
-          {medicines.map((medicine, index) => (
-            <View style={styles.tableRow} key={index}>
+          {data?.map((medicine, index) => (
+            <View style={styles.tableRow} key={medicine?.order_id}>
               <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{medicine.itemNo}</Text>
+                <Text style={styles.tableCell}>{index+1}</Text>
               </View>
               <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{medicine.name}</Text>
+                <Text style={styles.tableCell}>{medicine?.name}</Text>
               </View>
               <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{medicine.unitPrice.toFixed(2)}</Text>
+                <Text style={styles.tableCell}>{medicine?.price?.toFixed(2)}</Text>
               </View>
               <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{medicine.quantity}</Text>
+                <Text style={styles.tableCell}>{medicine?.quantity}</Text>
               </View>
               <View style={styles.tableCol}>
-                <Text style={styles.tableCell}>{medicine.totalAmount.toFixed(2)}</Text>
+                <Text style={styles.tableCell}>{(medicine?.price*medicine?.quantity)?.toFixed(2)}</Text>
               </View>
             </View>
           ))}
         </View>
         <View style={styles.revenueContainer}>
             <Text>Total Revenue</Text>
-            <Text>150</Text>
+            <Text>Ghc{sum}.00</Text>
         </View>
 
         <Text

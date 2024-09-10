@@ -167,9 +167,14 @@ export const dataSlice = createSlice({
         prescCountPharmacist:[],
         invoiceList:[],
         labResult:[],
-        bloodDonors:[]
+        bloodDonors:[],
+        salesReport:[]
     },
-    reducers:{},
+    reducers:{
+      handleReports:(state, action)=>{
+        state.salesReport = action.payload
+      }
+    },
     extraReducers:(builder)=>{
         builder     
           .addCase(getStaff.fulfilled, (state,action)=>{
@@ -220,3 +225,4 @@ export const dataSlice = createSlice({
     }
 })
 
+export const {handleReports} = dataSlice.actions;

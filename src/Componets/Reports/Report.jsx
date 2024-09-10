@@ -71,6 +71,7 @@ const Report = () => {
     fetchData();
   }, [dep]);
 
+  console.log(tableData)
 
   // Define columns for the table
   const columns = useMemo(
