@@ -83,6 +83,12 @@ const styles = StyleSheet.create({
     fontWeight: "normal",
     paddingTop:"15%"
   },
+  revenueContainer:{
+    alignItems:'center',
+    flexDirection:'row',
+    gap:310,
+    paddingTop:'5%'
+  }
 });
 
 const PDFDocument = () => {
@@ -139,6 +145,10 @@ const PDFDocument = () => {
               </View>
             </View>
           ))}
+        </View>
+        <View style={styles.revenueContainer}>
+            <Text>Total Revenue</Text>
+            <Text>150</Text>
         </View>
 
         <Text
