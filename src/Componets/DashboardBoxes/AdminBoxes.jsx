@@ -13,30 +13,56 @@ const AdminBoxes = () => {
 
     const role = localStorage.getItem('role').toLowerCase()
     
-    const [orders, setOrders] = useState('')
+    const [pendingOrders, setPendingOrders] = useState('')
+    const [delivered, setDelivered] = useState([])
     const [medicine, setMedicine] = useState('')
     const [user, setUser] = useState('')
     const dep = useSelector((state)=>state.count?.depValue)
 
 
     useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const token = localStorage.getItem("token")
-            const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/medicine/order/all/', {
-              headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json',
-            }
-            });
-            const {orders} = await response.data;           
-            setOrders(orders);
-          } catch (error) {
-            console.error('Error fetching data:', error);
+      const fetchData = async () => {
+        try {
+          const token = localStorage.getItem("token")
+          const response = await axios.get('https://pharmacy-v2qn.onrender.com/api/medicine/order/all/', {
+            headers: {
+              // 'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
           }
-        };
-        fetchData();
-      }, [dep]);
+          });
+  
+          const {orders} = await response.data;
+  
+  
+          const mappedData = orders?.map((order) => ({
+            order_id: order.order_id,
+            medicine_id: order.medicine.medicine_id,
+            name: order.medicine.name,
+            category: order.medicine.category,
+            price: order.medicine.price,
+            quantity: order.quantity,
+            status: order.status,
+            full_name:order.full_name,
+            address: order.address,
+          }));
+            
+          const dataWithIds = mappedData?.map((order, index) => ({
+            ...order,
+            id: index + 1,
+          }));
+          if(dataWithIds){
+            const delivered = dataWithIds?.filter((item)=> item?.status === true)
+            const pending = dataWithIds?.filter((item)=> item?.status !== true)
+            setPendingOrders(pending);
+            setDelivered(delivered)
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+      fetchData();
+    }, [dep]);
+
 
       useEffect(() => {
         const fetchData = async () => {
@@ -66,6 +92,8 @@ const AdminBoxes = () => {
         fetchData();
       }, [dep]);
 
+      
+
 
    const adminBoxes = [
         {
@@ -81,7 +109,7 @@ const AdminBoxes = () => {
         name:"Monthly Sales",
         background:"pink",
         link:'/admin/report',
-        total: 5,
+        total: delivered?.length,
         image:'https://cdn-icons-png.flaticon.com/128/3271/3271314.png'
       },
       {
@@ -89,7 +117,7 @@ const AdminBoxes = () => {
         name:"Orders",
         background:"orange",
         link:'/admin/order-list',
-        total: orders?.length,
+        total: pendingOrders?.length,
         image:'https://cdn-icons-png.flaticon.com/128/4290/4290854.png'
       },
       {

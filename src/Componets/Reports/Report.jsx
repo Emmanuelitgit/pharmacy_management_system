@@ -62,6 +62,8 @@ const Report = () => {
           id: index + 1,
         }));
 
+        console.log(dataWithIds)
+
         setTableData(dataWithIds);
       } catch (error) {
         console.error('Error fetching data:', error);

@@ -41,8 +41,6 @@ const Orders = () => {
           full_name:order.full_name,
           address: order.address,
         }));
-
-        console.log(mappedData)
         
         const dataWithIds = mappedData?.map((order, index) => ({
           ...order,
@@ -62,7 +60,7 @@ const Orders = () => {
       {
         accessorKey: 'id',
         header: 'Order ID',
-        size: 100,
+        size: 50,
       },
       {
         accessorKey: 'name',
@@ -72,12 +70,12 @@ const Orders = () => {
       {
         accessorKey: 'price',
         header: 'Price',
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: 'quantity',
         header: 'Quantity',
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: 'full_name',

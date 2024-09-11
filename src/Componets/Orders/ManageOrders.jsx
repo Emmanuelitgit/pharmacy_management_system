@@ -95,19 +95,59 @@ export default function ManageOrders({name, id, status}) {
     }
   };
 
+  const handleDelete = async() => {
+    const isConfirmed = window.confirm('Are you sure you want to delete this item?');
+
+    if (!isConfirmed) {
+      return; 
+    }
+    try {
+      const response = await axios.delete(`https://pharmacy-v2qn.onrender.com/api/medicine/order/delete/${id}/`,{
+        headers: {
+          'Content-Type': 'application/json',
+      }
+      });
+      if(response.status === 200){
+        handleDepCount()
+        dispatch(handleToastSuccess("Deleted Successfully"))
+      }
+    } catch (error) {
+      dispatch(handleToastError('Error! cannot perform operation'))
+    }
+  };
+
   return (
     <React.Fragment>
-      <button
+     <div style={{
+      display:'flex',
+      flexDirection:"row",
+      gap:"20px",
+     }}>
+     <button
       onClick={handleClickOpen}
       style={{
         backgroundColor:status===true?'green':'purple',
         color:'white',
-        padding:'5px',
+        padding:'7px',
+        width:"50%",
         borderRadius:'5px'
       }}
       >
         {status === true ? 'Delivered' : 'Pending'}<ArrowDropDown/>
       </button>
+      <button
+      onClick={handleDelete}
+      style={{
+        backgroundColor:'#D22222',
+        color:'white',
+        padding:'7px',
+        borderRadius:'5px',
+        width:"30%"
+      }}
+      >
+        Delete
+      </button>
+     </div>
       <BootstrapDialog
         aria-labelledby="customized-dialog-title"
         open={open}
