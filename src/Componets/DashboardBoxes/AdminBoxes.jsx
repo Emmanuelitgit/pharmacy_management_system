@@ -19,6 +19,24 @@ const AdminBoxes = () => {
     const [user, setUser] = useState('')
     const dep = useSelector((state)=>state.count?.depValue)
 
+    const currentMonth = (createdAt) => {
+      // Convert created_at string to a Date object
+      const createdDate = new Date(createdAt);
+      
+      // Get the year and month from created_at
+      const createdYear = createdDate.getFullYear();
+      const createdMonth = createdDate.getMonth(); // getMonth() returns 0-indexed months (0 = January)
+    
+      // Get the current year and month
+      const currentDate = new Date();
+      const currentYear = currentDate.getFullYear();
+      const currentMonth = currentDate.getMonth(); // getMonth() returns 0-indexed months
+    
+      // Compare year and month only
+      return createdYear === currentYear && createdMonth === currentMonth;
+    };
+
+    console.log(currentMonth("2024-09-29"))
 
     useEffect(() => {
       const fetchData = async () => {
@@ -44,6 +62,7 @@ const AdminBoxes = () => {
             status: order.status,
             full_name:order.full_name,
             address: order.address,
+            date:order.created_at
           }));
             
           const dataWithIds = mappedData?.map((order, index) => ({
@@ -51,10 +70,11 @@ const AdminBoxes = () => {
             id: index + 1,
           }));
           if(dataWithIds){
-            const delivered = dataWithIds?.filter((item)=> item?.status === true)
+            const delivered = dataWithIds?.filter((item)=> (item?.status === true && currentMonth(item?.date)))
+            const monthlyOrders = delivered.reduce((total, item) => total + parseFloat(item.quantity), 0);
             const pending = dataWithIds?.filter((item)=> item?.status !== true)
             setPendingOrders(pending);
-            setDelivered(delivered)
+            setDelivered(monthlyOrders)
           }
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -109,7 +129,7 @@ const AdminBoxes = () => {
         name:"Monthly Sales",
         background:"pink",
         link:'/admin/report',
-        total: delivered?.length,
+        total: delivered,
         image:'https://cdn-icons-png.flaticon.com/128/3271/3271314.png'
       },
       {

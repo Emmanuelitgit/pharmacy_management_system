@@ -9,6 +9,7 @@ const Report = () => {
   const [tableData, setTableData] = useState([]);
   const dep = useSelector((state) => state.count?.depValue);
 
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -18,11 +19,14 @@ const Report = () => {
             'Content-Type': 'application/json',
           },
         });
-
+  
         const { orders } = response.data;
-
-        // Map and format the data
-        const mappedData = orders?.map((order) => ({
+  
+        // Filter out orders where status is true
+        const filteredOrders = orders?.filter(order => order.status === true);
+  
+        // Map and format the filtered data
+        const mappedData = filteredOrders?.map((order) => ({
           order_id: order.order_id,
           medicine_id: order.medicine.medicine_id,
           name: order.medicine.name,
@@ -34,7 +38,7 @@ const Report = () => {
           address: order.address,
           date: new Date(order.created_at), // Convert to Date object for easier sorting and grouping
         }));
-
+  
         // Group orders by year and month
         const groupedData = mappedData?.reduce((acc, order) => {
           const yearMonth = `${order.date.getFullYear()}-${String(order.date.getMonth() + 1).padStart(2, '0')}`; // Group by YYYY-MM
@@ -52,26 +56,24 @@ const Report = () => {
           acc[yearMonth].orders.push(order); // Keep the individual orders in case you need them
           return acc;
         }, {});
-
+  
         // Convert the grouped data to an array and sort by latest month
         const sortedGroupedData = Object.values(groupedData).sort((a, b) => new Date(b.yearMonth) - new Date(a.yearMonth));
-
+  
         // Add ID for each row (optional)
         const dataWithIds = sortedGroupedData?.map((group, index) => ({
           ...group,
           id: index + 1,
         }));
-
-        console.log(dataWithIds)
-
+  
         setTableData(dataWithIds);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
+  
     fetchData();
-  }, [dep]);
+  }, [dep]);  
 
   console.log(tableData)
 
